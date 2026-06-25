@@ -4,8 +4,17 @@
 > tests — if this conflicts, verify and fix this file.
 
 - **Last updated:** 2026-06-25 (Europe/Kyiv)
-- **Phase:** 0 — scaffold + loop install (Gate G0), in progress
+- **Phase:** 1 done (requirements adopted, G1) → starting Phase 2 (baseline specs).
 - **Delivery goal:** every eval dimension ≥ 90 (Gate G6), driven in a loop.
+
+## Gates passed
+
+- **G0** ✅ scaffold + loop installed; lint/build/typecheck green; hooks fire
+  (commit-msg blocks untraced feature commits). Commit `efef101`.
+- **G1** ✅ `docs/requirements.md` + `docs/product-brief.md` adopted (user-
+  provided, complete). 33 FR / 6 NFR / 9 TC / 6 BC. Reconciliation: added
+  FR-SEARCH-06 (geolocation button, mandated by BC-PRIVACY-02) — see
+  `docs/requirements-clarifications.md`. Scope incl. weekend-compare (MVP).
 
 ## What exists
 
