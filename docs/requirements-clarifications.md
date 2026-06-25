@@ -2,7 +2,7 @@
 
 The user supplied a complete, already-numbered `docs/requirements.md` and
 `docs/product-brief.md`. Phase 1 therefore adopts them as the source of truth
-rather than re-deriving them. One reconciliation and the resolved defaults are
+rather than re-deriving them. Two reconciliations and the resolved defaults are
 logged here for the audit trail.
 
 ## Reconciliations applied
@@ -16,6 +16,19 @@ logged here for the audit trail.
      enumeration matches the brief and BC-PRIVACY-02. This is a faithful
      reconciliation of an omission, **not** a scope change — the feature was
      already in MVP scope.
+
+2. **FR-SEARCH-05 zero-results literal reconciled to Ukrainian.**
+   - *Gap:* FR-SEARCH-05 (`docs/requirements.md`) and the product brief quote the
+     inline zero-results string in English as "Nothing found", but the product is
+     Ukrainian-first and calm with no exclamation marks (NFR-I18N-01,
+     BC-BRAND-01, BC-BRAND-02). The literal as written in the FR contradicts the
+     shipped UI language.
+   - *Resolution:* the FR fixes the **meaning** (an inline, non-toast empty
+     state); the `city-search` spec fixes the **shipped literal** as the
+     Ukrainian "Нічого не знайдено", with the English "Nothing found" retained as
+     the `en.ts` fallback. This is a faithful UA-first reconciliation of copy,
+     **not** a behavior or scope change — consistent with the FR-SEARCH-06
+     reconciliation above.
 
 ## Open design freedoms (intentionally left to specs/implementation)
 
