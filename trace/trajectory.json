@@ -1,12 +1,20 @@
 {
   "generatedBy": "scripts/check-trajectory.mjs",
-  "slices": [],
+  "slices": [
+    {
+      "slice": "2026-06-25-add-app-shell",
+      "reviewEvidence": "clean",
+      "trailerCommits": 0,
+      "libDomains": [],
+      "processComplete": true
+    }
+  ],
   "overlaps": [],
   "failures": [],
   "warnings": [
     {
-      "check": "slices",
-      "msg": "no archived slices found under openspec/changes/archive/ (nothing to audit yet)"
+      "check": "trailer",
+      "msg": "2026-06-25-add-app-shell: no commit carries a \"Slice: add-app-shell\" trailer"
     }
   ]
 }

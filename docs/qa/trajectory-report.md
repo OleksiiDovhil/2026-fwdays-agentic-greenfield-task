@@ -5,12 +5,12 @@ archived slice took: review evidence, `Slice:` trailers, and module scope.
 It does NOT verify test-first ordering or test integrity (not derivable from
 one-commit-per-slice history) — those are graded by the trajectory-eval workflow.
 
-Scope: 0 archived slice(s).
+Scope: 1 archived slice(s).
 Result: PASS, 1 warning(s)
 
 | Slice | Review evidence | Trailer commits | design+tasks | lib domains touched |
 |---|---|---|---|---|
-
+| 2026-06-25-add-app-shell | clean | **0** | yes | - |
 
 ## Cross-slice module overlap
 
@@ -22,4 +22,4 @@ None.
 
 ## Warnings
 
-- **slices**: no archived slices found under openspec/changes/archive/ (nothing to audit yet)
+- **trailer**: 2026-06-25-add-app-shell: no commit carries a "Slice: add-app-shell" trailer

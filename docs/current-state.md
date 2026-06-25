@@ -4,8 +4,31 @@
 > tests — if this conflicts, verify and fix this file.
 
 - **Last updated:** 2026-06-25 (Europe/Kyiv)
-- **Phase:** 3 done (plan, G3) → starting Phase 4 (per-slice build).
+- **Phase:** 4 in progress — `add-app-shell` slice DONE (G4); Wave 1 next.
 - **Delivery goal:** every eval dimension ≥ 90 (Gate G6), driven in a loop.
+
+## add-app-shell conventions (LOCKED — Wave 1+ slices reuse these)
+
+- **i18n:** `lib/i18n/{uk,en,index}.ts`; `t("namespace.key")` resolves nested
+  dot-paths (UK default → EN fallback → ""). Add per-domain namespaces to `uk.ts`
+  + `en.ts` (`search.*`, `clock.*`, `jokes.*`, `forecast.*`, `comfort.*`, `map.*`,
+  `compare.*`) — never reach into `shell.*`. No exclamation marks (test-enforced).
+- **Location:** `lib/location/{types,validation,url}.ts` (pure; `Location={lat,lon,name}`;
+  dot-decimal only; total/never-throws → null on bad input). Client
+  `components/providers/LocationProvider.tsx` exposes `useLocation() → {location,setLocation}`
+  syncing `?lat=&lon=&name=` via `router.replace`. city-search/map WRITE it;
+  forecast/animated-bg/weekend-compare READ it.
+- **Theme:** `ThemeProvider` (light/dark, system default, `data-theme`, cookie-free).
+- **Error/empty:** `components/ui/Notice.tsx` (`error`→role alert, `empty`/`info`→role
+  status). Runtime faults: `app/error.tsx` + `components/ui/ErrorBoundary.tsx`. REUSE these.
+- **UI primitives:** `components/ui/{Button,Card,Badge,Input}.tsx` (cva + `cn()` from
+  `lib/utils.ts`); palette tokens in `app/globals.css` + `lib/a11y/palette.ts`
+  (AA-verified by `lib/a11y/contrast.ts checkPalette()`).
+- **Slots:** `app/page.tsx` composes `AppHeader` (logo+theme+**clock slot**),
+  `ShellContent` (empty-vs-located + responsive grid `grid-cols-1 md:grid-cols-2
+  xl:grid-cols-3`; hosts forecast/map/compare slots), `AppFooter` (Open-Meteo+OSM
+  credits + **jokes slot**), `WeatherBackground` (**bg slot**). Fill YOUR slot file,
+  never edit `app/page.tsx` (§3a serialize point).
 
 ## Gates passed
 
@@ -26,9 +49,8 @@
 
 ## Phase 4 slice order (per-slice loop: spec-change → red tests+evals → green → battery → review-gate → archive)
 
-1. add-app-shell (foundational: layout, i18n, LocationProvider, error/empty
-   pattern, theme, slot stubs)  ◀ NEXT
-2. add-comfort-score · 3. add-top-clock · 4. add-bottom-jokes (parallel-safe)
+1. add-app-shell (foundational)  ✅ DONE (G4) — 68 tests, review CLEAN, archived
+2. add-comfort-score · 3. add-top-clock · 4. add-bottom-jokes (Wave 1)  ◀ NEXT
 5. add-city-search · 6. add-forecast · 7. add-map · 8. add-animated-bg
 9. add-weekend-compare
 Agents assume default DB/auth/Playwright stack — OVERRIDE per dispatch with

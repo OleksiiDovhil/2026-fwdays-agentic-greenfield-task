@@ -66,7 +66,11 @@
         "openspec/specs/app-shell/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/location/url.test.ts",
+        "lib/location/validation.test.ts",
+        "components/shell/AppHeader.test.tsx"
+      ],
       "recordings": []
     },
     {
@@ -75,7 +79,9 @@
         "openspec/specs/app-shell/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/shell/empty-state.test.tsx"
+      ],
       "recordings": []
     },
     {
@@ -84,7 +90,10 @@
         "openspec/specs/app-shell/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/shell/ShellContent.test.tsx",
+        "components/shell/empty-state.test.tsx"
+      ],
       "recordings": []
     },
     {
@@ -369,18 +378,6 @@
   ],
   "failures": [],
   "warnings": [
-    {
-      "check": "test-trace",
-      "msg": "FR-SHELL-01 has no test annotated \"@trace FR-SHELL-01\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-SHELL-02 has no test annotated \"@trace FR-SHELL-02\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-SHELL-03 has no test annotated \"@trace FR-SHELL-03\""
-    },
     {
       "check": "test-trace",
       "msg": "FR-CLOCK-01 has no test annotated \"@trace FR-CLOCK-01\""

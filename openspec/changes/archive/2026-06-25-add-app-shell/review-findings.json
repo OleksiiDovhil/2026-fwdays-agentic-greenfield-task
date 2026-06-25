@@ -1,0 +1,34 @@
+{
+  "generatedBy": "review-gate",
+  "scope": "add-app-shell",
+  "change": "add-app-shell",
+  "baseRef": null,
+  "headRef": "staged",
+  "dimensions": {
+    "correctness": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 2
+    },
+    "security": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 0
+    },
+    "spec-compliance": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 2
+    },
+    "visual": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 0
+    }
+  },
+  "confirmedTitles": [],
+  "clean": true,
+  "generatedAt": "2026-06-25T20:02:28Z",
+  "initialConfirmed": 8,
+  "resolution": "All 8 confirmed findings fixed by the implementer and re-verified CLEAN by a fresh code-reviewer (maker!=checker): app/error.tsx + ErrorBoundary (+tests) for the runtime-fault scenario; theme-toggle action corrected; located-state dismissal tested; dark-OS FOUC fixed cookie-free; postcss override (npm audit 0); @trace regex broadened (fix, not weakening); eval hardened (no as-never, blank guard). No new issues."
+}

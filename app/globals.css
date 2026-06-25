@@ -1,26 +1,145 @@
 @import "tailwindcss";
 
+/*
+  Calm, low-chroma, Ukrainian-first palette (design.md D5/D6).
+
+  SINGLE SOURCE OF TRUTH WARNING: the foreground/background token PAIRS below are
+  mirrored as plain data in `lib/a11y/palette.ts`, which the computational WCAG-AA
+  checker (`lib/a11y/contrast.ts`, NFR-A11Y-02 / ADR-0004) verifies without a DOM.
+  Keep the two in LOCKSTEP — if you change a color here, change it there, and keep
+  every listed fg/bg pair at >= 4.5:1 (normal text) or >= 3:1 (large text / UI).
+
+  THEMING MODEL (design.md D3, BC-PRIVACY-03 — no cookie):
+    - `:root` (and the explicit `[data-theme="light"]` selector) hold the LIGHT
+      tokens; `[data-theme="dark"]` holds the DARK tokens. The ThemeProvider sets
+      `data-theme` once it mounts.
+    - To avoid a LIGHT-on-dark-OS first-paint flash before the provider's effect
+      runs, a `@media (prefers-color-scheme: dark)` block applies the dark tokens
+      to the UN-TOGGLED default — `:root:not([data-theme="light"])` — so it yields
+      to an explicit light choice but pre-paints dark for a dark-OS visitor. The
+      explicit `[data-theme="light"]` / `[data-theme="dark"]` selectors remain
+      authoritative once the user toggles.
+
+  DARK-TOKEN LOCKSTEP: the dark hex values appear in BOTH `[data-theme="dark"]`
+  and the `@media (prefers-color-scheme: dark)` block below, AND are mirrored in
+  `lib/a11y/palette.ts`. Keep all three in sync. (CSS cannot reuse one selector's
+  custom-property values in another, hence the deliberate duplication.)
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces */
+  --background: #f6f8fb;
+  --surface: #ffffff;
+
+  /* Text */
+  --foreground: #1e293b;
+  --muted-foreground: #475569;
+
+  /* Borders: --border is a subtle decorative separator (not AA-listed, a 1px
+     hairline is WCAG-exempt); --border-strong clears 3:1 and is used for the
+     edges of interactive controls (inputs, focusable cards). */
+  --border: #e2e8f0;
+  --border-strong: #64748b;
+
+  /* Brand */
+  --primary: #1d4ed8;
+  --primary-foreground: #ffffff;
+  --accent: #0f766e;
+  --accent-foreground: #ffffff;
+
+  /* Focus ring (NFR-A11Y-01: every interactive element has a visible focus ring) */
+  --ring: #1d4ed8;
 }
 
+/* An explicit light choice restates the light tokens so it wins on a dark OS,
+   over the prefers-color-scheme default below. */
+[data-theme="light"] {
+  --background: #f6f8fb;
+  --surface: #ffffff;
+
+  --foreground: #1e293b;
+  --muted-foreground: #475569;
+
+  --border: #e2e8f0;
+  --border-strong: #64748b;
+
+  --primary: #1d4ed8;
+  --primary-foreground: #ffffff;
+  --accent: #0f766e;
+  --accent-foreground: #ffffff;
+
+  --ring: #1d4ed8;
+}
+
+[data-theme="dark"] {
+  --background: #0b1220;
+  --surface: #131d2f;
+
+  --foreground: #e6edf6;
+  --muted-foreground: #9fb0c3;
+
+  --border: #1f2a3d;
+  --border-strong: #5b6f8a;
+
+  --primary: #60a5fa;
+  --primary-foreground: #0b1220;
+  --accent: #2dd4bf;
+  --accent-foreground: #0b1220;
+
+  --ring: #7cb3fb;
+}
+
+/* Dark-OS first-paint default: apply dark tokens UNLESS the user has explicitly
+   chosen light. Yields to `[data-theme="light"]`; matches `[data-theme="dark"]`
+   (same values), so no flash and no override of an explicit choice. Cookie-free. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #0b1220;
+    --surface: #131d2f;
+
+    --foreground: #e6edf6;
+    --muted-foreground: #9fb0c3;
+
+    --border: #1f2a3d;
+    --border-strong: #5b6f8a;
+
+    --primary: #60a5fa;
+    --primary-foreground: #0b1220;
+    --accent: #2dd4bf;
+    --accent-foreground: #0b1220;
+
+    --ring: #7cb3fb;
+  }
+}
+
+/* Expose the CSS variables to Tailwind 4's utility generator as theme tokens so
+   `bg-background`, `text-foreground`, `border-border`, `text-primary`, … resolve
+   from the variables and re-theme automatically when `data-theme` flips. */
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+/* Visible keyboard-focus indicator on every interactive element (NFR-A11Y-01).
+   :focus-visible only paints for keyboard navigation, not mouse clicks. */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
 }

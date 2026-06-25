@@ -145,7 +145,13 @@ const isTestFile = (f) => /\.(test|spec|eval)\.(ts|tsx|js|mjs)$/.test(f) || /int
 for (const dir of PATHS.testDirs) {
   for (const file of walk(dir, isTestFile)) {
     const text = read(file) ?? "";
-    for (const m of text.matchAll(/@trace\s+([A-Z]+-\d+(?:\s*,\s*[A-Z]+-\d+)*)/g)) {
+    // Accept CATEGORIZED ids with an optional middle segment (e.g. FR-SHELL-01,
+    // NFR-A11Y-02), mirroring the id pattern `idsIn` and the commit-msg hook use.
+    // This is purely a broader EXTRACTION so valid coverage is recognized — it
+    // relaxes no failure condition or threshold.
+    for (const m of text.matchAll(
+      /@trace\s+((?:FR|NFR|TC|BC|BUG)-(?:[A-Z0-9]+-)?\d+(?:\s*,\s*(?:FR|NFR|TC|BC|BUG)-(?:[A-Z0-9]+-)?\d+)*)/g,
+    )) {
       for (const id of m[1].split(/\s*,\s*/)) {
         if (!testTraces.has(id)) testTraces.set(id, []);
         testTraces.get(id).push(file.replaceAll("\\", "/"));
