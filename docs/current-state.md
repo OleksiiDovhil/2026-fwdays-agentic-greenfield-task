@@ -4,7 +4,7 @@
 > tests — if this conflicts, verify and fix this file.
 
 - **Last updated:** 2026-06-25 (Europe/Kyiv)
-- **Phase:** 1 done (requirements adopted, G1) → starting Phase 2 (baseline specs).
+- **Phase:** 3 done (plan, G3) → starting Phase 4 (per-slice build).
 - **Delivery goal:** every eval dimension ≥ 90 (Gate G6), driven in a loop.
 
 ## Gates passed
@@ -15,6 +15,25 @@
   provided, complete). 33 FR / 6 NFR / 9 TC / 6 BC. Reconciliation: added
   FR-SEARCH-06 (geolocation button, mandated by BC-PRIVACY-02) — see
   `docs/requirements-clarifications.md`. Scope incl. weekend-compare (MVP).
+- **G2** ✅ 9 baseline specs (`openspec/specs/`); all 33 FRs owned once, no
+  duplicates/contradictions; `openspec validate --all --strict` = 9 passed.
+  city-search reconciled zero-results literal to Ukrainian. Commit after G1.
+- **G3** ✅ `docs/mvp-capability-plan.md`: 9 slices, dependency DAG (critical
+  path app-shell→city-search→forecast→animated-bg→weekend-compare), FR coverage
+  table (33/33), cross-cutting NFR/TC governance (§5a). check-traceability: 0
+  failures. Checkpoint 2: plan is a faithful decomposition of the user's own
+  requirements + autonomous mandate → proceeding.
+
+## Phase 4 slice order (per-slice loop: spec-change → red tests+evals → green → battery → review-gate → archive)
+
+1. add-app-shell (foundational: layout, i18n, LocationProvider, error/empty
+   pattern, theme, slot stubs)  ◀ NEXT
+2. add-comfort-score · 3. add-top-clock · 4. add-bottom-jokes (parallel-safe)
+5. add-city-search · 6. add-forecast · 7. add-map · 8. add-animated-bg
+9. add-weekend-compare
+Agents assume default DB/auth/Playwright stack — OVERRIDE per dispatch with
+AGENTS.md + ADR-0003/0004 (no DB/auth/email; Vitest only; service smoke over
+mocked Open-Meteo; eval produce() calls pure lib).
 
 ## What exists
 
