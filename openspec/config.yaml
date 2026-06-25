@@ -1,0 +1,32 @@
+schema: spec-driven
+
+context: |
+  Weather Explorer — keyless, privacy-first, Ukrainian-first weekend trip
+  planner. Single actor: anonymous visitor; no accounts, no persistence.
+  Stack: Next.js 16.2 App Router, React 19.2, TypeScript strict, Tailwind 4,
+  shadcn/ui; Open-Meteo (forecast + geocoding, keyless), Leaflet/OSM tiles.
+  No database, no auth, no email (ADR-0003). No Playwright; Vitest + chrome-
+  devtools MCP (ADR-0004). lib/ is framework-free and 100% unit-testable
+  (TC-PURE-01). UI strings centralised, Ukrainian-first, calm tone, no
+  exclamation marks (NFR-I18N-01, BC-BRAND-01). Requirements source of truth:
+  docs/requirements.md (numbered FR/NFR/TC/BC). Delivery bar: every eval
+  dimension >= 90.
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+# Add your tech stack, conventions, style guides, domain knowledge, etc.
+# Example:
+#   context: |
+#     Tech stack: TypeScript, React, Node.js
+#     We use conventional commits
+#     Domain: e-commerce platform
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
