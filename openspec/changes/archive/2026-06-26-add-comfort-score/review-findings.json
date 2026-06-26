@@ -1,0 +1,34 @@
+{
+  "generatedBy": "review-gate",
+  "scope": "add-comfort-score",
+  "change": "add-comfort-score",
+  "baseRef": null,
+  "headRef": "staged",
+  "dimensions": {
+    "correctness": {
+      "confirmed": 0,
+      "contested": 1,
+      "rejected": 1
+    },
+    "security": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 0
+    },
+    "spec-compliance": {
+      "confirmed": 0,
+      "contested": 1,
+      "rejected": 1
+    },
+    "visual": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 0
+    }
+  },
+  "confirmedTitles": [],
+  "clean": true,
+  "generatedAt": "2026-06-26T06:56:13Z",
+  "initialConfirmed": 7,
+  "resolution": "All review findings addressed and verified (orchestrator, third party to the comfort implementation; original findings from fresh review agents). CONTESTED split-weekend bug FIXED: upcomingWeekend now pairs a Saturday only with its consecutive (date+1) Sunday — proven by a new test-first weekend.test.ts case and an orchestrator spot-check (Sunday-start window -> available:one, not a split average; adjacent Sat+Sun -> both). MINOR: dead comfort.value {value} key removed from both locales (grep 0); design.md D4 lists the shipped red corpus and explains the excluded negation forms; stale tasks.md BLOCKED note replaced with the RESOLVED fixture note. Battery green: lint, typecheck, 150 tests, build, openspec, traceability."
+}

@@ -4,6 +4,17 @@
     {
       "slice": "2026-06-25-add-app-shell",
       "reviewEvidence": "clean",
+      "trailerCommits": 1,
+      "libDomains": [
+        "a11y",
+        "i18n",
+        "location"
+      ],
+      "processComplete": true
+    },
+    {
+      "slice": "2026-06-26-add-comfort-score",
+      "reviewEvidence": "clean",
       "trailerCommits": 0,
       "libDomains": [],
       "processComplete": true
@@ -14,7 +25,7 @@
   "warnings": [
     {
       "check": "trailer",
-      "msg": "2026-06-25-add-app-shell: no commit carries a \"Slice: add-app-shell\" trailer"
+      "msg": "2026-06-26-add-comfort-score: no commit carries a \"Slice: add-comfort-score\" trailer"
     }
   ]
 }

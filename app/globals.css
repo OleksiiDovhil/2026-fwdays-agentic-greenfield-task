@@ -47,6 +47,15 @@
   --accent: #0f766e;
   --accent-foreground: #ffffff;
 
+  /* Comfort band badges (D6, NFR-A11Y-02) — text-on-tint pairs, AA-verified in
+     lib/a11y/palette.ts. Dark text on a pale tint in light theme. */
+  --comfort-green-fg: #14532d;
+  --comfort-green-bg: #dcfce7;
+  --comfort-yellow-fg: #713f12;
+  --comfort-yellow-bg: #fef3c7;
+  --comfort-red-fg: #7f1d1d;
+  --comfort-red-bg: #fee2e2;
+
   /* Focus ring (NFR-A11Y-01: every interactive element has a visible focus ring) */
   --ring: #1d4ed8;
 }
@@ -68,6 +77,13 @@
   --accent: #0f766e;
   --accent-foreground: #ffffff;
 
+  --comfort-green-fg: #14532d;
+  --comfort-green-bg: #dcfce7;
+  --comfort-yellow-fg: #713f12;
+  --comfort-yellow-bg: #fef3c7;
+  --comfort-red-fg: #7f1d1d;
+  --comfort-red-bg: #fee2e2;
+
   --ring: #1d4ed8;
 }
 
@@ -85,6 +101,14 @@
   --primary-foreground: #0b1220;
   --accent: #2dd4bf;
   --accent-foreground: #0b1220;
+
+  /* Comfort band badges (D6) — light text on a deep tint in dark theme. */
+  --comfort-green-fg: #bbf7d0;
+  --comfort-green-bg: #14532d;
+  --comfort-yellow-fg: #fde68a;
+  --comfort-yellow-bg: #713f12;
+  --comfort-red-fg: #fecaca;
+  --comfort-red-bg: #7f1d1d;
 
   --ring: #7cb3fb;
 }
@@ -108,6 +132,13 @@
     --accent: #2dd4bf;
     --accent-foreground: #0b1220;
 
+    --comfort-green-fg: #bbf7d0;
+    --comfort-green-bg: #14532d;
+    --comfort-yellow-fg: #fde68a;
+    --comfort-yellow-bg: #713f12;
+    --comfort-red-fg: #fecaca;
+    --comfort-red-bg: #7f1d1d;
+
     --ring: #7cb3fb;
   }
 }
@@ -126,6 +157,12 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-comfort-green-fg: var(--comfort-green-fg);
+  --color-comfort-green-bg: var(--comfort-green-bg);
+  --color-comfort-yellow-fg: var(--comfort-yellow-fg);
+  --color-comfort-yellow-bg: var(--comfort-yellow-bg);
+  --color-comfort-red-fg: var(--comfort-red-fg);
+  --color-comfort-red-bg: var(--comfort-red-bg);
   --color-ring: var(--ring);
 }
 

@@ -38,6 +38,10 @@ export const palette: Palette = {
     { name: "accent/surface", fg: "#0f766e", bg: "#ffffff" },
     { name: "primary-foreground/primary", fg: "#ffffff", bg: "#1d4ed8" },
     { name: "accent-foreground/accent", fg: "#ffffff", bg: "#0f766e" },
+    // Comfort band badges (text on tinted chip — normal text, >= 4.5:1). D6.
+    { name: "comfort-green-fg/comfort-green-bg", fg: "#14532d", bg: "#dcfce7" },
+    { name: "comfort-yellow-fg/comfort-yellow-bg", fg: "#713f12", bg: "#fef3c7" },
+    { name: "comfort-red-fg/comfort-red-bg", fg: "#7f1d1d", bg: "#fee2e2" },
     // UI / large (>= 3:1)
     { name: "ring/background", fg: "#1d4ed8", bg: "#f6f8fb", ui: true },
     { name: "ring/surface", fg: "#1d4ed8", bg: "#ffffff", ui: true },
@@ -54,6 +58,10 @@ export const palette: Palette = {
     { name: "accent/surface", fg: "#2dd4bf", bg: "#131d2f" },
     { name: "primary-foreground/primary", fg: "#0b1220", bg: "#60a5fa" },
     { name: "accent-foreground/accent", fg: "#0b1220", bg: "#2dd4bf" },
+    // Comfort band badges (light text on deep tinted chip — normal text, >= 4.5:1). D6.
+    { name: "comfort-green-fg/comfort-green-bg", fg: "#bbf7d0", bg: "#14532d" },
+    { name: "comfort-yellow-fg/comfort-yellow-bg", fg: "#fde68a", bg: "#713f12" },
+    { name: "comfort-red-fg/comfort-red-bg", fg: "#fecaca", bg: "#7f1d1d" },
     // UI / large (>= 3:1)
     { name: "ring/background", fg: "#7cb3fb", bg: "#0b1220", ui: true },
     { name: "ring/surface", fg: "#7cb3fb", bg: "#131d2f", ui: true },

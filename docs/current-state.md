@@ -50,7 +50,20 @@
 ## Phase 4 slice order (per-slice loop: spec-change → red tests+evals → green → battery → review-gate → archive)
 
 1. add-app-shell (foundational)  ✅ DONE (G4) — 68 tests, review CLEAN, archived
-2. add-comfort-score · 3. add-top-clock · 4. add-bottom-jokes (Wave 1)  ◀ NEXT
+2. add-comfort-score  ✅ DONE (G4) — 150 tests, review CLEAN (split-weekend bug fixed), archived
+3. add-top-clock · 4. add-bottom-jokes (Wave 1 cont.)  ◀ NEXT
+5. add-city-search · 6. add-forecast · 7. add-map · 8. add-animated-bg · 9. add-weekend-compare
+
+### add-comfort-score conventions (for forecast + weekend-compare to consume)
+- `comfortScore(daily): {value:0..100 int, rationale:UA sentence}` in `lib/scoring/comfort.ts`
+  (pure/total). Input type `ComfortInput` (lib/scoring/types.ts): `{time:"YYYY-MM-DD",
+  apparentHigh, apparentLow, precipProbability, windSpeed(m/s), cloudCover%, uvIndex}` —
+  forecast produces this shape. `bandOf(value)` → green/yellow/red.
+- `upcomingWeekend(days)` → `{value, saturday?, sunday?, available:"both"|"one"|"none"}`,
+  pairs a Saturday only with its CONSECUTIVE Sunday (same weekend) by local `time` date.
+- Components: `components/comfort/ComfortBadge.tsx` (value + accessible UA label, color-not-only),
+  `components/comfort/WeekendHighlight.tsx` (forecast wires it into the TOP of the grid).
+- i18n `comfort.*` namespace; green/yellow/red badge tokens in palette/globals.css (AA-verified).
 5. add-city-search · 6. add-forecast · 7. add-map · 8. add-animated-bg
 9. add-weekend-compare
 Agents assume default DB/auth/Playwright stack — OVERRIDE per dispatch with

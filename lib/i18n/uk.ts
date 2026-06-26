@@ -93,6 +93,29 @@ export const uk = {
       label: "Основний вміст",
     },
   },
+  comfort: {
+    // Comfort-score namespace (D6) — sibling to shell.*, never reaching into it.
+    // Calm, practical tone; no exclamation marks (BC-BRAND-01, test-enforced).
+    band: {
+      // Short badge labels shown beside the numeric score; color is not the only
+      // signal (NFR-A11Y-01), so each band carries a distinct textual label.
+      green: "Комфортно",
+      yellow: "Помірно",
+      red: "Некомфортно",
+    },
+    a11y: {
+      // Fuller accessible descriptions for assistive technology.
+      green: "Комфортні умови",
+      yellow: "Помірні умови",
+      red: "Некомфортні умови",
+    },
+    weekend: {
+      // Upcoming-weekend summary label and the calm out-of-range state shown when
+      // the weekend is outside the forecast window (never an error toast).
+      label: "Найближчі вихідні",
+      outOfRange: "Вихідні поза прогнозом",
+    },
+  },
 } as const;
 
 export default uk;

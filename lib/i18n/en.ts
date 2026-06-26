@@ -67,6 +67,22 @@ export const en = {
       label: "Main content",
     },
   },
+  comfort: {
+    band: {
+      green: "Comfortable",
+      yellow: "Moderate",
+      red: "Uncomfortable",
+    },
+    a11y: {
+      green: "Comfortable conditions",
+      yellow: "Moderate conditions",
+      red: "Uncomfortable conditions",
+    },
+    weekend: {
+      label: "This weekend",
+      outOfRange: "Weekend outside the forecast",
+    },
+  },
 } as const;
 
 export default en;
