@@ -67,6 +67,7 @@
       ],
       "planned": true,
       "tests": [
+        "lib/location/serialize-roundtrip.test.ts",
         "lib/location/url.test.ts",
         "lib/location/validation.test.ts",
         "components/shell/AppHeader.test.tsx"
@@ -268,21 +269,23 @@
     {
       "id": "FR-MAP-01",
       "specs": [
-        "openspec/specs/map/spec.md",
-        "openspec/changes/add-map/specs/map/spec.md"
+        "openspec/specs/map/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/map/LocationMap.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-MAP-02",
       "specs": [
-        "openspec/specs/map/spec.md",
-        "openspec/changes/add-map/specs/map/spec.md"
+        "openspec/specs/map/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/map/LocationMap.test.tsx"
+      ],
       "recordings": []
     },
     {
@@ -290,31 +293,40 @@
       "specs": [
         "openspec/specs/city-search/spec.md",
         "openspec/specs/map/spec.md",
-        "openspec/specs/weekend-compare/spec.md",
-        "openspec/changes/add-map/specs/map/spec.md"
+        "openspec/specs/weekend-compare/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/geo/coordinate-label.test.ts",
+        "lib/geo/equator-meridian.test.ts",
+        "lib/geo/reverse-validation.test.ts",
+        "app/api/reverse-geocode/route.test.ts",
+        "components/map/LocationMap.test.tsx",
+        "components/map/ReverseFailedHint.test.tsx",
+        "evals/cases/map-copy.eval.ts"
+      ],
       "recordings": []
     },
     {
       "id": "FR-MAP-04",
       "specs": [
-        "openspec/specs/map/spec.md",
-        "openspec/changes/add-map/specs/map/spec.md"
+        "openspec/specs/map/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/map/LocationMap.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-MAP-05",
       "specs": [
-        "openspec/specs/map/spec.md",
-        "openspec/changes/add-map/specs/map/spec.md"
+        "openspec/specs/map/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/map/LocationMap.test.tsx"
+      ],
       "recordings": []
     },
     {
@@ -424,7 +436,8 @@
     {
       "id": "FR-COMPARE-01",
       "specs": [
-        "openspec/specs/weekend-compare/spec.md"
+        "openspec/specs/weekend-compare/spec.md",
+        "openspec/changes/add-weekend-compare/specs/weekend-compare/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -433,7 +446,8 @@
     {
       "id": "FR-COMPARE-02",
       "specs": [
-        "openspec/specs/weekend-compare/spec.md"
+        "openspec/specs/weekend-compare/spec.md",
+        "openspec/changes/add-weekend-compare/specs/weekend-compare/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -442,7 +456,8 @@
     {
       "id": "FR-COMPARE-03",
       "specs": [
-        "openspec/specs/weekend-compare/spec.md"
+        "openspec/specs/weekend-compare/spec.md",
+        "openspec/changes/add-weekend-compare/specs/weekend-compare/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -451,26 +466,6 @@
   ],
   "failures": [],
   "warnings": [
-    {
-      "check": "test-trace",
-      "msg": "FR-MAP-01 has no test annotated \"@trace FR-MAP-01\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-MAP-02 has no test annotated \"@trace FR-MAP-02\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-MAP-03 has no test annotated \"@trace FR-MAP-03\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-MAP-04 has no test annotated \"@trace FR-MAP-04\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-MAP-05 has no test annotated \"@trace FR-MAP-05\""
-    },
     {
       "check": "test-trace",
       "msg": "FR-ANIM-01 has no test annotated \"@trace FR-ANIM-01\""
@@ -637,7 +632,7 @@
     },
     {
       "check": "active-changes",
-      "msg": "active change \"add-map\" is not archived"
+      "msg": "active change \"add-weekend-compare\" is not archived"
     }
   ]
 }

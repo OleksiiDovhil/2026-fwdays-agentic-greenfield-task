@@ -4,11 +4,15 @@
 > tests — if this conflicts, verify and fix this file.
 
 - **Last updated:** 2026-06-26 (Europe/Kyiv)
-- **Phase:** 4 in progress — 6/9 slices DONE & archived (app-shell, comfort-score,
-  top-clock, bottom-jokes, city-search, forecast — each review-gate CLEAN; 356 tests
-  green; lint/typecheck/build/openspec/trace green). Specs READY for map +
-  animated-bg. Remaining slices: map, animated-bg, weekend-compare. Eval grading of
-  all per-slice eval cases happens together in Phase 6 (eval-suite, threshold 90).
+- **Phase:** 4 in progress — 7/9 slices DONE & archived (app-shell, comfort-score,
+  top-clock, bottom-jokes, city-search, forecast, map — each review-gate CLEAN; 427
+  tests green; lint/typecheck/build/openspec/trace green). Specs READY for the last
+  two: animated-bg, weekend-compare. Eval grading of all per-slice eval cases happens
+  together in Phase 6 (eval-suite, threshold 90).
+- map added: `app/api/reverse-geocode` (Nominatim, ADR-0005) + client-only Leaflet
+  (dynamic ssr:false). NOTE for later slices: `lib/location/url.ts serialize()` now
+  emits PLAIN decimal (no exponent) so any coord round-trips DOT_DECIMAL; Leaflet
+  marker icons are SAME-ORIGIN; `next.config.ts` now sets CSP + security headers.
 - **Delivery goal:** every eval dimension ≥ 90 (Gate G6), driven in a loop.
 
 ### add-forecast conventions (LOCKED — Wave 4+ slices reuse these)

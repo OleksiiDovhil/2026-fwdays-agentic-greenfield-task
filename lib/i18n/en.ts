@@ -159,6 +159,17 @@ export const en = {
       "Could not load the forecast. Please try again in a moment — the rest of the app keeps working.",
     noLocation: "Search for a city to see its forecast for the days ahead.",
   },
+  map: {
+    // Map namespace (D8, add-map) — the English fallback subset mirroring
+    // `uk.map.*` key-for-key. Same calm tone; no exclamation marks (BC-BRAND-01).
+    regionLabel: "Map of the chosen place",
+    markerLabel: "Chosen place on the map",
+    loading: "Loading the map",
+    fallbackName: "Chosen place",
+    reverseFailed:
+      "We could not find the name of this place. It is already selected on the map, and the forecast keeps working.",
+    attribution: "© OpenStreetMap contributors",
+  },
   jokes: {
     // Bottom-jokes namespace (D3, add-bottom-jokes) — the per-index English
     // fallback for `uk.jokes.items`. SAME count and index alignment as the

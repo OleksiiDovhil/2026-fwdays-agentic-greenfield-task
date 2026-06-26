@@ -11,6 +11,7 @@
 // their own slot files, never `app/page.tsx` (§3a serialize point).
 import { useLocation } from "@/components/providers/LocationProvider";
 import { ForecastSection } from "@/components/forecast/ForecastSection";
+import { LocationMap } from "@/components/map/LocationMap";
 import { SearchHero } from "@/components/shell/SearchHero";
 import { Notice } from "@/components/ui/Notice";
 import { t } from "@/lib/i18n";
@@ -33,11 +34,12 @@ export function ShellContent() {
           <Notice variant="empty" className="md:col-span-2 xl:col-span-3" />
         ) : (
           // Located layout: the forecast slice fills the forecast slot (it may span
-          // grid columns for the wider daily grid + chart); map / compare remain
-          // inert placeholders owned by later waves.
+          // grid columns for the wider daily grid + chart); the map fills its slot
+          // (the client-only Leaflet map via dynamic ssr:false, FR-MAP-05); compare
+          // remains an inert placeholder owned by a later wave.
           <>
             <ForecastSection />
-            <div data-slot="map" aria-hidden="true" />
+            <LocationMap />
             <div data-slot="compare" aria-hidden="true" />
           </>
         )}

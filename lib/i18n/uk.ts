@@ -245,6 +245,35 @@ export const uk = {
     // guides the visitor to search a city — never an error or a dead end.
     noLocation: "Знайдіть місто, щоб побачити його прогноз на найближчі дні.",
   },
+  map: {
+    // Map namespace (D8, add-map) — sibling to shell.*, never reaching into it.
+    // Carries EVERY user-visible map string: the region's accessible name, the
+    // marker / popup aria label, the loading / skeleton label, the coordinate-
+    // fallback display label, and the calm reverse-geocode-failed copy. Calm,
+    // practical tone; no exclamation marks (BC-BRAND-01, enforced across both
+    // locales by lib/i18n/i18n.test.ts). The `fallbackName` / `reverseFailed`
+    // copy is EVAL-GRADED (map-copy.eval.ts, target ≥ 90).
+    //
+    // Accessible region name for the map (NFR-A11Y-01).
+    regionLabel: "Карта обраного місця",
+    // Accessible name for the marker / its popup (NFR-A11Y-01).
+    markerLabel: "Обране місце на карті",
+    // The skeleton / loading accessible label shown while the client-only map
+    // chunk loads (same-footprint placeholder, FR-MAP-05). Calm, momentary.
+    loading: "Завантажуємо карту",
+    // The coordinate-fallback display label shown in the marker popup when no
+    // reverse name resolves (the spec's "no named place" / "malformed payload"
+    // scenarios). Reads as a calm "a chosen place", never an error or a dead end.
+    fallbackName: "Обране місце",
+    // The calm reverse-geocode-failed copy (if the component surfaces one). The
+    // location IS set and the map keeps working — only the place name could not
+    // be determined; blame-free, never alarmist.
+    reverseFailed:
+      "Не вдалося визначити назву цього місця. Його вже обрано на карті, і прогноз працює, як і раніше.",
+    // The required OSM attribution wording (FR-MAP-04). Kept here so the literal
+    // is centralised; the map renders it verbatim bottom-right.
+    attribution: "© OpenStreetMap contributors",
+  },
   jokes: {
     // Bottom-jokes namespace (D3, add-bottom-jokes) — sibling to shell.*, never
     // reaching into it. SUPERSEDES the inert `shell.jokes.placeholder` copy

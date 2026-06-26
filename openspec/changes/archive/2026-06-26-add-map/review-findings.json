@@ -1,0 +1,32 @@
+{
+  "generatedBy": "review-gate",
+  "scope": "add-map",
+  "change": "add-map",
+  "baseRef": null,
+  "headRef": "staged",
+  "dimensions": {
+    "correctness": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 1
+    },
+    "security": {
+      "confirmed": 0,
+      "contested": 1,
+      "rejected": 0
+    },
+    "spec-compliance": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 1
+    }
+  },
+  "confirmedTitles": [],
+  "contestedTitles": [
+    "Hardcoded placeholder Referer/User-Agent sent to Nominatim; .example identity may breach the usage policy in production"
+  ],
+  "clean": true,
+  "generatedAt": "2026-06-26T15:19:17Z",
+  "initialConfirmed": 6,
+  "resolution": "All 6 confirmed + 1 contested fixed (+13 regression tests, 427 total; battery green; 2 correctly rejected). Equator/meridian reset fixed in BOTH layers: normalizeLatLon rounds 6dp + snaps tiny->0, and the SHARED lib/location/url.ts serialize() now emits plain-decimal (no exponent) so any coord round-trips DOT_DECIMAL (verified serialize(1e-7)->0.0000001, valid). Leaflet marker icons now same-origin (leaflet/dist/images, NO unpkg in .next/static). CSP + security headers added to next.config.ts. map.reverseFailed now rendered (quiet popup hint) + tested. Real Nominatim User-Agent. tasks.md test refs corrected. / stays static, Leaflet lazy."
+}
