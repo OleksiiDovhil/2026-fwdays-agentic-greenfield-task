@@ -23,11 +23,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useLocation } from "@/components/providers/LocationProvider";
+import {
+  useWeather,
+  NOT_LOADED_WEATHER,
+  type WeatherSnapshot,
+} from "@/components/providers/WeatherProvider";
 import { WeekendHighlight } from "@/components/comfort/WeekendHighlight";
 import { DayCard } from "@/components/forecast/DayCard";
 import { Notice } from "@/components/ui/Notice";
 import { nextHours } from "@/lib/forecast/hourly";
 import { toComfortInput, type Forecast } from "@/lib/forecast/types";
+import { describeWeather } from "@/lib/forecast/weather-code";
 import { comfortScore, upcomingWeekend } from "@/lib/scoring/comfort";
 import type { Location } from "@/lib/location/types";
 import { t } from "@/lib/i18n";
@@ -190,6 +196,40 @@ export function ForecastSection() {
     () => (showForecast ? forecast.days.map((d) => comfortScore(toComfortInput(d)).value) : []),
     [showForecast, forecast],
   );
+
+  // ── Cross-slice publish into the shared WeatherContext (design.md D1) ────────
+  // ADDITIVE ONLY: this relays today's category + sun times to the decorative
+  // `WeatherBackground` so it issues NO second weather fetch (TC-DATA-01,
+  // NFR-COST-01). It changes NONE of the fetch / cache / latest-wins / render
+  // logic above. When a validated forecast is shown for the active location it
+  // publishes today's snapshot; on no-location / no-forecast / failed-or-invalid
+  // fetch it publishes the not-loaded default.
+  const { publish } = useWeather();
+  const publishDay = showForecast ? forecast.days[0] : null;
+  const todayCategory = publishDay ? describeWeather(publishDay.weatherCode).category : null;
+  const todaySunrise = publishDay ? publishDay.sunrise : null;
+  const todaySunset = publishDay ? publishDay.sunset : null;
+  // The LOCATION's UTC offset, so the background places "now" in the location's
+  // frame (FR-ANIM-02). Read defensively (a body that omits it → null) so the
+  // publish stays total.
+  const todayOffset =
+    showForecast && typeof forecast.utcOffsetSeconds === "number"
+      ? forecast.utcOffsetSeconds
+      : null;
+  useEffect(() => {
+    const snapshot: WeatherSnapshot = showForecast
+      ? {
+          todayCategory,
+          sunrise: todaySunrise,
+          sunset: todaySunset,
+          utcOffsetSeconds: todayOffset,
+          isLoaded: true,
+        }
+      : NOT_LOADED_WEATHER;
+    publish(snapshot);
+    // Keyed on the DERIVED snapshot primitives so it fires only when they change
+    // (no render loop); `publish` is stable from the provider.
+  }, [showForecast, todayCategory, todaySunrise, todaySunset, todayOffset, publish]);
 
   const sectionLabel = t("forecast.sectionLabel");
 

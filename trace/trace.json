@@ -201,8 +201,7 @@
       "specs": [
         "openspec/specs/animated-bg/spec.md",
         "openspec/specs/comfort-score/spec.md",
-        "openspec/specs/forecast/spec.md",
-        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
+        "openspec/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [
@@ -245,8 +244,7 @@
       "id": "FR-FORECAST-04",
       "specs": [
         "openspec/specs/animated-bg/spec.md",
-        "openspec/specs/forecast/spec.md",
-        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
+        "openspec/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [
@@ -396,41 +394,52 @@
     {
       "id": "FR-ANIM-01",
       "specs": [
-        "openspec/specs/animated-bg/spec.md",
-        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
+        "openspec/specs/animated-bg/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/animated-bg/scene.test.ts",
+        "components/providers/WeatherProvider.test.tsx",
+        "components/shell/WeatherBackground.reactivity.test.tsx",
+        "components/shell/WeatherBackground.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-ANIM-02",
       "specs": [
-        "openspec/specs/animated-bg/spec.md",
-        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
+        "openspec/specs/animated-bg/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/animated-bg/day-night.offset.test.ts",
+        "lib/animated-bg/day-night.test.ts",
+        "components/providers/WeatherProvider.test.tsx",
+        "components/shell/WeatherBackground.test.tsx",
+        "components/shell/WeatherBackground.timezone.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-ANIM-03",
       "specs": [
-        "openspec/specs/animated-bg/spec.md",
-        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
+        "openspec/specs/animated-bg/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/shell/WeatherBackground.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-ANIM-04",
       "specs": [
-        "openspec/specs/animated-bg/spec.md",
-        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
+        "openspec/specs/animated-bg/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/shell/WeatherBackground.test.tsx"
+      ],
       "recordings": []
     },
     {
@@ -466,22 +475,6 @@
   ],
   "failures": [],
   "warnings": [
-    {
-      "check": "test-trace",
-      "msg": "FR-ANIM-01 has no test annotated \"@trace FR-ANIM-01\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-ANIM-02 has no test annotated \"@trace FR-ANIM-02\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-ANIM-03 has no test annotated \"@trace FR-ANIM-03\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-ANIM-04 has no test annotated \"@trace FR-ANIM-04\""
-    },
     {
       "check": "test-trace",
       "msg": "FR-COMPARE-01 has no test annotated \"@trace FR-COMPARE-01\""
@@ -625,10 +618,6 @@
     {
       "check": "recording-evidence",
       "msg": "FR-COMPARE-03 is not referenced by any recording manifest under docs/qa/"
-    },
-    {
-      "check": "active-changes",
-      "msg": "active change \"add-animated-bg\" is not archived"
     },
     {
       "check": "active-changes",

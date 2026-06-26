@@ -1,0 +1,29 @@
+{
+  "generatedBy": "review-gate",
+  "scope": "add-animated-bg",
+  "change": "add-animated-bg",
+  "baseRef": null,
+  "headRef": "staged",
+  "dimensions": {
+    "correctness": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 0
+    },
+    "spec-compliance": {
+      "confirmed": 0,
+      "contested": 3,
+      "rejected": 0
+    }
+  },
+  "confirmedTitles": [],
+  "contestedTitles": [
+    "'Condition updates when active location changes' scenario has no dedicated test",
+    "`aria-label` on an `aria-hidden=\"true\"` element is dead and contradicts the decorative intent",
+    "Day/night gradient is read once at mount and never refreshed on a timer — a long-lived session does not transition day↔night as the location's clock crosses sunrise/sunset"
+  ],
+  "clean": true,
+  "generatedAt": "2026-06-26T21:42:01Z",
+  "initialConfirmed": 5,
+  "resolution": "All 5 confirmed + 3 contested fixed (+3 regression tests, 509 total; battery green). CORE FR-ANIM-02 bug fixed: utc_offset_seconds threaded forecast->WeatherProvider->isDaytime, which converts the absolute instant to the LOCATION local wall clock and compares time-of-day (calendar-mismatch-proof); a new host-independent timezone test flips day<->night purely on the offset (verified: 11:00 location-local => DAY despite 02:00 viewer-UTC). Live ~60s day/night tick added (cleanup, console-silent). Dead aria-label removed (aria-hidden only). Tests added: cross-timezone component regression, offset unit cases, condition-change reactivity. ForecastSection + all existing tests green (utcOffsetSeconds optional to preserve NOT_LOADED 4-key shape)."
+}

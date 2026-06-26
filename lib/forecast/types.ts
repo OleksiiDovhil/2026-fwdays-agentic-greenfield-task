@@ -57,10 +57,19 @@ export type DailyForecast = {
  * The full validated forecast. `days` is 1..7 chronological (a short array renders
  * the days it has, per spec); `hourly` is the parsed hourly series (the section
  * slices the next 48 h via `nextHours`).
+ *
+ * `utcOffsetSeconds` is the ACTIVE LOCATION's UTC offset in seconds, captured from
+ * the top-level Open-Meteo `utc_offset_seconds` (present under timezone=auto). It
+ * lets a consumer place the ABSOLUTE current instant into the location's local
+ * frame — the animated background uses it so day/night follows the LOCATION's sun
+ * times, never the viewer's clock (FR-ANIM-02). `null` when the payload omits it
+ * (parse stays total; the background then degrades to its day default).
  */
 export type Forecast = {
   days: DailyForecast[];
   hourly: HourlyPoint[];
+  /** Active location's UTC offset in seconds (Open-Meteo utc_offset_seconds), or null. */
+  utcOffsetSeconds: number | null;
 };
 
 /**

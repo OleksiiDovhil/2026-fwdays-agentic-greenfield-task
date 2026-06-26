@@ -57,6 +57,11 @@ const hourlySchema = z.object({
 const forecastSchema = z.object({
   daily: dailySchema,
   hourly: hourlySchema,
+  // The ACTIVE LOCATION's UTC offset in seconds (Open-Meteo returns this top-level
+  // under timezone=auto). OPTIONAL + nullable so a payload that omits it still
+  // parses (total): the background then degrades to its day default. The animated
+  // background uses it to place "now" in the location's frame (FR-ANIM-02).
+  utc_offset_seconds: z.number().nullish(),
 });
 
 type DailyColumns = z.infer<typeof dailySchema>;
@@ -120,9 +125,17 @@ export function parseForecast(body: unknown): ForecastResult {
   // failed-fetch state").
   if (daily.time.length === 0) return { error: "failed" };
 
+  // Normalize an absent/undefined offset to null (the Forecast contract is
+  // `number | null`); a present numeric offset passes through unchanged.
+  const utcOffsetSeconds =
+    typeof parsed.data.utc_offset_seconds === "number"
+      ? parsed.data.utc_offset_seconds
+      : null;
+
   const forecast: Forecast = {
     days: zipDays(daily),
     hourly: zipHourly(hourly),
+    utcOffsetSeconds,
   };
   return { forecast };
 }

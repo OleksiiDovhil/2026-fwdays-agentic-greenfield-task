@@ -13,6 +13,13 @@
       "processComplete": true
     },
     {
+      "slice": "2026-06-26-add-animated-bg",
+      "reviewEvidence": "clean",
+      "trailerCommits": 0,
+      "libDomains": [],
+      "processComplete": true
+    },
+    {
       "slice": "2026-06-26-add-bottom-jokes",
       "reviewEvidence": "clean",
       "trailerCommits": 1,
@@ -56,8 +63,12 @@
     {
       "slice": "2026-06-26-add-map",
       "reviewEvidence": "clean",
-      "trailerCommits": 0,
-      "libDomains": [],
+      "trailerCommits": 1,
+      "libDomains": [
+        "geo",
+        "i18n",
+        "location"
+      ],
       "processComplete": true
     },
     {
@@ -87,7 +98,15 @@
         "2026-06-26-add-city-search",
         "2026-06-26-add-comfort-score",
         "2026-06-26-add-forecast",
+        "2026-06-26-add-map",
         "2026-06-26-add-top-clock"
+      ]
+    },
+    {
+      "domain": "location",
+      "slices": [
+        "2026-06-25-add-app-shell",
+        "2026-06-26-add-map"
       ]
     }
   ],
@@ -95,7 +114,7 @@
   "warnings": [
     {
       "check": "trailer",
-      "msg": "2026-06-26-add-map: no commit carries a \"Slice: add-map\" trailer"
+      "msg": "2026-06-26-add-animated-bg: no commit carries a \"Slice: add-animated-bg\" trailer"
     },
     {
       "check": "in-scope",
@@ -103,7 +122,11 @@
     },
     {
       "check": "in-scope",
-      "msg": "lib/i18n/ modified by 6 slices (2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-city-search, 2026-06-26-add-comfort-score, 2026-06-26-add-forecast, 2026-06-26-add-top-clock) — review for scope drift"
+      "msg": "lib/i18n/ modified by 7 slices (2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-city-search, 2026-06-26-add-comfort-score, 2026-06-26-add-forecast, 2026-06-26-add-map, 2026-06-26-add-top-clock) — review for scope drift"
+    },
+    {
+      "check": "in-scope",
+      "msg": "lib/location/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-map) — review for scope drift"
     }
   ]
 }

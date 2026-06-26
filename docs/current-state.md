@@ -3,12 +3,14 @@
 > Persistent handoff. Update at every milestone. Source of truth is code/specs/
 > tests — if this conflicts, verify and fix this file.
 
-- **Last updated:** 2026-06-26 (Europe/Kyiv)
-- **Phase:** 4 in progress — 7/9 slices DONE & archived (app-shell, comfort-score,
-  top-clock, bottom-jokes, city-search, forecast, map — each review-gate CLEAN; 427
-  tests green; lint/typecheck/build/openspec/trace green). Specs READY for the last
-  two: animated-bg, weekend-compare. Eval grading of all per-slice eval cases happens
-  together in Phase 6 (eval-suite, threshold 90).
+- **Last updated:** 2026-06-27 00:08 (Europe/Kyiv)
+- **Phase:** 4 in progress — 8/9 slices DONE & archived (app-shell, comfort-score,
+  top-clock, bottom-jokes, city-search, forecast, map, animated-bg — each review-gate
+  CLEAN). animated-bg review FIXED a real FR-ANIM-02 bug (day/night now follows the
+  LOCATION's `utc_offset_seconds`, not the viewer's clock). 509 tests green. LAST slice:
+  weekend-compare (spec ✅). Then Phase 5 + Phase 6 eval-suite (≥90 goal) + Phase 7.
+  Eval grading of all per-slice eval cases happens together in Phase 6 (eval-suite,
+  threshold 90).
 - map added: `app/api/reverse-geocode` (Nominatim, ADR-0005) + client-only Leaflet
   (dynamic ssr:false). NOTE for later slices: `lib/location/url.ts serialize()` now
   emits PLAIN decimal (no exponent) so any coord round-trips DOT_DECIMAL; Leaflet
@@ -61,6 +63,77 @@
   value (B `tempMax:88`) so it no longer false-positives on A's legitimate "30%"
   precip; 356/356 green, no test weakened.
 
+### add-animated-bg conventions (LOCKED — Wave 5+ slices reuse these)
+- **Shared `WeatherContext` (D1, ADR-WORTHY cross-slice integration):**
+  `components/providers/WeatherProvider.tsx` (`"use client"`) exposes
+  `useWeather() → { weather: WeatherSnapshot, publish }`, where `WeatherSnapshot =
+  { todayCategory: WeatherCategory|null, sunrise: string|null, sunset: string|null,
+  isLoaded: boolean }` (`WeatherCategory` IMPORTED from `lib/forecast/weather-code.ts`,
+  never redefined). In-memory ONLY (ADR-0003) — NO fetch, NO persistence; a passive
+  relay from the forecast that already fetched (the `forecast` capability owns the ONLY
+  weather fetch, TC-DATA-01/NFR-COST-01). `useWeather()` returns the not-loaded default
+  (`{null,null,null,false}` exported as `NOT_LOADED_WEATHER`) outside a provider and as
+  the initial value; `publish` is latest-wins (replace, no merge). Mounted ONCE in
+  `app/layout.tsx` INSIDE `LocationProvider`, wrapping `{children}`, so it spans BOTH
+  the `<WeatherBackground/>` and `<ShellContent/>`/`<ForecastSection/>` siblings.
+  `app/page.tsx` UNTOUCHED. **FLAG: this is the ADR-worthy decision** (who owns the
+  fetch + how decorative consumers read derived weather without a duplicate request).
+- **Pure layer `lib/animated-bg/{day-night,scene}.ts`** (framework-free, TC-PURE-01,
+  total, never throws): `isDaytime(now: Date|number, sunrise, sunset, utcOffsetSeconds?):
+  boolean` — decides day/night in the active location's frame by shifting the ABSOLUTE
+  instant by the LOCATION's `utcOffsetSeconds` (Open-Meteo) and comparing TIME-OF-DAY
+  (minutes since local midnight) against the sun strings' time-of-day (so a calendar-date
+  mismatch can't flip it); inclusive at sunrise, exclusive at sunset. NEVER the viewer's
+  `getHours()`/timezone — a cross-timezone viewer ("explore another city") sees the
+  LOCATION's day/night (FR-ANIM-02; the review-gate fixed a prior viewer-clock bug here).
+  `utcOffsetSeconds` null/missing/non-finite OR null/malformed sun → `true` (day). A 4th
+  optional arg: omitted → it reads the passed instant's LOCAL components (the injected-
+  `Date` unit-test back-compat path). `conditionToScene(category): { gradient:
+  GradientKind, particle: ParticleKind }` — `clear→none`, `cloudy/fog→clouds`,
+  `drizzle/rain/thunder→rain`, `snow→snow`, unknown/null/undefined → neutral default
+  `{ gradient:"clear", particle:"none" }` (gradient only). `ParticleKind = rain|snow|
+  clouds|none`; `GradientKind = clear|cloudy|fog|storm`.
+- **`WeatherBackground` (`components/shell/WeatherBackground.tsx`, `"use client"`)** fills
+  the shell bg slot (replaces the inert stub; `app/page.tsx` untouched). A fixed
+  `inset-0 -z-10` layer, `pointer-events:none` + `aria-hidden="true"` + NO focusable
+  children (FR-ANIM-04, NFR-A11Y-01); consumes `useWeather()`; renders the day OR night
+  base gradient by `isDaytime` (`data-gradient="day|night"`) tinted by the scene kind,
+  and exactly one particle family (`data-particle="rain|snow|clouds"`, none for clear)
+  as a small FIXED count of CSS-keyframe nodes (`app/globals.css`
+  `animated-bg-{rain,snow,cloud}-*` — transform/opacity only; NO canvas/WebGL, NO new
+  dep, NFR-PERF-03). Under `prefers-reduced-motion: reduce` (JS `matchMedia` read,
+  guarded) it OMITS the particle nodes entirely (static gradient only, day/night still
+  applies) with a CSS `@media` backstop. The ABSOLUTE "now" (`Date.now()`, passed to
+  `isDaytime` with the snapshot's `utcOffsetSeconds`) + reduced-motion are CLIENT
+  mount-reads deferred one microtask (the locked TopClock D2 pattern, NOT a synchronous
+  setState-in-effect); a ~60s `setInterval` re-samples `now` so a long-lived session
+  transitions day↔night as the LOCATION crosses sunrise/sunset (resync, cleared on
+  unmount, no re-fetch). Not-loaded snapshot → calm neutral DAY gradient, no effect,
+  console silent (NFR-OBS-01). a11y: the layer is `aria-hidden` ONLY — NO `aria-label`/
+  `role` (a label on an aria-hidden node is dead; `shell.background.label` is left unused
+  in the dictionary).
+- **`WeatherSnapshot` carries `utcOffsetSeconds?: number|null`** (the LOCATION's offset)
+  — OPTIONAL, published on the LOADED snapshot only; `NOT_LOADED_WEATHER` stays the
+  minimal 4-key default (its day-fallback state needs no offset, and keeping it 4 keys
+  preserves the provider's exact-shape `toEqual` contract tests). `lib/forecast/{types,
+  validation}.ts` ADDITIVELY capture top-level `utc_offset_seconds` (timezone=auto) onto
+  `Forecast.utcOffsetSeconds` (number|null; parse stays total — absent → null; the
+  upstream key stays server-side, only the DTO field reaches the client).
+- **ForecastSection publish (additive):** `components/forecast/ForecastSection.tsx` gained
+  ONLY a `useEffect` (keyed on the derived snapshot primitives) that `publish`es
+  `{ describeWeather(days[0].weatherCode).category, days[0].sunrise, days[0].sunset,
+  utcOffsetSeconds, isLoaded:true }` when its validated forecast is shown, and
+  `NOT_LOADED_WEATHER` on no-location / error / invalid. NONE of its fetch/cache/
+  latest-wins/render logic changed; all existing ForecastSection tests stay green.
+- **Regression tests (review-gate fix):** `lib/animated-bg/day-night.offset.test.ts`
+  (offset → location frame), `components/shell/WeatherBackground.timezone.test.tsx`
+  (cross-timezone viewer gets the LOCATION's day/night — fixed instant, flip only the
+  offset), `components/shell/WeatherBackground.reactivity.test.tsx` (category change swaps
+  the particle, no leftover). 509 tests green.
+- Build verified: `/` STAYS static (`WeatherBackground` is a client island under the
+  static page); NO new dependency (`package.json` unchanged); NO `api.open-meteo.com`
+  host/key in `.next/static` from animated-bg (it issues no fetch).
+
 ## add-app-shell conventions (LOCKED — Wave 1+ slices reuse these)
 
 - **i18n:** `lib/i18n/{uk,en,index}.ts`; `t("namespace.key")` resolves nested
@@ -110,7 +183,8 @@
    is now client-driven, rotates per visitor-local-day), archived. WAVE 1 COMPLETE.
 5. add-city-search  ◀ IMPLEMENTED + VALIDATED (tests/lint/build/openspec green;
    eval-grade + review-gate + archive PENDING — maker≠checker)
-6. add-forecast  ◀ NEXT (Wave 3) · 7. add-map · 8. add-animated-bg · 9. add-weekend-compare
+6. add-forecast  ✅ · 7. add-map  ✅ · 8. add-animated-bg  ◀ IMPLEMENTED + VALIDATED
+   (eval-grade + review-gate + archive PENDING) · 9. add-weekend-compare  ◀ NEXT (Wave 5)
 
 ### add-city-search conventions (LOCKED — Wave 3+ slices reuse these)
 - **i18n:** `search.*` namespace in `lib/i18n/{uk,en}.ts` (sibling to others). The
@@ -194,10 +268,12 @@ mocked Open-Meteo; eval produce() calls pure lib).
 
 ## Next step
 
-**Next: `add-map`** (spec READY — `openspec/changes/add-map/`; ADR-0005 reverse-geocode
-via OSM Nominatim + coordinate-label fallback; client-only Leaflet via dynamic ssr:false).
-Then **`add-animated-bg`** (spec READY — shared `WeatherProvider`: ForecastSection
-publishes today's condition+sun, WeatherBackground consumes; reduced-motion static;
-pointer-events none). Then **`add-weekend-compare`** (spec TBD — pin ≤3 cities, reuse
-the `DailyForecast` shape + `app/api/forecast` route + comfort badges/upcomingWeekend).
-All per-slice eval cases are graded together in Phase 6 (eval-suite, threshold 90).
+**Next: `add-weekend-compare`** (spec READY — `openspec/changes/add-weekend-compare/`;
+pin ≤3 cities, reuse the `DailyForecast` shape + `app/api/forecast` route + comfort
+badges/`upcomingWeekend`). `add-animated-bg` is IMPLEMENTED + VALIDATED (509 tests green;
+lint/build/openspec/trace green) and awaits eval-grade + review-gate + archive
+(maker≠checker — the implementing agent does not review/grade it). Its shared
+`WeatherProvider` (ForecastSection publishes today's condition+sun, WeatherBackground
+consumes; reduced-motion static; pointer-events none) is the ADR-worthy cross-slice
+integration to record. All per-slice eval cases are graded together in Phase 6
+(eval-suite, threshold 90).

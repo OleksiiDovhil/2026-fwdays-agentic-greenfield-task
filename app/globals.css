@@ -184,3 +184,81 @@ body {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* ── Animated-background particle keyframes (add-animated-bg, FR-ANIM-01) ───────
+   GPU-friendly transform/opacity-only keyframes for the decorative weather
+   layer's particles (CSS gradients carry the day/night base; these animate a
+   small, FIXED count of rain streaks / snowflakes / drifting clouds — no canvas,
+   no WebGL, no animation library, no new dependency, NFR-PERF-03). The particle
+   NODES are omitted entirely under reduced motion by the component (the
+   authoritative branch reads matchMedia in JS); the @media rule below is a
+   belt-and-braces backstop that also stills any particle that does slip through
+   (FR-ANIM-03). The layer is fixed inset-0 behind content, so these never affect
+   layout (no CLS). */
+@keyframes animated-bg-rain-fall {
+  0% {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(120vh);
+    opacity: 0.7;
+  }
+}
+
+@keyframes animated-bg-snow-fall {
+  0% {
+    transform: translateY(-110%) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(55vh) translateX(1.2rem);
+  }
+  100% {
+    transform: translateY(120vh) translateX(-0.6rem);
+    opacity: 0.9;
+  }
+}
+
+@keyframes animated-bg-cloud-drift {
+  0% {
+    transform: translateX(-30vw);
+  }
+  100% {
+    transform: translateX(130vw);
+  }
+}
+
+.animated-bg-rain {
+  top: -10%;
+  animation-name: animated-bg-rain-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.animated-bg-snow {
+  top: -5%;
+  animation-name: animated-bg-snow-fall;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.animated-bg-cloud {
+  animation-name: animated-bg-cloud-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-bg-rain,
+  .animated-bg-snow,
+  .animated-bg-cloud {
+    animation: none;
+  }
+}
