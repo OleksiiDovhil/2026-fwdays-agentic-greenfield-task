@@ -52,9 +52,17 @@
 1. add-app-shell (foundational)  ✅ DONE (G4) — 68 tests, review CLEAN, archived
 2. add-comfort-score  ✅ DONE (G4) — 150 tests, review CLEAN (split-weekend bug fixed), archived
 3. add-top-clock  ✅ DONE (G4) — 174 tests, review CLEAN, archived
-4. add-bottom-jokes (Wave 1 cont.)  ◀ NEXT (spec ✅, red tests written then relocated to
-   $CLAUDE_JOB_DIR/tmp/jokes-tests/ during top-clock commit — RESTORE before implementing)
-5. add-city-search · 6. add-forecast · 7. add-map · 8. add-animated-bg · 9. add-weekend-compare
+4. add-bottom-jokes  ✅ DONE (G4) — 204 tests, review CLEAN (build-freeze bug fixed: FooterJoke
+   is now client-driven, rotates per visitor-local-day), archived. WAVE 1 COMPLETE.
+5. add-city-search  ◀ NEXT (spec ✅ done — route-handler /api/geocode, opt-in geolocation)
+6. add-forecast · 7. add-map · 8. add-animated-bg · 9. add-weekend-compare (Wave 2+)
+
+### KEY ARCHITECTURE LESSON (applies to forecast/map): app/page.tsx is STATICALLY PRERENDERED
+(no dynamic API). Anything that depends on the visitor's clock OR the active location (URL
+?lat=&lon=) MUST be CLIENT-driven — a server component would bake build-time/server-tz values.
+TopClock + FooterJoke are client. forecast/map MUST fetch on the client off useLocation()
+(or a route handler the client calls), never a server component reading new Date()/searchParams
+baked at build. The review-gate caught this only by inspecting the .next build output.
 
 - top-clock: `components/clock/TopClock.tsx` fills the AppHeader clock slot; `lib/clock/format.ts`
   pure `formatClock`. font-mono now mapped to Geist Mono in globals.css @theme inline.

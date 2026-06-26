@@ -78,7 +78,11 @@ export const uk = {
       label: "Тло з погодою",
     },
     jokes: {
-      // Inert jokes slot placeholder (owned by the bottom-jokes slice later).
+      // `label` is the footer jokes slot's accessible name — STILL used by
+      // components/jokes/FooterJoke.tsx (D5). `placeholder` is SUPERSEDED by the
+      // real selected joke from the top-level `jokes.items` corpus (add-bottom-
+      // jokes); it is left in place because removing it is a shell.* edit (§3a),
+      // but FooterJoke does NOT consume it.
       label: "Жарт про погоду",
       placeholder: "Тут зʼявиться легкий жарт про погоду",
     },
@@ -129,6 +133,37 @@ export const uk = {
     // announced name does not churn every second. No exclamation marks
     // (BC-BRAND-01, test-enforced across both locales).
     label: "Поточний місцевий час",
+  },
+  jokes: {
+    // Bottom-jokes namespace (D3, add-bottom-jokes) — sibling to shell.*, never
+    // reaching into it. SUPERSEDES the inert `shell.jokes.placeholder` copy
+    // ("Тут зʼявиться легкий жарт про погоду"): the footer now shows a real
+    // selected joke from `items`. `shell.jokes.label` is STILL used as the slot's
+    // accessible name; `shell.jokes.placeholder` is left in place but NOT
+    // consumed (removing it is a shell.* edit, §3a).
+    //
+    // `items` is the CORPUS — an ARRAY of strings, read DIRECTLY off the `uk`
+    // dictionary object (`uk.jokes.items`), NOT via `t()`. `t(key)` resolves a
+    // single string leaf and cannot return an array, so the footer hands this
+    // array to `pickJoke` itself (D3). `en.jokes.items` mirrors it index-for-index
+    // as the per-index English fallback.
+    //
+    // Tone: calm, gently humorous (a light smile, not slapstick), genuinely
+    // weather/season-themed, natural Ukrainian, family-friendly. No exclamation
+    // marks (BC-BRAND-01) — enforced by lib/i18n/i18n.test.ts (arrays flattened)
+    // and the slice's own corpus test, and graded by the jokes-quality eval.
+    items: [
+      "Синоптики обіцяли сонячний день, але хмари вирішили прийти зі своїм планом.",
+      "Гарна погода завжди настає саме тоді, коли парасолька вже зібрана в дорогу.",
+      "Весняний дощ ніколи не питає дозволу — просто заходить у гості без попередження.",
+      "Восени листя падає так неквапливо, ніби й воно не поспішає на роботу.",
+      "Зима прийшла тихо, на пальчиках, щоб не розбудити тих, хто ще не дістав теплу куртку.",
+      "Літня спека така приязна, що навіть тінь шукає, де б їй сховатися в холодок.",
+      "Туман зранку повільно стирає місто, наче хтось забув домалювати горизонт.",
+      "Вітер сьогодні грайливий: спершу проводжає додому, потім вертає капелюх назад.",
+      "Перший сніг лягає обережно, ніби пробує, чи готове місто до зими.",
+      "Веселка зʼявляється рівно тоді, коли вже й не сподіваєшся, і трохи вибачається за спізнення.",
+    ],
   },
 } as const;
 

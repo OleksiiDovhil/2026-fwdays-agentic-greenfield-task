@@ -1,0 +1,27 @@
+{
+  "generatedBy": "review-gate",
+  "scope": "add-bottom-jokes",
+  "change": "add-bottom-jokes",
+  "baseRef": null,
+  "headRef": "staged",
+  "dimensions": {
+    "correctness": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 0
+    },
+    "spec-compliance": {
+      "confirmed": 0,
+      "contested": 1,
+      "rejected": 2
+    }
+  },
+  "confirmedTitles": [],
+  "contestedTitles": [
+    "Task 5.7/5.8 ticked naming the file components/jokes/FooterJoke.test.tsx, which does not exist (covered by AppFooter.test.tsx instead)"
+  ],
+  "clean": true,
+  "generatedAt": "2026-06-26T09:50:39Z",
+  "initialConfirmed": 5,
+  "resolution": "All 5 findings fixed + verified. MAJOR build-time-freeze + server-timezone bug fixed: FooterJoke is now a \"use client\" component computing pickJoke(corpus, dailyKey(new Date())) on the client after mount (SSR fallback = deterministic index-0, no hydration mismatch); verified it is a client reference in the build manifest, so the visitor-local-day rotation runs in the browser, not baked at build. EN per-index fallback now has a test; components/jokes/FooterJoke.test.tsx created (docs references corrected); stale type casts/comments cleaned. Battery green: lint, typecheck, 204 tests, build, openspec, trace."
+}

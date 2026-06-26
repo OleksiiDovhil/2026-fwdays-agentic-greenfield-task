@@ -111,7 +111,8 @@
     {
       "id": "FR-SEARCH-01",
       "specs": [
-        "openspec/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md",
+        "openspec/changes/add-city-search/specs/city-search/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -120,7 +121,8 @@
     {
       "id": "FR-SEARCH-02",
       "specs": [
-        "openspec/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md",
+        "openspec/changes/add-city-search/specs/city-search/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -130,7 +132,8 @@
       "id": "FR-SEARCH-03",
       "specs": [
         "openspec/specs/app-shell/spec.md",
-        "openspec/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md",
+        "openspec/changes/add-city-search/specs/city-search/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -139,7 +142,8 @@
     {
       "id": "FR-SEARCH-04",
       "specs": [
-        "openspec/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md",
+        "openspec/changes/add-city-search/specs/city-search/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -148,7 +152,8 @@
     {
       "id": "FR-SEARCH-05",
       "specs": [
-        "openspec/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md",
+        "openspec/changes/add-city-search/specs/city-search/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -157,7 +162,8 @@
     {
       "id": "FR-SEARCH-06",
       "specs": [
-        "openspec/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md",
+        "openspec/changes/add-city-search/specs/city-search/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -166,11 +172,15 @@
     {
       "id": "FR-JOKES-01",
       "specs": [
-        "openspec/specs/bottom-jokes/spec.md",
-        "openspec/changes/add-bottom-jokes/specs/bottom-jokes/spec.md"
+        "openspec/specs/bottom-jokes/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/jokes/jokes.test.ts",
+        "components/jokes/FooterJoke.test.tsx",
+        "components/shell/AppFooter.test.tsx",
+        "evals/cases/jokes-quality.eval.ts"
+      ],
       "recordings": []
     },
     {
@@ -245,7 +255,8 @@
       "specs": [
         "openspec/specs/city-search/spec.md",
         "openspec/specs/map/spec.md",
-        "openspec/specs/weekend-compare/spec.md"
+        "openspec/specs/weekend-compare/spec.md",
+        "openspec/changes/add-city-search/specs/city-search/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -418,10 +429,6 @@
     {
       "check": "test-trace",
       "msg": "FR-SEARCH-06 has no test annotated \"@trace FR-SEARCH-06\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-JOKES-01 has no test annotated \"@trace FR-JOKES-01\""
     },
     {
       "check": "test-trace",
@@ -625,7 +632,7 @@
     },
     {
       "check": "active-changes",
-      "msg": "active change \"add-bottom-jokes\" is not archived"
+      "msg": "active change \"add-city-search\" is not archived"
     }
   ]
 }

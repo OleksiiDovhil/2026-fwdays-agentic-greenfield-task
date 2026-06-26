@@ -5,19 +5,20 @@ archived slice took: review evidence, `Slice:` trailers, and module scope.
 It does NOT verify test-first ordering or test integrity (not derivable from
 one-commit-per-slice history) — those are graded by the trajectory-eval workflow.
 
-Scope: 3 archived slice(s).
+Scope: 4 archived slice(s).
 Result: PASS, 3 warning(s)
 
 | Slice | Review evidence | Trailer commits | design+tasks | lib domains touched |
 |---|---|---|---|---|
 | 2026-06-25-add-app-shell | clean | 1 | yes | a11y, i18n, location |
+| 2026-06-26-add-bottom-jokes | clean | **0** | yes | - |
 | 2026-06-26-add-comfort-score | clean | 1 | yes | a11y, i18n, scoring |
-| 2026-06-26-add-top-clock | clean | **0** | yes | - |
+| 2026-06-26-add-top-clock | clean | 1 | yes | clock, i18n |
 
 ## Cross-slice module overlap
 
 - `lib/a11y/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-comfort-score
-- `lib/i18n/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-comfort-score
+- `lib/i18n/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-comfort-score, 2026-06-26-add-top-clock
 
 ## Failures
 
@@ -25,6 +26,6 @@ None.
 
 ## Warnings
 
-- **trailer**: 2026-06-26-add-top-clock: no commit carries a "Slice: add-top-clock" trailer
+- **trailer**: 2026-06-26-add-bottom-jokes: no commit carries a "Slice: add-bottom-jokes" trailer
 - **in-scope**: lib/a11y/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score) — review for scope drift
-- **in-scope**: lib/i18n/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score) — review for scope drift
+- **in-scope**: lib/i18n/ modified by 3 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score, 2026-06-26-add-top-clock) — review for scope drift

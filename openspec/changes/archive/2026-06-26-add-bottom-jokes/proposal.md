@@ -97,11 +97,16 @@ jokes.* i18n namespace — it does not edit shell.* copy semantics or app/page.t
   `openspec validate add-bottom-jokes --strict`; archive runs with `--skip-specs`
   because the baseline already holds it (OpenSpec Option B is not re-applied).
 - **Code (new):** `lib/jokes/jokes.ts` (`pickJoke` + `dailyKey`, framework-free)
-  with a colocated `lib/jokes/jokes.test.ts`; a footer joke component (e.g.
-  `components/jokes/FooterJoke.tsx`) consuming `pickJoke(corpus, dailyKey(new
-  Date()))`, with a colocated jsdom test `components/jokes/FooterJoke.test.tsx`;
-  one browser-free eval case `evals/cases/jokes-quality.eval.ts` grading the
-  Ukrainian joke quality.
+  with a colocated `lib/jokes/jokes.test.ts`; a `"use client"` footer joke
+  component `components/jokes/FooterJoke.tsx` that computes
+  `pickJoke(corpus, dailyKey(new Date()))` on the CLIENT after mount (so the
+  rotation follows the visitor's local day, not the static-build host), with a
+  colocated jsdom test `components/jokes/FooterJoke.test.tsx` (populated render,
+  the client-side mount gate, the per-index English fallback, empty-corpus
+  omission); the FOOTER-structure assertions (credits/privacy render, joke line
+  omitted on an empty corpus) live in `components/shell/AppFooter.test.tsx`; one
+  browser-free eval case `evals/cases/jokes-quality.eval.ts` grading the Ukrainian
+  joke quality.
 - **Code (extended):** `components/shell/AppFooter.tsx` — the inert jokes slot is
   replaced with the real footer joke (filling the slot the shell reserved; the
   shell's own slot, not an `app/page.tsx` edit). `lib/i18n/uk.ts` + `lib/i18n/en.ts`

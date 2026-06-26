@@ -13,6 +13,13 @@
       "processComplete": true
     },
     {
+      "slice": "2026-06-26-add-bottom-jokes",
+      "reviewEvidence": "clean",
+      "trailerCommits": 0,
+      "libDomains": [],
+      "processComplete": true
+    },
+    {
       "slice": "2026-06-26-add-comfort-score",
       "reviewEvidence": "clean",
       "trailerCommits": 1,
@@ -26,8 +33,11 @@
     {
       "slice": "2026-06-26-add-top-clock",
       "reviewEvidence": "clean",
-      "trailerCommits": 0,
-      "libDomains": [],
+      "trailerCommits": 1,
+      "libDomains": [
+        "clock",
+        "i18n"
+      ],
       "processComplete": true
     }
   ],
@@ -43,7 +53,8 @@
       "domain": "i18n",
       "slices": [
         "2026-06-25-add-app-shell",
-        "2026-06-26-add-comfort-score"
+        "2026-06-26-add-comfort-score",
+        "2026-06-26-add-top-clock"
       ]
     }
   ],
@@ -51,7 +62,7 @@
   "warnings": [
     {
       "check": "trailer",
-      "msg": "2026-06-26-add-top-clock: no commit carries a \"Slice: add-top-clock\" trailer"
+      "msg": "2026-06-26-add-bottom-jokes: no commit carries a \"Slice: add-bottom-jokes\" trailer"
     },
     {
       "check": "in-scope",
@@ -59,7 +70,7 @@
     },
     {
       "check": "in-scope",
-      "msg": "lib/i18n/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score) — review for scope drift"
+      "msg": "lib/i18n/ modified by 3 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score, 2026-06-26-add-top-clock) — review for scope drift"
     }
   ]
 }

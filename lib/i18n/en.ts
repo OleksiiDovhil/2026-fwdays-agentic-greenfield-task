@@ -93,6 +93,26 @@ export const en = {
     // marks (BC-BRAND-01).
     label: "Current local time",
   },
+  jokes: {
+    // Bottom-jokes namespace (D3, add-bottom-jokes) — the per-index English
+    // fallback for `uk.jokes.items`. SAME count and index alignment as the
+    // Ukrainian corpus; the footer falls back to `en.jokes.items[i]` only when
+    // the Ukrainian entry at index `i` is missing/empty. Same calm, gently
+    // humorous, weather/season-themed tone; no exclamation marks (BC-BRAND-01).
+    // Read DIRECTLY off the `en` dictionary object, NOT via `t()` (D3).
+    items: [
+      "The forecast promised a sunny day, but the clouds decided to show up with a plan of their own.",
+      "Fine weather always arrives just after the umbrella has been packed away for the trip.",
+      "Spring rain never asks permission — it simply drops by unannounced.",
+      "In autumn the leaves fall so unhurriedly, as if they too are in no rush to get to work.",
+      "Winter arrived quietly, on tiptoe, so as not to wake anyone who has not found a warm coat yet.",
+      "The summer heat is so friendly that even the shade goes looking for somewhere cool to hide.",
+      "The morning fog slowly erases the city, as if someone forgot to finish drawing the horizon.",
+      "The wind is playful today: first it walks you home, then it hands your hat back.",
+      "The first snow settles carefully, as if testing whether the city is ready for winter.",
+      "A rainbow turns up exactly when you have stopped expecting one, and apologizes a little for being late.",
+    ],
+  },
 } as const;
 
 export default en;
