@@ -11,7 +11,7 @@ Result: PASS, 58 warning(s)
 | FR-SHELL-01 | yes | yes | 3 | - |
 | FR-SHELL-02 | yes | yes | 1 | - |
 | FR-SHELL-03 | yes | yes | 2 | - |
-| FR-CLOCK-01 | yes | yes | - | - |
+| FR-CLOCK-01 | yes | yes | 2 | - |
 | FR-SEARCH-01 | yes | yes | - | - |
 | FR-SEARCH-02 | yes | yes | - | - |
 | FR-SEARCH-03 | yes | yes | - | - |
@@ -48,7 +48,6 @@ None.
 
 ## Warnings
 
-- **test-trace**: FR-CLOCK-01 has no test annotated "@trace FR-CLOCK-01"
 - **test-trace**: FR-SEARCH-01 has no test annotated "@trace FR-SEARCH-01"
 - **test-trace**: FR-SEARCH-02 has no test annotated "@trace FR-SEARCH-02"
 - **test-trace**: FR-SEARCH-03 has no test annotated "@trace FR-SEARCH-03"
@@ -106,3 +105,4 @@ None.
 - **recording-evidence**: FR-COMPARE-01 is not referenced by any recording manifest under docs/qa/
 - **recording-evidence**: FR-COMPARE-02 is not referenced by any recording manifest under docs/qa/
 - **recording-evidence**: FR-COMPARE-03 is not referenced by any recording manifest under docs/qa/
+- **active-changes**: active change "add-bottom-jokes" is not archived

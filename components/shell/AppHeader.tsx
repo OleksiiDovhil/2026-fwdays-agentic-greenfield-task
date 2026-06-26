@@ -6,6 +6,7 @@
 // theme and the action it performs; activating it flips `data-theme` light<->dark
 // (D3, NFR-A11Y-01). All copy comes from `lib/i18n` (no exclamation marks).
 import { CloudSun, Moon, Sun } from "lucide-react";
+import { TopClock } from "@/components/clock/TopClock";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { Button } from "@/components/ui/Button";
 import { t } from "@/lib/i18n";
@@ -34,13 +35,12 @@ export function AppHeader() {
       </div>
 
       <div className="flex items-center gap-2">
-        {/* Inert clock slot — the top-clock slice fills this later. */}
-        <div
-          data-slot="clock"
-          className="hidden text-sm text-muted-foreground sm:block"
-          aria-label={t("shell.clock.label")}
-        >
-          {t("shell.clock.placeholder")}
+        {/* Clock slot — filled by the top-clock slice (D7). `TopClock` is the
+            live DEVICE-local clock; it owns `data-slot="clock"` and its own
+            no-CLS footprint + accessible name. The `sm:` wrapper preserves the
+            shell's responsive visibility (hidden on the narrowest viewport). */}
+        <div className="hidden sm:block">
+          <TopClock />
         </div>
 
         <Button

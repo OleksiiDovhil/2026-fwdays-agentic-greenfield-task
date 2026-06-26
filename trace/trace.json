@@ -102,7 +102,10 @@
         "openspec/specs/top-clock/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/clock/format.test.ts",
+        "components/clock/TopClock.test.tsx"
+      ],
       "recordings": []
     },
     {
@@ -163,7 +166,8 @@
     {
       "id": "FR-JOKES-01",
       "specs": [
-        "openspec/specs/bottom-jokes/spec.md"
+        "openspec/specs/bottom-jokes/spec.md",
+        "openspec/changes/add-bottom-jokes/specs/bottom-jokes/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -393,10 +397,6 @@
   "warnings": [
     {
       "check": "test-trace",
-      "msg": "FR-CLOCK-01 has no test annotated \"@trace FR-CLOCK-01\""
-    },
-    {
-      "check": "test-trace",
       "msg": "FR-SEARCH-01 has no test annotated \"@trace FR-SEARCH-01\""
     },
     {
@@ -622,6 +622,10 @@
     {
       "check": "recording-evidence",
       "msg": "FR-COMPARE-03 is not referenced by any recording manifest under docs/qa/"
+    },
+    {
+      "check": "active-changes",
+      "msg": "active change \"add-bottom-jokes\" is not archived"
     }
   ]
 }

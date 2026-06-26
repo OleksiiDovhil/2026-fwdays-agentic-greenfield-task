@@ -83,7 +83,11 @@ export const uk = {
       placeholder: "Тут зʼявиться легкий жарт про погоду",
     },
     clock: {
-      // Inert clock slot placeholder (owned by the top-clock slice later).
+      // SUPERSEDED by the top-level `clock.*` namespace (D6, add-top-clock).
+      // These inert keys described a REJECTED idea — the WEATHER-LOCATION's time
+      // ("обраного міста"). The shipped TopClock shows the visitor's DEVICE time
+      // and reads `clock.label`, NOT `shell.clock.*`. Left in place because
+      // removing them is a `shell.*` edit (§3a); do NOT consume them anymore.
       label: "Місцевий час",
       placeholder: "Місцевий час обраного міста зʼявиться тут",
     },
@@ -115,6 +119,16 @@ export const uk = {
       label: "Найближчі вихідні",
       outOfRange: "Вихідні поза прогнозом",
     },
+  },
+  clock: {
+    // Top-clock namespace (D6, add-top-clock) — sibling to shell.*, never
+    // reaching into it. SUPERSEDES the inert `shell.clock.*` copy, which
+    // described a rejected weather-location time; this clock shows the visitor's
+    // DEVICE-local time. `label` is the live header clock's accessible name
+    // (NFR-A11Y-01) — a calm, stable descriptor, NOT the live digits, so the
+    // announced name does not churn every second. No exclamation marks
+    // (BC-BRAND-01, test-enforced across both locales).
+    label: "Поточний місцевий час",
   },
 } as const;
 

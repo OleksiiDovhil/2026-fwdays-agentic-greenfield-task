@@ -5,17 +5,19 @@ archived slice took: review evidence, `Slice:` trailers, and module scope.
 It does NOT verify test-first ordering or test integrity (not derivable from
 one-commit-per-slice history) — those are graded by the trajectory-eval workflow.
 
-Scope: 2 archived slice(s).
-Result: PASS, 1 warning(s)
+Scope: 3 archived slice(s).
+Result: PASS, 3 warning(s)
 
 | Slice | Review evidence | Trailer commits | design+tasks | lib domains touched |
 |---|---|---|---|---|
 | 2026-06-25-add-app-shell | clean | 1 | yes | a11y, i18n, location |
-| 2026-06-26-add-comfort-score | clean | **0** | yes | - |
+| 2026-06-26-add-comfort-score | clean | 1 | yes | a11y, i18n, scoring |
+| 2026-06-26-add-top-clock | clean | **0** | yes | - |
 
 ## Cross-slice module overlap
 
-None.
+- `lib/a11y/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-comfort-score
+- `lib/i18n/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-comfort-score
 
 ## Failures
 
@@ -23,4 +25,6 @@ None.
 
 ## Warnings
 
-- **trailer**: 2026-06-26-add-comfort-score: no commit carries a "Slice: add-comfort-score" trailer
+- **trailer**: 2026-06-26-add-top-clock: no commit carries a "Slice: add-top-clock" trailer
+- **in-scope**: lib/a11y/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score) — review for scope drift
+- **in-scope**: lib/i18n/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score) — review for scope drift

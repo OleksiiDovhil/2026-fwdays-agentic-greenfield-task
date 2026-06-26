@@ -15,17 +15,51 @@
     {
       "slice": "2026-06-26-add-comfort-score",
       "reviewEvidence": "clean",
+      "trailerCommits": 1,
+      "libDomains": [
+        "a11y",
+        "i18n",
+        "scoring"
+      ],
+      "processComplete": true
+    },
+    {
+      "slice": "2026-06-26-add-top-clock",
+      "reviewEvidence": "clean",
       "trailerCommits": 0,
       "libDomains": [],
       "processComplete": true
     }
   ],
-  "overlaps": [],
+  "overlaps": [
+    {
+      "domain": "a11y",
+      "slices": [
+        "2026-06-25-add-app-shell",
+        "2026-06-26-add-comfort-score"
+      ]
+    },
+    {
+      "domain": "i18n",
+      "slices": [
+        "2026-06-25-add-app-shell",
+        "2026-06-26-add-comfort-score"
+      ]
+    }
+  ],
   "failures": [],
   "warnings": [
     {
       "check": "trailer",
-      "msg": "2026-06-26-add-comfort-score: no commit carries a \"Slice: add-comfort-score\" trailer"
+      "msg": "2026-06-26-add-top-clock: no commit carries a \"Slice: add-top-clock\" trailer"
+    },
+    {
+      "check": "in-scope",
+      "msg": "lib/a11y/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score) — review for scope drift"
+    },
+    {
+      "check": "in-scope",
+      "msg": "lib/i18n/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score) — review for scope drift"
     }
   ]
 }

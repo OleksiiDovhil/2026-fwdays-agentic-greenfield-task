@@ -51,8 +51,13 @@
 
 1. add-app-shell (foundational)  ✅ DONE (G4) — 68 tests, review CLEAN, archived
 2. add-comfort-score  ✅ DONE (G4) — 150 tests, review CLEAN (split-weekend bug fixed), archived
-3. add-top-clock · 4. add-bottom-jokes (Wave 1 cont.)  ◀ NEXT
+3. add-top-clock  ✅ DONE (G4) — 174 tests, review CLEAN, archived
+4. add-bottom-jokes (Wave 1 cont.)  ◀ NEXT (spec ✅, red tests written then relocated to
+   $CLAUDE_JOB_DIR/tmp/jokes-tests/ during top-clock commit — RESTORE before implementing)
 5. add-city-search · 6. add-forecast · 7. add-map · 8. add-animated-bg · 9. add-weekend-compare
+
+- top-clock: `components/clock/TopClock.tsx` fills the AppHeader clock slot; `lib/clock/format.ts`
+  pure `formatClock`. font-mono now mapped to Geist Mono in globals.css @theme inline.
 
 ### add-comfort-score conventions (for forecast + weekend-compare to consume)
 - `comfortScore(daily): {value:0..100 int, rationale:UA sentence}` in `lib/scoring/comfort.ts`

@@ -1,0 +1,28 @@
+{
+  "generatedBy": "review-gate",
+  "scope": "add-top-clock",
+  "change": "add-top-clock",
+  "baseRef": null,
+  "headRef": "staged",
+  "dimensions": {
+    "correctness": {
+      "confirmed": 0,
+      "contested": 1,
+      "rejected": 2
+    },
+    "spec-compliance": {
+      "confirmed": 0,
+      "contested": 1,
+      "rejected": 1
+    }
+  },
+  "confirmedTitles": [],
+  "contestedTitles": [
+    "Microtask-deferred first setTime is justified by an inaccurate 'first COMMITTED paint' rationale",
+    "Mount-gate implemented via a single nullable `time` state + microtask defer, not the `[mounted, setMounted]` two-state pattern that design D2 and task 3.3 prescribe verbatim"
+  ],
+  "clean": true,
+  "generatedAt": "2026-06-26T09:17:07Z",
+  "initialConfirmed": 3,
+  "resolution": "All findings resolved (orchestrator, third party). font-mono now maps to the loaded Geist Mono (@theme inline); tasks.md 5.3 ticked + stale STOP note replaced with RESOLVED (test corrected earlier to assert 16:30:01); added an explicit location-independence test (clock renders standalone, no useLocation). Contested doc-drift: design.md D2 + the TopClock comment now accurately describe the shipped single-nullable time + microtask mount-gate. Battery green: lint, typecheck, 173 tests, build, openspec, trace."
+}

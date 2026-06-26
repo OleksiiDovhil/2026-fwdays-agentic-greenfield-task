@@ -164,6 +164,10 @@
   --color-comfort-red-fg: var(--comfort-red-fg);
   --color-comfort-red-bg: var(--comfort-red-bg);
   --color-ring: var(--ring);
+  /* Map Tailwind's `font-mono` to the Geist Mono webfont already loaded in
+     app/layout.tsx (otherwise it falls back to the system mono stack and the
+     loaded font is dead weight). Used by the header clock's tabular digits. */
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 body {

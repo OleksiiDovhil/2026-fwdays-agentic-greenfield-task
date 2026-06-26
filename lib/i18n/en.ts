@@ -60,6 +60,10 @@ export const en = {
       placeholder: "A light weather joke will appear here",
     },
     clock: {
+      // SUPERSEDED by the top-level `clock.*` namespace (D6, add-top-clock):
+      // these described a rejected weather-location time; the shipped TopClock
+      // shows the DEVICE time and reads `clock.label`. Left in place (removing
+      // them is a shell.* edit, §3a); do NOT consume them anymore.
       label: "Local time",
       placeholder: "The local time of the chosen city will appear here",
     },
@@ -82,6 +86,12 @@ export const en = {
       label: "This weekend",
       outOfRange: "Weekend outside the forecast",
     },
+  },
+  clock: {
+    // Top-clock namespace (D6, add-top-clock) — the live header clock's
+    // accessible name (NFR-A11Y-01). Calm, stable descriptor; no exclamation
+    // marks (BC-BRAND-01).
+    label: "Current local time",
   },
 } as const;
 
