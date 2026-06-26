@@ -171,6 +171,80 @@ export const uk = {
     // (BC-BRAND-01, test-enforced across both locales).
     label: "Поточний місцевий час",
   },
+  forecast: {
+    // Forecast namespace (D6, add-forecast) — sibling to shell.*, never reaching
+    // into it. Carries EVERY user-visible forecast string: the section's
+    // accessible name, the weekday labels, the weather-code condition labels, the
+    // sunrise/sunset labels, the unit labels + minus glyph + precip placeholder,
+    // the chart accessible name, and the loading / error / no-location copy. Calm,
+    // practical tone; no exclamation marks (BC-BRAND-01, enforced across both
+    // locales by lib/i18n/i18n.test.ts). The loading / error / noLocation copy is
+    // EVAL-GRADED (forecast-copy.eval.ts, target ≥ 90).
+    //
+    // Accessible region name for the forecast section (NFR-A11Y-01).
+    sectionLabel: "Прогноз погоди",
+    weekday: {
+      // Seven short Ukrainian weekday labels indexed by day-of-week
+      // (0=Sun … 6=Sat), the SAME index a fixed-Date.UTC parse of the location-
+      // local `time` date yields (D6, never the viewer's clock). The card reads
+      // forecast.weekday[index]; the dot-path keys are the numeric strings.
+      "0": "Нд",
+      "1": "Пн",
+      "2": "Вт",
+      "3": "Ср",
+      "4": "Чт",
+      "5": "Пт",
+      "6": "Сб",
+    },
+    condition: {
+      // Short Ukrainian weather-code condition labels, keyed to match the
+      // `describeWeather` label keys (the lib returns the KEY, the card calls
+      // t()). Distinct keys per WMO group so clear ≠ rain ≠ snow ≠ thunder; the
+      // generic `unknown` fallback covers an unrecognised code (never blank).
+      clear: "Ясно",
+      mainlyClear: "Переважно ясно",
+      partlyCloudy: "Мінлива хмарність",
+      overcast: "Хмарно",
+      fog: "Туман",
+      drizzle: "Мряка",
+      rain: "Дощ",
+      rainShowers: "Дощ із проясненнями",
+      snow: "Сніг",
+      snowShowers: "Сніг із проясненнями",
+      thunder: "Гроза",
+      unknown: "Погода без особливостей",
+    },
+    // Sunrise / sunset labels for the small text under the chart (FR-FORECAST-04).
+    sunrise: "Схід сонця",
+    sunset: "Захід сонця",
+    unit: {
+      // Unit labels — never hardcoded in the card (NFR-I18N-01). The wind label
+      // matches the requested windspeed_unit=ms so the value is reproducible.
+      celsius: "°C",
+      wind: "м/с",
+      percent: "%",
+    },
+    // The app's standard minus glyph for sub-zero temperatures (D4). ASCII minus,
+    // kept centralised so the card never hardcodes a sign.
+    minus: "-",
+    // Neutral placeholder for an absent value (precip / sunrise / sunset), DISTINCT
+    // from a present 0 (D4).
+    precipPlaceholder: "—",
+    // The hourly chart's accessible name so the trend is not an unlabeled image
+    // (NFR-A11Y-01).
+    chartLabel: "Погодинна температура на найближчі 48 годин",
+    // A quiet, reassuring busy label while a fetch for a newly selected location is
+    // in flight (EVAL-GRADED). Calm, momentary, never alarmist.
+    loading: "Завантажуємо прогноз",
+    // The failed-fetch Notice copy (network / non-OK / malformed / zero-day)
+    // (EVAL-GRADED). Calm, blame-free, recoverable: the forecast could not load
+    // right now, the visitor can try again, and the rest of the app keeps working.
+    error:
+      "Не вдалося завантажити прогноз. Спробуйте ще раз трохи згодом — решта застосунку працює, як і раніше.",
+    // The no-location empty-state copy (EVAL-GRADED). A calm, inviting state that
+    // guides the visitor to search a city — never an error or a dead end.
+    noLocation: "Знайдіть місто, щоб побачити його прогноз на найближчі дні.",
+  },
   jokes: {
     // Bottom-jokes namespace (D3, add-bottom-jokes) — sibling to shell.*, never
     // reaching into it. SUPERSEDES the inert `shell.jokes.placeholder` copy

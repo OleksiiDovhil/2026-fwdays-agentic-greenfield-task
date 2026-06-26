@@ -116,6 +116,49 @@ export const en = {
     // marks (BC-BRAND-01).
     label: "Current local time",
   },
+  forecast: {
+    // Forecast namespace (D6, add-forecast) — the English fallback subset
+    // mirroring `uk.forecast.*` key-for-key. Same calm tone; no exclamation marks
+    // (BC-BRAND-01).
+    sectionLabel: "Weather forecast",
+    weekday: {
+      "0": "Sun",
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat",
+    },
+    condition: {
+      clear: "Clear",
+      mainlyClear: "Mainly clear",
+      partlyCloudy: "Partly cloudy",
+      overcast: "Overcast",
+      fog: "Fog",
+      drizzle: "Drizzle",
+      rain: "Rain",
+      rainShowers: "Rain showers",
+      snow: "Snow",
+      snowShowers: "Snow showers",
+      thunder: "Thunderstorm",
+      unknown: "No notable weather",
+    },
+    sunrise: "Sunrise",
+    sunset: "Sunset",
+    unit: {
+      celsius: "°C",
+      wind: "m/s",
+      percent: "%",
+    },
+    minus: "-",
+    precipPlaceholder: "—",
+    chartLabel: "Hourly temperature for the next 48 hours",
+    loading: "Loading the forecast",
+    error:
+      "Could not load the forecast. Please try again in a moment — the rest of the app keeps working.",
+    noLocation: "Search for a city to see its forecast for the days ahead.",
+  },
   jokes: {
     // Bottom-jokes namespace (D3, add-bottom-jokes) — the per-index English
     // fallback for `uk.jokes.items`. SAME count and index alignment as the

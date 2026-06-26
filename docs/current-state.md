@@ -4,9 +4,58 @@
 > tests — if this conflicts, verify and fix this file.
 
 - **Last updated:** 2026-06-26 (Europe/Kyiv)
-- **Phase:** 4 in progress — Wave 1 COMPLETE; `add-city-search` IMPLEMENTED +
-  VALIDATED (tests/lint/build/openspec green), NOT yet eval-graded or archived.
+- **Phase:** 4 in progress — 6/9 slices DONE & archived (app-shell, comfort-score,
+  top-clock, bottom-jokes, city-search, forecast — each review-gate CLEAN; 356 tests
+  green; lint/typecheck/build/openspec/trace green). Specs READY for map +
+  animated-bg. Remaining slices: map, animated-bg, weekend-compare. Eval grading of
+  all per-slice eval cases happens together in Phase 6 (eval-suite, threshold 90).
 - **Delivery goal:** every eval dimension ≥ 90 (Gate G6), driven in a loop.
+
+### add-forecast conventions (LOCKED — Wave 4+ slices reuse these)
+- **i18n:** `forecast.*` namespace in `lib/i18n/{uk,en}.ts` (sibling to others).
+  `forecast.weekday.{0..6}` (0=Sun..6=Sat, indexed off the location-local `time`
+  date via a fixed `Date.UTC` parse), `forecast.condition.*` (weather-code labels,
+  incl. `unknown` fallback), `forecast.unit.{celsius,wind,percent}` + `forecast.minus`
+  + `forecast.precipPlaceholder` ("—"), `forecast.{sunrise,sunset,chartLabel,
+  sectionLabel}`. EVAL-GRADED copy: `forecast.{loading,error,noLocation}` (≥ 90).
+- **Data path (TC-DATA-01, the SAME pattern as geocode):** `app/api/forecast/route.ts`
+  — a Next 16 `GET(?lat=&lon=)` doing the KEYLESS server-side `fetch` to
+  `https://api.open-meteo.com/v1/forecast` (URL + the long `daily`/`hourly` param
+  lists + unit pins live ONLY there: `temperature_unit=celsius`, `windspeed_unit=ms`,
+  `timezone=auto`, `forecast_days=7`), `AbortSignal.timeout`, zod-parses BOTH blocks
+  via `lib/forecast`, returns typed `{ forecast }` / `{ error: "failed" }` (status
+  200, NEVER a raw 500: bad/missing/out-of-range lat|lon short-circuit with no
+  upstream call; non-OK / thrown / `.json()` throw / zod-fail / zero-day all → typed
+  error). NOT cached. Build verified: `/` STAYS static; NO `open-meteo` host/key in
+  `.next/static`; **Recharts is in a LAZY chunk** (registered in the page
+  react-loadable-manifest, ABSENT from build-manifest initial chunks + rootMainFiles).
+- **Pure layer:** `lib/forecast/{types,validation,weather-code,hourly,format}.ts`
+  (framework-free, TC-PURE-01). `parseForecast(body): ForecastResult` TOTAL (column→row
+  zip; malformed/empty-hourly/zero-day → `{error:"failed"}`, never throws; short 1..6
+  days valid; absent per-day value → `null`; `cloud_cover_mean` optional).
+  `describeWeather(code)` → `{icon (lucide name), labelKey (forecast.condition.*),
+  category}` TOTAL (unknown/null → neutral default). `nextHours(hourly,count=48,now?)`
+  pure (injected `now`, fixed-UTC parse). `toComfortInput(day)` → exact `ComfortInput`
+  (`windMax→windSpeed`). `roundAwayFromZero`/`localWeekday` (format).
+- **`DailyForecast` shape** (`lib/forecast/types.ts`) carries the comfort factors +
+  display fields — the shape `add-weekend-compare` reuses. The **`weather-code`
+  category** (`clear|cloudy|fog|drizzle|rain|snow|thunder`) is the contract
+  `add-animated-bg` consumes (day/night-agnostic).
+- **UI:** `components/forecast/{ForecastSection,DayCard,HourlyChart}.tsx`. ForecastSection
+  (`"use client"`) reads `useLocation()` (location only), fetches `/api/forecast` on
+  location change, holds an in-memory location-tagged cache (single slot, `{lat,lon}`
+  rounded key) with `AbortController` + captured-identity latest-wins discard (A→B→A
+  late B is dropped; A's cache never shown under B). Render order: WeekendHighlight
+  (top) → 7-card `day-grid` → dynamically-imported (`dynamic(ssr:false)`) HourlyChart
+  → today's sunrise/sunset. States via `<Notice>` (no-location=info/status, error=alert,
+  loading=quiet skeleton — NO role, so it never collides with the located-state
+  `queryByRole("status")` shell test). data hooks: `data-slot` `forecast`/`day-card`/
+  `day-grid`/`weekend-highlight`/`hourly-chart`, `data-testid="hourly-chart"`. Fills
+  the ShellContent forecast slot (the `<section data-slot="forecast">` IS the slot —
+  `app/page.tsx` UNTOUCHED). Client-driven per the ARCHITECTURE LESSON.
+- forecast A→B→A discard test: the leak sentinel was corrected to a non-colliding
+  value (B `tempMax:88`) so it no longer false-positives on A's legitimate "30%"
+  precip; 356/356 green, no test weakened.
 
 ## add-app-shell conventions (LOCKED — Wave 1+ slices reuse these)
 
@@ -141,12 +190,10 @@ mocked Open-Meteo; eval produce() calls pure lib).
 
 ## Next step
 
-`add-city-search` is IMPLEMENTED + VALIDATED (lint/test:run [259]/build/openspec/
-traceability green; smoke over mocked geocoding passed). PENDING (maker≠checker):
-the eval-suite judge grades the `search.*` copy (target ≥ 90 on `search-empty-clarity`
-+ `geolocation-denied-clarity`), then the review-gate, then
-`npx openspec archive add-city-search --yes --skip-specs`. After archive, start
-**Wave 3: `add-forecast`** (and `add-map`) — both CONSUME the active location this
-slice writes (`useLocation()`) and REUSE the `app/api/geocode` server/route pattern
-to fetch Open-Meteo forecast data (keyless, zod-parsed, typed-result, client-driven
-per the ARCHITECTURE LESSON).
+**Next: `add-map`** (spec READY — `openspec/changes/add-map/`; ADR-0005 reverse-geocode
+via OSM Nominatim + coordinate-label fallback; client-only Leaflet via dynamic ssr:false).
+Then **`add-animated-bg`** (spec READY — shared `WeatherProvider`: ForecastSection
+publishes today's condition+sun, WeatherBackground consumes; reduced-motion static;
+pointer-events none). Then **`add-weekend-compare`** (spec TBD — pin ≤3 cities, reuse
+the `DailyForecast` shape + `app/api/forecast` route + comfort badges/upcomingWeekend).
+All per-slice eval cases are graded together in Phase 6 (eval-suite, threshold 90).

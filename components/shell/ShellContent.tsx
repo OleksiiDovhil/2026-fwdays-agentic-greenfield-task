@@ -10,6 +10,7 @@
 // forecast / map / compare slots filled by later waves — so those slices edit
 // their own slot files, never `app/page.tsx` (§3a serialize point).
 import { useLocation } from "@/components/providers/LocationProvider";
+import { ForecastSection } from "@/components/forecast/ForecastSection";
 import { SearchHero } from "@/components/shell/SearchHero";
 import { Notice } from "@/components/ui/Notice";
 import { t } from "@/lib/i18n";
@@ -31,10 +32,11 @@ export function ShellContent() {
           // (NFR-OBS-01). Later slices replace these with real content slots.
           <Notice variant="empty" className="md:col-span-2 xl:col-span-3" />
         ) : (
-          // Located layout: inert content-slot placeholders for forecast / map /
-          // compare. Owning slices fill these in Wave 1+.
+          // Located layout: the forecast slice fills the forecast slot (it may span
+          // grid columns for the wider daily grid + chart); map / compare remain
+          // inert placeholders owned by later waves.
           <>
-            <div data-slot="forecast" aria-hidden="true" />
+            <ForecastSection />
             <div data-slot="map" aria-hidden="true" />
             <div data-slot="compare" aria-hidden="true" />
           </>

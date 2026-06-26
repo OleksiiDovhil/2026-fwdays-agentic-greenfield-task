@@ -5,21 +5,22 @@ archived slice took: review evidence, `Slice:` trailers, and module scope.
 It does NOT verify test-first ordering or test integrity (not derivable from
 one-commit-per-slice history) — those are graded by the trajectory-eval workflow.
 
-Scope: 5 archived slice(s).
+Scope: 6 archived slice(s).
 Result: PASS, 3 warning(s)
 
 | Slice | Review evidence | Trailer commits | design+tasks | lib domains touched |
 |---|---|---|---|---|
 | 2026-06-25-add-app-shell | clean | 1 | yes | a11y, i18n, location |
 | 2026-06-26-add-bottom-jokes | clean | 1 | yes | i18n, jokes |
-| 2026-06-26-add-city-search | clean | **0** | yes | - |
+| 2026-06-26-add-city-search | clean | 1 | yes | i18n, search |
 | 2026-06-26-add-comfort-score | clean | 1 | yes | a11y, i18n, scoring |
+| 2026-06-26-add-forecast | clean | **0** | yes | - |
 | 2026-06-26-add-top-clock | clean | 1 | yes | clock, i18n |
 
 ## Cross-slice module overlap
 
 - `lib/a11y/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-comfort-score
-- `lib/i18n/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-comfort-score, 2026-06-26-add-top-clock
+- `lib/i18n/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-city-search, 2026-06-26-add-comfort-score, 2026-06-26-add-top-clock
 
 ## Failures
 
@@ -27,6 +28,6 @@ None.
 
 ## Warnings
 
-- **trailer**: 2026-06-26-add-city-search: no commit carries a "Slice: add-city-search" trailer
+- **trailer**: 2026-06-26-add-forecast: no commit carries a "Slice: add-forecast" trailer
 - **in-scope**: lib/a11y/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score) — review for scope drift
-- **in-scope**: lib/i18n/ modified by 4 slices (2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-comfort-score, 2026-06-26-add-top-clock) — review for scope drift
+- **in-scope**: lib/i18n/ modified by 5 slices (2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-city-search, 2026-06-26-add-comfort-score, 2026-06-26-add-top-clock) — review for scope drift

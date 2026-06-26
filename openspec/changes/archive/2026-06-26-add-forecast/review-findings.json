@@ -1,0 +1,30 @@
+{
+  "generatedBy": "review-gate",
+  "scope": "add-forecast",
+  "change": "add-forecast",
+  "baseRef": null,
+  "headRef": "staged",
+  "dimensions": {
+    "correctness": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 3
+    },
+    "security": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 0
+    },
+    "spec-compliance": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 3
+    }
+  },
+  "confirmedTitles": [],
+  "contestedTitles": [],
+  "clean": true,
+  "generatedAt": "2026-06-26T14:11:45Z",
+  "initialConfirmed": 3,
+  "resolution": "All 3 confirmed findings (all MINOR bookkeeping/lint-warning; 6 findings correctly rejected by adversarial verify) resolved: dropped the unused _loader/_opts params from the next/dynamic mock (lint now 0 warnings), ticked tasks.md 5.6 + replaced its stale FLAGGED note with RESOLVED, and cleaned the stale current-state.md flag (356/356). The A->B->A discard sentinel was corrected (88, non-colliding) before this review. No implementation defect found."
+}

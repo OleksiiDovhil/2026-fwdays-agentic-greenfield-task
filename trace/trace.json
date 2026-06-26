@@ -201,31 +201,43 @@
         "openspec/specs/animated-bg/spec.md",
         "openspec/specs/comfort-score/spec.md",
         "openspec/specs/forecast/spec.md",
-        "openspec/changes/add-forecast/specs/forecast/spec.md"
+        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/forecast/comfort-input.test.ts",
+        "lib/forecast/validation.test.ts",
+        "app/api/forecast/route.test.ts",
+        "components/forecast/ForecastSection.test.tsx",
+        "evals/cases/forecast-copy.eval.ts"
+      ],
       "recordings": []
     },
     {
       "id": "FR-FORECAST-02",
       "specs": [
         "openspec/specs/animated-bg/spec.md",
-        "openspec/specs/forecast/spec.md",
-        "openspec/changes/add-forecast/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/forecast/weather-code.test.ts",
+        "components/forecast/DayCard.test.tsx",
+        "components/forecast/ForecastSection.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-FORECAST-03",
       "specs": [
-        "openspec/specs/forecast/spec.md",
-        "openspec/changes/add-forecast/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/forecast/hourly.test.ts",
+        "components/forecast/ForecastSection.test.tsx",
+        "components/forecast/HourlyChart.test.tsx"
+      ],
       "recordings": []
     },
     {
@@ -233,20 +245,24 @@
       "specs": [
         "openspec/specs/animated-bg/spec.md",
         "openspec/specs/forecast/spec.md",
-        "openspec/changes/add-forecast/specs/forecast/spec.md"
+        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/forecast/ForecastSection.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-FORECAST-05",
       "specs": [
-        "openspec/specs/forecast/spec.md",
-        "openspec/changes/add-forecast/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/forecast/ForecastSection.test.tsx",
+        "evals/cases/forecast-copy.eval.ts"
+      ],
       "recordings": []
     },
     {
@@ -316,11 +332,12 @@
       "id": "FR-COMFORT-02",
       "specs": [
         "openspec/specs/comfort-score/spec.md",
-        "openspec/specs/forecast/spec.md",
-        "openspec/changes/add-forecast/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [
+        "lib/forecast/comfort-input.test.ts",
+        "lib/forecast/validation.test.ts",
         "lib/scoring/comfort.test.ts"
       ],
       "recordings": []
@@ -345,7 +362,8 @@
       "planned": true,
       "tests": [
         "lib/scoring/bands.test.ts",
-        "components/comfort/ComfortBadge.test.tsx"
+        "components/comfort/ComfortBadge.test.tsx",
+        "components/forecast/ForecastSection.test.tsx"
       ],
       "recordings": []
     },
@@ -353,20 +371,21 @@
       "id": "FR-COMFORT-05",
       "specs": [
         "openspec/specs/comfort-score/spec.md",
-        "openspec/specs/forecast/spec.md",
-        "openspec/changes/add-forecast/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [
         "lib/scoring/weekend.test.ts",
-        "components/comfort/WeekendHighlight.test.tsx"
+        "components/comfort/WeekendHighlight.test.tsx",
+        "components/forecast/ForecastSection.test.tsx"
       ],
       "recordings": []
     },
     {
       "id": "FR-ANIM-01",
       "specs": [
-        "openspec/specs/animated-bg/spec.md"
+        "openspec/specs/animated-bg/spec.md",
+        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -375,7 +394,8 @@
     {
       "id": "FR-ANIM-02",
       "specs": [
-        "openspec/specs/animated-bg/spec.md"
+        "openspec/specs/animated-bg/spec.md",
+        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -384,7 +404,8 @@
     {
       "id": "FR-ANIM-03",
       "specs": [
-        "openspec/specs/animated-bg/spec.md"
+        "openspec/specs/animated-bg/spec.md",
+        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -393,7 +414,8 @@
     {
       "id": "FR-ANIM-04",
       "specs": [
-        "openspec/specs/animated-bg/spec.md"
+        "openspec/specs/animated-bg/spec.md",
+        "openspec/changes/add-animated-bg/specs/animated-bg/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -429,26 +451,6 @@
   ],
   "failures": [],
   "warnings": [
-    {
-      "check": "test-trace",
-      "msg": "FR-FORECAST-01 has no test annotated \"@trace FR-FORECAST-01\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-FORECAST-02 has no test annotated \"@trace FR-FORECAST-02\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-FORECAST-03 has no test annotated \"@trace FR-FORECAST-03\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-FORECAST-04 has no test annotated \"@trace FR-FORECAST-04\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-FORECAST-05 has no test annotated \"@trace FR-FORECAST-05\""
-    },
     {
       "check": "test-trace",
       "msg": "FR-MAP-01 has no test annotated \"@trace FR-MAP-01\""
@@ -631,7 +633,7 @@
     },
     {
       "check": "active-changes",
-      "msg": "active change \"add-forecast\" is not archived"
+      "msg": "active change \"add-animated-bg\" is not archived"
     },
     {
       "check": "active-changes",
