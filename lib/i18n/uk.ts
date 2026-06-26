@@ -28,9 +28,10 @@ export const uk = {
         "Знайдіть місто, і ми покажемо його прогноз — щоб ви спокійно обрали, куди поїхати на ці вихідні.",
     },
     search: {
-      // Accessible label + placeholder for the centered search slot (the slot
-      // itself is an inert stub in this slice; the real input arrives with
-      // city-search).
+      // SUPERSEDED by the top-level `search.*` namespace (D8, add-city-search).
+      // These described the inert stub slot; the real interactive SearchBox reads
+      // `search.*` and does NOT consume `shell.search.*`. Left in place because
+      // removing them is a `shell.*` edit (§3a).
       label: "Пошук міста",
       placeholder: "Введіть назву міста",
       hint: "Почніть із назви міста, щоб побачити його погоду",
@@ -100,6 +101,42 @@ export const uk = {
       // compare slots in later waves.
       label: "Основний вміст",
     },
+  },
+  search: {
+    // City-search namespace (D8, add-city-search) — sibling to shell.*, never
+    // reaching into it. SUPERSEDES the inert `shell.search.*` slot copy
+    // (`label`/`placeholder`/`hint`), which described the disabled stub slot; the
+    // real interactive SearchBox owns its copy here. `shell.search.*` is left in
+    // place (removing it is a `shell.*` edit, §3a) but is NOT consumed by SearchBox.
+    //
+    // Tone: calm, practical, blame-free; natural Ukrainian. No exclamation marks
+    // (BC-BRAND-01) — enforced across both locales by lib/i18n/i18n.test.ts. The
+    // `empty` and `geolocation*` copy is graded by the search-copy eval (≥ 90).
+    //
+    // Accessible name + visible label for the combobox input (NFR-A11Y-01).
+    label: "Пошук міста",
+    placeholder: "Введіть назву міста",
+    // Accessible name for the suggestion listbox (NFR-A11Y-01).
+    listLabel: "Підказки міст",
+    // A quiet busy label announced while suggestions load.
+    loading: "Шукаємо міста",
+    // FR-SEARCH-05 zero-results literal — the shipped Ukrainian copy. Calm, reads
+    // as "nothing matched, try another spelling", never an error or a dead end.
+    empty: "Нічого не знайдено",
+    // The search-failed Notice copy (network / non-OK / malformed payload). Calm,
+    // reassuring, recoverable — the visitor can simply try again.
+    failed:
+      "Не вдалося завантажити підказки. Спробуйте ще раз трохи згодом або введіть назву міста.",
+    // The "Use my location" button label (FR-SEARCH-06).
+    geolocate: "Визначити моє місце",
+    // Geolocation permission denied — blame-free; search still works (FR-SEARCH-06).
+    geolocationDenied:
+      "Не вдалося визначити ваше місце. Можна просто ввести назву міста — пошук працює, як і раніше.",
+    // Geolocation unavailable (API absent / position error) — calm, constructive.
+    geolocationUnavailable:
+      "Визначення місця зараз недоступне. Введіть назву міста — і ми покажемо його погоду.",
+    // Calm fallback label for a location chosen via geolocation (no reverse-geocode).
+    myLocation: "Моє місце",
   },
   comfort: {
     // Comfort-score namespace (D6) — sibling to shell.*, never reaching into it.

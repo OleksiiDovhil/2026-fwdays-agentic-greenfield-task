@@ -111,62 +111,74 @@
     {
       "id": "FR-SEARCH-01",
       "specs": [
-        "openspec/specs/city-search/spec.md",
-        "openspec/changes/add-city-search/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/search/validation.test.ts",
+        "app/api/geocode/route.test.ts",
+        "components/search/SearchBox.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-SEARCH-02",
       "specs": [
-        "openspec/specs/city-search/spec.md",
-        "openspec/changes/add-city-search/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/search/flag.test.ts",
+        "lib/search/validation.test.ts",
+        "components/search/SearchBox.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-SEARCH-03",
       "specs": [
         "openspec/specs/app-shell/spec.md",
-        "openspec/specs/city-search/spec.md",
-        "openspec/changes/add-city-search/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/search/SearchBox.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-SEARCH-04",
       "specs": [
-        "openspec/specs/city-search/spec.md",
-        "openspec/changes/add-city-search/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/search/SearchBox.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-SEARCH-05",
       "specs": [
-        "openspec/specs/city-search/spec.md",
-        "openspec/changes/add-city-search/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/search/SearchBox.test.tsx",
+        "evals/cases/search-copy.eval.ts"
+      ],
       "recordings": []
     },
     {
       "id": "FR-SEARCH-06",
       "specs": [
-        "openspec/specs/city-search/spec.md",
-        "openspec/changes/add-city-search/specs/city-search/spec.md"
+        "openspec/specs/city-search/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/search/SearchBox.test.tsx",
+        "evals/cases/search-copy.eval.ts"
+      ],
       "recordings": []
     },
     {
@@ -188,7 +200,8 @@
       "specs": [
         "openspec/specs/animated-bg/spec.md",
         "openspec/specs/comfort-score/spec.md",
-        "openspec/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md",
+        "openspec/changes/add-forecast/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -198,7 +211,8 @@
       "id": "FR-FORECAST-02",
       "specs": [
         "openspec/specs/animated-bg/spec.md",
-        "openspec/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md",
+        "openspec/changes/add-forecast/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -207,7 +221,8 @@
     {
       "id": "FR-FORECAST-03",
       "specs": [
-        "openspec/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md",
+        "openspec/changes/add-forecast/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -217,7 +232,8 @@
       "id": "FR-FORECAST-04",
       "specs": [
         "openspec/specs/animated-bg/spec.md",
-        "openspec/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md",
+        "openspec/changes/add-forecast/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -226,7 +242,8 @@
     {
       "id": "FR-FORECAST-05",
       "specs": [
-        "openspec/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md",
+        "openspec/changes/add-forecast/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -235,7 +252,8 @@
     {
       "id": "FR-MAP-01",
       "specs": [
-        "openspec/specs/map/spec.md"
+        "openspec/specs/map/spec.md",
+        "openspec/changes/add-map/specs/map/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -244,7 +262,8 @@
     {
       "id": "FR-MAP-02",
       "specs": [
-        "openspec/specs/map/spec.md"
+        "openspec/specs/map/spec.md",
+        "openspec/changes/add-map/specs/map/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -256,7 +275,7 @@
         "openspec/specs/city-search/spec.md",
         "openspec/specs/map/spec.md",
         "openspec/specs/weekend-compare/spec.md",
-        "openspec/changes/add-city-search/specs/city-search/spec.md"
+        "openspec/changes/add-map/specs/map/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -265,7 +284,8 @@
     {
       "id": "FR-MAP-04",
       "specs": [
-        "openspec/specs/map/spec.md"
+        "openspec/specs/map/spec.md",
+        "openspec/changes/add-map/specs/map/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -274,7 +294,8 @@
     {
       "id": "FR-MAP-05",
       "specs": [
-        "openspec/specs/map/spec.md"
+        "openspec/specs/map/spec.md",
+        "openspec/changes/add-map/specs/map/spec.md"
       ],
       "planned": true,
       "tests": [],
@@ -295,7 +316,8 @@
       "id": "FR-COMFORT-02",
       "specs": [
         "openspec/specs/comfort-score/spec.md",
-        "openspec/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md",
+        "openspec/changes/add-forecast/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [
@@ -331,7 +353,8 @@
       "id": "FR-COMFORT-05",
       "specs": [
         "openspec/specs/comfort-score/spec.md",
-        "openspec/specs/forecast/spec.md"
+        "openspec/specs/forecast/spec.md",
+        "openspec/changes/add-forecast/specs/forecast/spec.md"
       ],
       "planned": true,
       "tests": [
@@ -406,30 +429,6 @@
   ],
   "failures": [],
   "warnings": [
-    {
-      "check": "test-trace",
-      "msg": "FR-SEARCH-01 has no test annotated \"@trace FR-SEARCH-01\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-SEARCH-02 has no test annotated \"@trace FR-SEARCH-02\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-SEARCH-03 has no test annotated \"@trace FR-SEARCH-03\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-SEARCH-04 has no test annotated \"@trace FR-SEARCH-04\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-SEARCH-05 has no test annotated \"@trace FR-SEARCH-05\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-SEARCH-06 has no test annotated \"@trace FR-SEARCH-06\""
-    },
     {
       "check": "test-trace",
       "msg": "FR-FORECAST-01 has no test annotated \"@trace FR-FORECAST-01\""
@@ -632,7 +631,11 @@
     },
     {
       "check": "active-changes",
-      "msg": "active change \"add-city-search\" is not archived"
+      "msg": "active change \"add-forecast\" is not archived"
+    },
+    {
+      "check": "active-changes",
+      "msg": "active change \"add-map\" is not archived"
     }
   ]
 }

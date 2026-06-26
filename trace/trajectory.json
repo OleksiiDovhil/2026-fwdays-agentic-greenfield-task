@@ -15,6 +15,16 @@
     {
       "slice": "2026-06-26-add-bottom-jokes",
       "reviewEvidence": "clean",
+      "trailerCommits": 1,
+      "libDomains": [
+        "i18n",
+        "jokes"
+      ],
+      "processComplete": true
+    },
+    {
+      "slice": "2026-06-26-add-city-search",
+      "reviewEvidence": "clean",
       "trailerCommits": 0,
       "libDomains": [],
       "processComplete": true
@@ -53,6 +63,7 @@
       "domain": "i18n",
       "slices": [
         "2026-06-25-add-app-shell",
+        "2026-06-26-add-bottom-jokes",
         "2026-06-26-add-comfort-score",
         "2026-06-26-add-top-clock"
       ]
@@ -62,7 +73,7 @@
   "warnings": [
     {
       "check": "trailer",
-      "msg": "2026-06-26-add-bottom-jokes: no commit carries a \"Slice: add-bottom-jokes\" trailer"
+      "msg": "2026-06-26-add-city-search: no commit carries a \"Slice: add-city-search\" trailer"
     },
     {
       "check": "in-scope",
@@ -70,7 +81,7 @@
     },
     {
       "check": "in-scope",
-      "msg": "lib/i18n/ modified by 3 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score, 2026-06-26-add-top-clock) — review for scope drift"
+      "msg": "lib/i18n/ modified by 4 slices (2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-comfort-score, 2026-06-26-add-top-clock) — review for scope drift"
     }
   ]
 }

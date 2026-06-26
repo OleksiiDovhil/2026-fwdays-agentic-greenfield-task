@@ -134,12 +134,40 @@ The locked conventions reused **verbatim**, not re-built:
 - **Handler honest-degradation contract (NFR-OBS-01):** the handler **never throws
   to a 500** on bad input or a bad upstream. Concretely: an empty/whitespace/missing
   `q` → `{ suggestions: [] }` with `200` (the client treats empty like "no query",
-  never an error); a **non-OK** Open-Meteo status or a **thrown** fetch (network) →
-  a small typed error body the client maps to the calm error Notice (status chosen
-  so the client `fetch` resolves and reads it, never an unhandled rejection); a
-  **200 body that fails the zod schema** → treated exactly like a failed fetch
-  (typed error, never partial data). The whole handler body is wrapped so no
-  unexpected throw escapes as a raw 500.
+  never an error); a **non-OK** Open-Meteo status, a **thrown** fetch (network), or
+  an **upstream timeout** → a small typed error body the client maps to the calm
+  error Notice (status chosen so the client `fetch` resolves and reads it, never an
+  unhandled rejection); a **200 body that fails the zod schema** → treated exactly
+  like a failed fetch (typed error, never partial data). The whole handler body is
+  wrapped so no unexpected throw escapes as a raw 500.
+- **Bounded latency — upstream + client timeouts (NFR-OBS-01):** a **failed** fetch
+  already degrades calmly, but a **hung** (never-resolving) upstream would otherwise
+  leave the request pending forever. The handler bounds its Open-Meteo call with an
+  `AbortSignal.timeout` (~4 s) **inside** the existing try/catch, so a timeout aborts
+  to the same typed error result (never a 500, never a stuck request). The client
+  `SearchBox` adds its **own** longer deadline (~8 s, combined with the supersede/
+  unmount `AbortController` via `AbortSignal.any`) as a backstop, so even a hung
+  *route* surfaces the calm error Notice instead of an indefinite silent loading
+  state. The two deadlines are layered (server shorter than client) so the server
+  normally resolves first.
+- **MVP security posture — keyless, unauthenticated relay, no app-level rate
+  limiting (deliberate, ADR-0003):** `app/api/geocode` is an **unauthenticated**,
+  **keyless** relay to the keyless Open-Meteo geocoding API with **no
+  application-level rate limiting**. This is an accepted trade-off for the keyless,
+  stateless MVP: there is **no key/quota or per-user state to protect**, and a
+  debounced, human-typed search is inherently low-volume. The handler's own defences
+  are the **120-char query cap** (bounded upstream requests) and the **upstream
+  timeout** (bounded latency). Abuse protection for **production** is expected at the
+  **platform/edge layer** (e.g. Vercel/Cloudflare rate limiting or a WAF) — the
+  natural place to add it without touching the client contract; application-level
+  rate limiting is intentionally **out of scope** for the MVP and noted at the top of
+  the route file.
+- **Suggestion-limit constant `count = 8` (TC-DATA-01):** the upstream `count`
+  param is fixed at **8** in the handler — a small, deliberate cap: enough to
+  disambiguate same-name places (an oblast capital vs a village, or several
+  identically-named towns) while keeping the listbox short enough to scan by eye and
+  arrow through in a few keystrokes, and the payload + render cheap. The client never
+  sees `count`; tuning it later stays server-side behind the `GeoSuggestion` DTO.
 
 ### D2 — Pure framework-free `lib/search`: zod parse + `GeoSuggestion` mapper, total (TC-PURE-01)
 

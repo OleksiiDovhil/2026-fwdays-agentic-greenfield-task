@@ -19,6 +19,9 @@ export const en = {
         "Search for a city and we will show its forecast, so you can calmly decide where to go this weekend.",
     },
     search: {
+      // SUPERSEDED by the top-level `search.*` namespace (D8, add-city-search):
+      // the real SearchBox reads `search.*` and does NOT consume `shell.search.*`.
+      // Left in place (removing them is a `shell.*` edit, §3a).
       label: "City search",
       placeholder: "Enter a city name",
       hint: "Start with a city name to see its weather",
@@ -70,6 +73,26 @@ export const en = {
     main: {
       label: "Main content",
     },
+  },
+  search: {
+    // City-search namespace (D8, add-city-search) — the English fallback subset
+    // mirroring `uk.search.*` key-for-key. SUPERSEDES the inert `shell.search.*`
+    // slot copy; the real SearchBox owns its copy here. Same calm, blame-free
+    // tone; no exclamation marks (BC-BRAND-01).
+    label: "City search",
+    placeholder: "Enter a city name",
+    listLabel: "City suggestions",
+    loading: "Searching cities",
+    // FR-SEARCH-05 zero-results literal — English fallback for "Нічого не знайдено".
+    empty: "Nothing found",
+    failed:
+      "Could not load suggestions. Please try again in a moment, or type a city name.",
+    geolocate: "Use my location",
+    geolocationDenied:
+      "We could not find your location. You can simply type a city name — search still works.",
+    geolocationUnavailable:
+      "Locating you is unavailable right now. Type a city name and we will show its weather.",
+    myLocation: "My location",
   },
   comfort: {
     band: {

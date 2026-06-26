@@ -1,0 +1,34 @@
+{
+  "generatedBy": "review-gate",
+  "scope": "add-city-search",
+  "change": "add-city-search",
+  "baseRef": null,
+  "headRef": "staged",
+  "dimensions": {
+    "correctness": {
+      "confirmed": 0,
+      "contested": 1,
+      "rejected": 1
+    },
+    "security": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 1
+    },
+    "spec-compliance": {
+      "confirmed": 0,
+      "contested": 2,
+      "rejected": 1
+    }
+  },
+  "confirmedTitles": [],
+  "contestedTitles": [
+    "No fetch timeout on client or server: a hung (not failed) Open-Meteo leaves an indefinite silent loading state",
+    "Client-side mapping of the route's typed { error: \"failed\" } result to the error Notice is asserted only for a thrown fetch, not for a non-OK/zod-failed handler body",
+    "Undocumented constant: route handler requests count=8 with no spec/scenario backing"
+  ],
+  "clean": true,
+  "generatedAt": "2026-06-26T10:56:27Z",
+  "initialConfirmed": 9,
+  "resolution": "All 9 confirmed + 3 contested findings fixed by the implementer (+6 guarding tests, 265 total) and verified (battery green; key fixes spot-checked present). MAJOR stale-geoError fixed (cleared on typing + selection, tested). loading state surfaced (aria-busy + polite status). aria-controls dangling fixed. server + client fetch timeouts added (hung upstream -> calm error, not infinite loading). count=8 + unauthenticated-keyless-relay MVP decision documented. Added tests: Tab-past-combobox, geolocation console-silence, route {error} body -> Notice, geoError-clears-on-typing. 3 findings correctly rejected. Battery: lint, typecheck, 265 tests, build (/ static), openspec, trace."
+}

@@ -1,12 +1,10 @@
 // First-load empty-state hero slot — design.md D7, FR-SHELL-03. Presents calm
 // hero copy and a prominently CENTERED city-search slot as the primary focal
-// point. In this slice the search input is an INERT stub (the city-search slice
-// fills it later); the slot, its `search` landmark, and the centering exist now
-// so downstream only edits this file. All copy comes from `lib/i18n` (no
-// exclamation marks, BC-BRAND-01). Framework-free of client hooks so it renders
-// standalone (a server component in the page tree).
-import { Search } from "lucide-react";
-import { Input } from "@/components/ui/Input";
+// point. The city-search slice (add-city-search, D7) fills the slot with the real
+// interactive <SearchBox/>; the slot's `search` landmark and centering exist here
+// so downstream only edits this file (NOT the shared app/page.tsx serialize
+// point, §3a). Hero copy comes from `lib/i18n` (no exclamation marks, BC-BRAND-01).
+import { SearchBox } from "@/components/search/SearchBox";
 import { t } from "@/lib/i18n";
 
 export function SearchHero() {
@@ -21,33 +19,19 @@ export function SearchHero() {
         </p>
       </div>
 
-      {/* Centered city-search slot — the primary focal point (FR-SHELL-03).
-          Inert stub: the real input + suggestions arrive with city-search. */}
+      {/* Centered city-search slot — the primary focal point (FR-SHELL-03). The
+          real <SearchBox/> (city-search, D7) renders the interactive combobox,
+          its suggestion listbox, the "Use my location" button, and the inline
+          Notice states within this centered column. The `search` landmark, the
+          `search-slot` test id, and the centering are preserved from the shell. */}
       <div
         role="search"
         data-testid="search-slot"
         data-slot="search"
-        aria-label={t("shell.search.label")}
+        aria-label={t("search.label")}
         className="mx-auto w-full max-w-md"
       >
-        <div className="relative">
-          <Search
-            aria-hidden="true"
-            className="pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground"
-          />
-          <Input
-            inputSize="lg"
-            className="pl-10"
-            placeholder={t("shell.search.placeholder")}
-            aria-label={t("shell.search.label")}
-            // Inert in this slice — the city-search slice wires interactivity.
-            readOnly
-            disabled
-          />
-        </div>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {t("shell.search.hint")}
-        </p>
+        <SearchBox />
       </div>
     </section>
   );
