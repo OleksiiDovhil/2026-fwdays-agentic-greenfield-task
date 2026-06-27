@@ -3,15 +3,19 @@
 > Persistent handoff. Update at every milestone. Source of truth is code/specs/
 > tests — if this conflicts, verify and fix this file.
 
-- **Last updated:** 2026-06-27 11:02 (Europe/Kyiv)
-- **Phase:** 5 COMPLETE (G5) — all 9/9 capability slices archived (Phase 4); cross-cutting
-  integration layer added: `tests/integration/weekend-trip-flow.integration.test.ts` (21
-  tests, the search→forecast→comfort→weekend→compare business flow over mocked Open-Meteo,
-  LOCAL-date timezone-invariance proven) + `tests/fixtures/open-meteo.ts` (idempotent).
-  Coverage baseline committed `quality/coverage-baseline.json` (95.78% lines / 92.43% stmt
-  / 84.53% branch; ratchet guards it). `qa:verify` battery all-green (Overall: Pass). 585
-  tests. Browser E2E (chrome-devtools MCP) ENV-GATED per ADR-0004. **NEXT: Phase 6** —
-  eval-suite ≥90 over 13 copy dimensions (THE GOAL) → Phase 7. (history below kept):
+- **Last updated:** 2026-06-27 13:30 (Europe/Kyiv)
+- **Phase:** 6 COMPLETE (G6) — **THE GOAL MET: every eval dimension ≥ 90.** The eval-suite
+  (`project-factory:eval-judge`, maker≠checker, ship-unchanged bar 90) graded 14 cases →
+  **14 pass / 0 fail**; per-dimension 93–99, baseline locked `quality/eval-baseline.json`
+  (`node scripts/check-eval-ratchet.mjs` exit 0). Lifted the 3 sub-90: search-empty 59→96
+  (added `search.emptyHint` beneath the "Нічого не знайдено" title), compare-error 73→95
+  (forward guidance + de-enveloped the eval `produce()`), comfort-rationale 91→95 (bands
+  case 87→94: trip-framed green[1], de-spliced yellow[1]; band-disjointness intact). QA
+  proof pack authored under `docs/qa/` (traceability matrix, acceptance 9/9, manual test
+  plan, demo script, risk register; R-06 eval RESOLVED). 606 tests green; build/lint/
+  openspec strict clean; fresh `code-reviewer` PASS. **NEXT: Phase 7 (G7)** — global
+  review-gate + trajectory-eval + technical docs + NFRs-by-class (deploy-gated pending) +
+  deploy (env/user-gated). (history below kept):
   weekend-compare review FIXED a CRITICAL per-city-abort/strand bug + major failed-retry
   (+ shared `keyOf` in lib/location/key.ts, precip clamp). Then Phase 5 + Phase 6 (≥90
   goal) + Phase 7. Eval grading of all per-slice eval cases happens together in Phase 6
