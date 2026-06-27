@@ -138,3 +138,51 @@ describe("nextHours — deterministic + non-mutating (TC-PURE-01)", () => {
     expect(JSON.stringify(all)).toBe(snapshot);
   });
 });
+
+// @trace FR-FORECAST-03, FR-ANIM-02
+// Regression (global review-gate, Gate G7): the PRODUCTION caller passes a TRUE
+// absolute `Date.now()` (a UTC instant), but each point's `time` is the LOCATION's
+// wall clock read AS UTC (Open-Meteo timezone=auto, no zone suffix). Without the
+// location's offset the "next 48 h" window is skewed by that offset — eastern
+// offsets leak already-elapsed hours, western offsets drop near-future hours.
+// `nextHours` takes an optional `utcOffsetSeconds` (4th param) that shifts `now`
+// into the location's frame, mirroring `isDaytime`/`nowTimeOfDay`
+// (lib/animated-bg/day-night.ts) — the identical fix the team already applied to
+// the day/night background.
+describe("nextHours — threads the LOCATION's UTC offset so the window is in the location's frame (FR-FORECAST-03)", () => {
+  const OFFSET = 10_800; // Kyiv +3h (Open-Meteo utc_offset_seconds)
+
+  it("a TRUE-UTC `now` + offset starts the window at the LOCATION's current hour, not the viewer's", async () => {
+    const { nextHours } = await loadHourly();
+    const all = series(72);
+    // A true absolute instant whose LOCATION-local time is series hour 10:
+    // (hour 10 read as UTC) minus the +3h offset.
+    const trueUtcNow = nowAtHour(10) - OFFSET * 1000;
+
+    const picked = nextHours(all, 48, trueUtcNow, OFFSET);
+    // Offset-aware: the slice begins at the location's current hour (10) — no
+    // elapsed hours leaked in, no near-future hours dropped.
+    expect(picked[0].temperature).toBe(10);
+    expect(picked[0].time).toBe(isoLocalHour(10));
+  });
+
+  it("WITHOUT the offset the same true-UTC `now` skews the window 3 h early (the bug this guards)", async () => {
+    const { nextHours } = await loadHourly();
+    const all = series(72);
+    const trueUtcNow = nowAtHour(10) - OFFSET * 1000;
+    // The pre-fix 3-arg call compares the raw UTC instant against the
+    // location-local-as-UTC epochs → starts 3 hours early (hour 7); the offset is
+    // exactly what corrects the frame.
+    const buggy = nextHours(all, 48, trueUtcNow);
+    expect(buggy[0].temperature).toBe(7);
+  });
+
+  it("a null / absent offset preserves the legacy injected-`now` behavior (back-compat)", async () => {
+    const { nextHours } = await loadHourly();
+    const all = series(72);
+    // The pure unit-test path injects `now` already on the location-local-as-UTC
+    // basis and passes no offset → identical to before this parameter existed.
+    expect(nextHours(all, 48, nowAtHour(10), null)[0].temperature).toBe(10);
+    expect(nextHours(all, 48, nowAtHour(10), undefined)[0].temperature).toBe(10);
+  });
+});

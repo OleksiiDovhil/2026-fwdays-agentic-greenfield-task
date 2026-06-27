@@ -21,7 +21,7 @@ Result: PASS, 33 warning(s)
 | FR-JOKES-01 | yes | yes | 4 | - |
 | FR-FORECAST-01 | yes | yes | 6 | - |
 | FR-FORECAST-02 | yes | yes | 3 | - |
-| FR-FORECAST-03 | yes | yes | 3 | - |
+| FR-FORECAST-03 | yes | yes | 4 | - |
 | FR-FORECAST-04 | yes | yes | 1 | - |
 | FR-FORECAST-05 | yes | yes | 2 | - |
 | FR-MAP-01 | yes | yes | 1 | - |
@@ -35,7 +35,7 @@ Result: PASS, 33 warning(s)
 | FR-COMFORT-04 | yes | yes | 3 | - |
 | FR-COMFORT-05 | yes | yes | 5 | - |
 | FR-ANIM-01 | yes | yes | 4 | - |
-| FR-ANIM-02 | yes | yes | 5 | - |
+| FR-ANIM-02 | yes | yes | 6 | - |
 | FR-ANIM-03 | yes | yes | 1 | - |
 | FR-ANIM-04 | yes | yes | 1 | - |
 | FR-COMPARE-01 | yes | yes | 4 | - |

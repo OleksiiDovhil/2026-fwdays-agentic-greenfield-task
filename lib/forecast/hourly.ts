@@ -47,19 +47,34 @@ function localEpoch(time: string | null | undefined): number | null {
  * The next `count` future hours (inclusive of the hour AT `now`) from `hourly`.
  * Points whose time cannot be parsed are skipped; the series is assumed
  * chronological. Pure: never mutates the input, never reads a hidden clock.
+ *
+ * @param utcOffsetSeconds the LOCATION's UTC offset (Open-Meteo
+ *   `utc_offset_seconds`). Each point's `epoch` is the location's wall clock read
+ *   AS UTC (localEpoch); a real caller passes a TRUE absolute `now` (`Date.now()`,
+ *   a UTC instant), so `now` must be shifted by the offset to land in the same
+ *   frame — otherwise the window is skewed by the offset (eastern offsets leak
+ *   already-elapsed hours, western offsets drop near-future hours). When
+ *   absent/non-finite, `now` is assumed already in the points' frame (the
+ *   injected-`now` unit-test path) — mirroring `isDaytime`/`nowTimeOfDay`
+ *   (lib/animated-bg/day-night.ts), the identical FR-ANIM-02 fix.
  */
 export function nextHours(
   hourly: readonly HourlyPoint[],
   count = 48,
   now: number = Date.now(),
+  utcOffsetSeconds?: number | null,
 ): HourlyPoint[] {
+  const threshold =
+    typeof utcOffsetSeconds === "number" && Number.isFinite(utcOffsetSeconds)
+      ? now + utcOffsetSeconds * 1000
+      : now;
   const out: HourlyPoint[] = [];
   for (const point of hourly) {
     if (out.length >= count) break;
     const epoch = localEpoch(point.time);
     if (epoch === null) continue;
-    // A point AT or AFTER `now` is in the (present/)future; past points are skipped.
-    if (epoch >= now) out.push(point);
+    // A point AT or AFTER the (location-framed) boundary is future; skip the past.
+    if (epoch >= threshold) out.push(point);
   }
   return out;
 }

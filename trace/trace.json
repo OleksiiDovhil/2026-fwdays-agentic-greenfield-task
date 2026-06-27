@@ -238,6 +238,7 @@
       "planned": true,
       "tests": [
         "lib/forecast/hourly.test.ts",
+        "lib/forecast/hourly.test.ts",
         "components/forecast/ForecastSection.test.tsx",
         "components/forecast/HourlyChart.test.tsx"
       ],
@@ -419,6 +420,7 @@
       "tests": [
         "lib/animated-bg/day-night.offset.test.ts",
         "lib/animated-bg/day-night.test.ts",
+        "lib/forecast/hourly.test.ts",
         "components/providers/WeatherProvider.test.tsx",
         "components/shell/WeatherBackground.test.tsx",
         "components/shell/WeatherBackground.timezone.test.tsx"

@@ -99,6 +99,12 @@ export function ForecastSection() {
   // the active key (so a failure for B is never shown under A, and vice-versa).
   const [errorKey, setErrorKey] = useState<string | null>(null);
 
+  // A captured "now" for the hourly window (FR-FORECAST-03). `Date.now()` is impure
+  // (forbidden during render, react-hooks/purity), so the instant lives in state —
+  // lazily seeded once, then refreshed below when a new forecast becomes active, so a
+  // city explored later in the session still gets a current "next 48 h" window.
+  const [now, setNow] = useState<number>(() => Date.now());
+
   // The currently-active key (for the discard-on-resolve identity guard) and the
   // in-flight controller (to abort the previous request on a location change).
   const activeKeyRef = useRef<string | null>(key);
@@ -140,6 +146,10 @@ export function ForecastSection() {
           setForecast(valid);
           setCacheKey(fetchKey);
           setErrorKey((prev) => (prev === fetchKey ? null : prev));
+          // Anchor the hourly "next 48 h" window (FR-FORECAST-03) to the instant
+          // this forecast loaded — fresh per explored city. Set in the async `.then`
+          // (like the setState calls above), so it never cascades within an effect.
+          setNow(Date.now());
         } else {
           // A typed error / unreadable / zero-day body → the degraded state for
           // THIS key. The stale forecast is NOT shown under a DIFFERENT location
@@ -273,7 +283,11 @@ export function ForecastSection() {
   const weekend = upcomingWeekend(
     forecast.days.map((d, i) => ({ time: d.time, value: comfortValues[i] })),
   );
-  const hourly = nextHours(forecast.hourly, 48);
+  // Pass the LOCATION's offset so the "next 48 h" window sits in the location's
+  // frame, not the viewer's (FR-FORECAST-03; the same fix the day/night
+  // background applies for FR-ANIM-02). `Date.now()` is a true UTC instant;
+  // nextHours shifts it by `utcOffsetSeconds` to match the location-local times.
+  const hourly = nextHours(forecast.hourly, 48, now, forecast.utcOffsetSeconds);
   const today = forecast.days[0];
 
   return (

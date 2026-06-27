@@ -13,7 +13,7 @@
 // Rendered within ThemeProvider — the provider the header needs for the toggle.
 //
 // @trace FR-SHELL-01, NFR-A11Y-01
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AppHeader } from "@/components/shell/AppHeader";
@@ -95,5 +95,39 @@ describe("components/shell/AppHeader — theme indicator/toggle", () => {
     await user.click(getThemeToggle());
     const nameAfter = nameOf(getThemeToggle());
     expect(nameAfter).not.toBe(nameBefore);
+  });
+
+  it("follows the system preference: a dark-OS render announces a different theme than a light-OS render (hydration-safe, no matchMedia read during render)", () => {
+    const nameOf = (el: HTMLElement) =>
+      (el.getAttribute("aria-label") || el.textContent || "").toLowerCase();
+    const darkStub = (q: string) => ({
+      matches: true,
+      media: q,
+      onchange: null,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    });
+    const original = window.matchMedia;
+
+    // Light OS (the default setup stub reports matches:false).
+    const light = renderHeader();
+    const lightName = nameOf(getThemeToggle());
+    light.unmount();
+
+    // Dark OS — the control follows the system and announces the dark state. The
+    // value is read via useSyncExternalStore (server snapshot "light" === the first
+    // client render), so a real SSR hydration would NOT mismatch on this markup.
+    window.matchMedia = vi
+      .fn()
+      .mockImplementation(darkStub) as typeof window.matchMedia;
+    try {
+      renderHeader();
+      expect(nameOf(getThemeToggle())).not.toBe(lightName);
+    } finally {
+      window.matchMedia = original;
+    }
   });
 });
