@@ -3,19 +3,34 @@
 > Persistent handoff. Update at every milestone. Source of truth is code/specs/
 > tests — if this conflicts, verify and fix this file.
 
-- **Last updated:** 2026-06-27 13:30 (Europe/Kyiv)
-- **Phase:** 6 COMPLETE (G6) — **THE GOAL MET: every eval dimension ≥ 90.** The eval-suite
-  (`project-factory:eval-judge`, maker≠checker, ship-unchanged bar 90) graded 14 cases →
-  **14 pass / 0 fail**; per-dimension 93–99, baseline locked `quality/eval-baseline.json`
-  (`node scripts/check-eval-ratchet.mjs` exit 0). Lifted the 3 sub-90: search-empty 59→96
-  (added `search.emptyHint` beneath the "Нічого не знайдено" title), compare-error 73→95
-  (forward guidance + de-enveloped the eval `produce()`), comfort-rationale 91→95 (bands
-  case 87→94: trip-framed green[1], de-spliced yellow[1]; band-disjointness intact). QA
-  proof pack authored under `docs/qa/` (traceability matrix, acceptance 9/9, manual test
-  plan, demo script, risk register; R-06 eval RESOLVED). 606 tests green; build/lint/
-  openspec strict clean; fresh `code-reviewer` PASS. **NEXT: Phase 7 (G7)** — global
-  review-gate + trajectory-eval + technical docs + NFRs-by-class (deploy-gated pending) +
-  deploy (env/user-gated). (history below kept):
+- **Last updated:** 2026-06-27 17:55 (Europe/Kyiv)
+- **Phase:** 7 autonomous portion COMPLETE (**G7 PASS**, deterministic) — global review +
+  release readiness. The **global review-gate** (whole codebase: correctness + security +
+  spec-compliance, each finding adversarially 2-lens verified → `docs/qa/global-review-
+  findings.json`) found 3 confirmed: a CRITICAL/MAJOR hourly-window **timezone bug**
+  (FR-FORECAST-03 — `nextHours` ignored the location's UTC offset, the mirror of the
+  FR-ANIM-02 isDaytime fix) + the SAME defect from the spec angle — BOTH **FIXED**
+  (commit 996a030: `nextHours` 4th param `utcOffsetSeconds`; 3 regression tests); plus a
+  CONTESTED-but-real MAJOR theme **hydration mismatch** (NFR-OBS-01 — `useState(()=>
+  matchMedia())` diverged SSR vs dark-OS client on the SSR'd AppHeader toggle) — **FIXED**
+  via `useSyncExternalStore` (server snapshot === first client render); one MINOR CSP
+  `unsafe-inline` item DEFERRED (R-08b, no XSS sink today). A fresh `code-reviewer`
+  verified both fixes PASS (maker≠checker). **Trajectory-eval**: 36/36 slice×dimension
+  judgements pass (`docs/qa/trajectory-eval-report.md`). qa:verify Overall **Pass** (610
+  tests = 589 unit/component + 21 integration), `npm audit` 0 vulns, no secrets in
+  history, `check-traceability --release --strict-tests` + `--check-fresh` + `check-
+  trajectory --release` all exit 0. Technical docs (`docs/technical/{architecture,
+  deployment}.md`) + `docs/qa/delivery-report.md` authored. NFRs verified local /
+  explicitly deploy-gated (Lighthouse perf+a11y, p95 TTFB, browser-axe, recordings).
+  NB: there are **no `queries.ts`/`service.ts` files** — the keyless fetch + orchestration
+  live in the three route handlers (documented in architecture.md). **REMAINING
+  (user-gated): deploy to Vercel + create the git remote + push (CI runs on push).** No
+  remote configured; deploy is keyless (zero env secrets). **NEXT: user authorizes
+  deploy/push** → then G7's deploy + CI + live smoke-check close. An unrelated
+  "factory-glass" process is concurrently editing `package.json` + `.claude/` + `tools/`
+  (NOT ours — excluded from every commit).
+- **G6 (THE GOAL, COMPLETE):** every eval dimension ≥ 90 — 14/14 cases pass, baseline
+  locked `quality/eval-baseline.json`; ratchet exit 0. (history below kept):
   weekend-compare review FIXED a CRITICAL per-city-abort/strand bug + major failed-retry
   (+ shared `keyOf` in lib/location/key.ts, precip clamp). Then Phase 5 + Phase 6 (≥90
   goal) + Phase 7. Eval grading of all per-slice eval cases happens together in Phase 6
