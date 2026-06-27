@@ -3,14 +3,16 @@
 > Persistent handoff. Update at every milestone. Source of truth is code/specs/
 > tests — if this conflicts, verify and fix this file.
 
-- **Last updated:** 2026-06-27 00:08 (Europe/Kyiv)
-- **Phase:** 4 in progress — 8/9 slices DONE & archived (app-shell, comfort-score,
-  top-clock, bottom-jokes, city-search, forecast, map, animated-bg — each review-gate
-  CLEAN). animated-bg review FIXED a real FR-ANIM-02 bug (day/night now follows the
-  LOCATION's `utc_offset_seconds`, not the viewer's clock). 509 tests green. LAST slice:
-  weekend-compare (spec ✅). Then Phase 5 + Phase 6 eval-suite (≥90 goal) + Phase 7.
-  Eval grading of all per-slice eval cases happens together in Phase 6 (eval-suite,
-  threshold 90).
+- **Last updated:** 2026-06-27 11:02 (Europe/Kyiv)
+- **Phase:** 4 COMPLETE — ALL 9/9 capability slices DONE & archived, each review-gate
+  CLEAN (app-shell, comfort-score, top-clock, bottom-jokes, city-search, forecast, map,
+  animated-bg, weekend-compare). 564 tests green; lint/build/openspec/trace clean; `/`
+  stays static. NEXT: **Phase 5** (cross-cutting integration + full battery + coverage
+  baseline) → **Phase 6** eval-suite ≥90 over 13 copy dimensions (THE GOAL) → Phase 7.
+  weekend-compare review FIXED a CRITICAL per-city-abort/strand bug + major failed-retry
+  (+ shared `keyOf` in lib/location/key.ts, precip clamp). Then Phase 5 + Phase 6 (≥90
+  goal) + Phase 7. Eval grading of all per-slice eval cases happens together in Phase 6
+  (eval-suite, threshold 90).
 - map added: `app/api/reverse-geocode` (Nominatim, ADR-0005) + client-only Leaflet
   (dynamic ssr:false). NOTE for later slices: `lib/location/url.ts serialize()` now
   emits PLAIN decimal (no exponent) so any coord round-trips DOT_DECIMAL; Leaflet
@@ -133,6 +135,101 @@
 - Build verified: `/` STAYS static (`WeatherBackground` is a client island under the
   static page); NO new dependency (`package.json` unchanged); NO `api.open-meteo.com`
   host/key in `.next/static` from animated-bg (it issues no fetch).
+
+### add-weekend-compare conventions (LOCKED — the LAST capability slice, no new ADR)
+- **Pin state — `components/providers/PinProvider.tsx` (`"use client"`, D1):** `usePins()
+  → { pins: PinnedCity[] (0..3), pin, unpin, isPinned, atCap }`. `PinnedCity` IS the
+  locked `Location` ({lat,lon,name}). Dedupe + the **max-3 cap** live in the provider
+  (unit-tested off-component, the component cannot bypass them); a 4th `pin` is a
+  **no-op** surfacing `atCap` (never throws, never silently swallows). Dedupe by
+  `keyOf(loc) = "${lat.toFixed(4)},${lon.toFixed(4)}"` — now the SINGLE shared identity
+  in **`lib/location/key.ts`** (a Location identity's natural home; `lib/compare/key.ts`
+  re-exports it and `ForecastSection` imports it, so the forecast cache, the pin list,
+  the per-city compare cache, and `buildCompareRow` all key on ONE function — review
+  finding #3). In-memory ONLY (ADR-0003, BC-PRIVACY-03) —
+  no cookies / localStorage / server store; resets on reload (a test spies on
+  `Storage.setItem` + `document.cookie` to prove it). `usePins()` returns a SAFE
+  empty-list default outside a provider (mirrors `useLocation`/`useWeather`/`useTheme`).
+  Mounted ONCE in `app/layout.tsx` INSIDE `LocationProvider` (alongside `WeatherProvider`,
+  wrapping `{children}`) so the chip row + table share it; `app/page.tsx` UNTOUCHED.
+- **Pure layer `lib/compare/{key,weekend,row}.ts`** (framework-free, TC-PURE-01, total,
+  never throws): `selectWeekend(forecast): { saturday, sunday }` finds the upcoming
+  **Saturday** (weekday 6) + its **CONSECUTIVE Sunday** (Sat+1 calendar day) by the
+  location-local `time` date via a FIXED `Date.UTC(y,m-1,d)` parse — NEVER `toISOString`,
+  NEVER `new Date("YYYY-MM-DD")`, NEVER the viewer's clock (FR-COMFORT-05; mirrors the
+  locked `upcomingWeekend`/`localWeekday`). Anchors on the FIRST weekend day so a leading
+  Sunday tail is NOT paired with a different week's Saturday (the split-weekend trap);
+  degrades to `{ null, <Sunday> }` / `{ <Sat>, null }` / `{ null, null }`.
+  `buildCompareRow(city, state): CompareRow` (`state = loading|failed|{ok,forecast}`) is
+  the pure display model the table renders: per Sat/Sun `DayCells` carrying the
+  **nullable** numbers as-is (a present `0%` precip stays `0`; an ABSENT precip stays
+  `null` → em-dash; extreme negatives keep their sign), `comfortValue =
+  comfortScore(toComfortInput(day)).value` (REUSES comfort-score, no local copy). BOTH
+  Sat+Sun null → `status: "out-of-range"`; `key`/`name` always present so a column
+  header renders in every state.
+- **`components/compare/CompareSection.tsx` (`"use client"`, D2)** fills the shell
+  `data-slot="compare"` (REPLACED the inert stub in `ShellContent.tsx`; `app/page.tsx`
+  UNTOUCHED — client-driven per the ARCHITECTURE LESSON). A controls header (the "Pin
+  this city" button — pins `useLocation().location`, lives in the compare/chip-row area
+  per D1, disabled at cap / no-location with `compare.cap` as its hint — + the "Compare
+  weekend" toggle, `role=switch`/`aria-checked`); a chip row (one chip per pin + a named
+  `compare.unpin {city}` control, NOT rendered when empty); and on toggle-on a real
+  sticky-header 3-column `<table>` (`<th scope=col>` per city, `<th scope=row>` per
+  Sat/Sun × hi/lo/precip/comfort) with a `ComfortBadge` per present day. Each column's
+  "make active" button calls the locked `setLocation(city)` (keeps all pins, does not
+  close the table); the active column (its `keyOf` == the active location's) carries
+  `aria-current` + a NON-COLOR cue (the `compare.active` marker AND the disabled active
+  control) that MOVES when another is made active. Empty (no pins) → the calm
+  `compare.empty` Notice, NO fetch; a failed city → calm `forecast.precipPlaceholder`
+  ("—") cells + a calm `compare.error` label, the OTHER columns intact, console silent.
+- **Parallel per-city fetch over the REUSED `/api/forecast` route (D4, TC-DATA-01,
+  NFR-COST-01) — review-gate-HARDENED:** on the pinned-SET changing, each city whose
+  cache entry is ABSENT or `"failed"` (so a failed city RETRIES on a later effect run /
+  re-pin) and not already in flight is fetched via `GET /api/forecast?lat=&lon=` (NO new
+  endpoint, NEVER Open-Meteo directly) IN PARALLEL (`Promise.allSettled` — NEVER a
+  waterfall). The CRITICAL fix: a **PER-CITY `AbortController`** (a `Map` keyed by
+  `keyOf`); on a pin-set change the effect aborts ONLY controllers for cities that LEFT
+  the set (and drops their cache + in-flight entries so a re-pin re-fetches), NEVER a
+  still-pinned in-flight request — the old single shared controller aborted EVERY
+  request on any pin/unpin, stranding the survivors on "loading" forever. A resolution
+  is discarded (no stale cache) when the request was aborted, the component unmounted,
+  or the city is no longer in the LIVE `pinKeysRef` membership set (synced after each
+  commit, not a stale closure). Controller/in-flight bookkeeping lives in the EFFECT
+  BODY (side effects), never inside a `setCache` updater (updaters stay pure). Each
+  city's `CityForecastState` is held in an in-memory **per-city** map (`keyOf → state`,
+  ADR-0003); a successfully-cached city is not re-fetched. Two regression tests guard
+  it (proven to FAIL on the old shared-controller code): (a) pinning a 3rd city while 2
+  are in flight aborts NEITHER survivor (asserted on the captured signals) and all
+  three resolve; (b) a failed city re-fetches + renders after unpin + re-pin. Build
+  verified: `/` STAYS static (`CompareSection` is a client island), NO new dependency
+  (`package.json` unchanged), NO `api.open-meteo.com` host/key in `.next/static`, and
+  `.next/server/app/api` holds only `forecast`/`geocode`/`reverse-geocode` (compare
+  added NO route). Precip cells are CLAMPED to 0..100 before formatting (FR-COMPARE-02
+  valid range); an absent value still shows the em-dash.
+- **i18n `compare.*`** (`lib/i18n/{uk,en}.ts`, sibling to `forecast.*`/`comfort.*`,
+  never reaching into `shell.*`): `sectionLabel` (the section's accessible name — kept
+  DISTINCT from `toggle.label` so a query for the toggle never matches the section
+  wrapper), `toggle.label`, `pin`, `unpin`, `makeActive`, `active`, `cap`,
+  `header.{saturday,sunday,hiLo,precip,comfort}`, `empty.{title,description}`
+  (EVAL-GRADED, ≥90), `error`. Missing-data placeholder REUSES `forecast.precipPlaceholder`
+  ("—"). No exclamation marks (BC-BRAND-01, swept by `i18n.test.ts`). Eval case
+  `evals/cases/compare-copy.eval.ts` authored (graded in Phase 6, maker≠checker).
+- **ALL 9 capability slices are now implemented.** weekend-compare added 55 tests
+  (`lib/compare/{weekend,row}.test.ts`, `PinProvider.test.tsx`, `CompareSection.test.tsx`
+  incl. the 2 per-city-abort/strand + failed-retry regressions) → **564 total green**.
+  The review gate (8 findings: 1 CRITICAL + 1 major + minors) was addressed: the
+  per-city abort/cache rework above (CRITICAL strand + major no-retry), the dead
+  make-active `useReducer` tick replaced by a plain local re-render with an accurate
+  comment (the cue still moves under the mocked-provider test), `keyOf` moved to the
+  shared `lib/location/key.ts` (finding #3), the precip clamp (finding #4), and the
+  softened tasks.md 6.2 import-boundary wording (finding #5; the `lib/compare`
+  framework-free boundary is held by the `lib/` convention + the pure colocated tests,
+  not a dedicated eslint rule). The reviewer CONFIRMED the `ShellContent.test.tsx`
+  adaptation (assert the shell empty Notice by COPY, since the compare empty state is
+  now a legitimate `role="status"` Notice) is correct, not a weakening. NO other
+  upstream behavior changed (the `/api/forecast` route, `comfort.ts`, `ComfortBadge`
+  consumed as-is; `ForecastSection` only swapped its local `keyOf` for the shared one).
+  Next: the remaining gates (re-review, eval-suite ≥90, archive).
 
 ## add-app-shell conventions (LOCKED — Wave 1+ slices reuse these)
 

@@ -10,6 +10,7 @@
 // forecast / map / compare slots filled by later waves — so those slices edit
 // their own slot files, never `app/page.tsx` (§3a serialize point).
 import { useLocation } from "@/components/providers/LocationProvider";
+import { CompareSection } from "@/components/compare/CompareSection";
 import { ForecastSection } from "@/components/forecast/ForecastSection";
 import { LocationMap } from "@/components/map/LocationMap";
 import { SearchHero } from "@/components/shell/SearchHero";
@@ -35,12 +36,13 @@ export function ShellContent() {
         ) : (
           // Located layout: the forecast slice fills the forecast slot (it may span
           // grid columns for the wider daily grid + chart); the map fills its slot
-          // (the client-only Leaflet map via dynamic ssr:false, FR-MAP-05); compare
-          // remains an inert placeholder owned by a later wave.
+          // (the client-only Leaflet map via dynamic ssr:false, FR-MAP-05); the
+          // weekend-compare slice fills the compare slot (the chip row + toggle +
+          // sticky Sat/Sun table, client-driven off usePins()/useLocation()).
           <>
             <ForecastSection />
             <LocationMap />
-            <div data-slot="compare" aria-hidden="true" />
+            <CompareSection />
           </>
         )}
       </section>

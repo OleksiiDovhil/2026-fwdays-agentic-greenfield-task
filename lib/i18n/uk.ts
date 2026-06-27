@@ -305,6 +305,62 @@ export const uk = {
       "Веселка зʼявляється рівно тоді, коли вже й не сподіваєшся, і трохи вибачається за спізнення.",
     ],
   },
+  compare: {
+    // Weekend-compare namespace (D6, add-weekend-compare) — sibling to shell.*,
+    // never reaching into it. Carries EVERY user-visible compare string: the
+    // toggle / pin / unpin / make-active control labels, the table headers, the
+    // active-column marker, the calm 3-city cap message, the EVAL-GRADED empty
+    // "pin a city" state, and the calm per-column error copy. The neutral
+    // missing-data placeholder REUSES forecast.precipPlaceholder ("—") — not added
+    // here. Calm, practical tone; no exclamation marks (BC-BRAND-01, enforced
+    // across both locales by lib/i18n/i18n.test.ts). City names come from the
+    // resolved location data, not i18n (exempt). The empty.* and error copy is
+    // EVAL-GRADED (compare-copy.eval.ts, target ≥ 90).
+    // Accessible region name for the compare section (NFR-A11Y-01) — DISTINCT from
+    // the toggle label, so a query for the toggle's accessible name never matches
+    // the section wrapper.
+    sectionLabel: "Порівняння міст на вихідні",
+    toggle: {
+      // Accessible name + visible label for the "Compare weekend" toggle. Its
+      // on/off state is exposed via aria-pressed (the label itself stays stable).
+      label: "Порівняти вихідні",
+    },
+    // The "Pin this city" button label (pins the active location, D1). Disabled at
+    // the cap and when there is no active location to pin.
+    pin: "Закріпити це місто",
+    // The chip remove control — name-templated: the component composes
+    // "Відкріпити {city}" as the accessible label (the city name is appended).
+    unpin: "Відкріпити",
+    // The per-column "make active" control — name-templated: the component composes
+    // "Зробити активним {city}" as the accessible label.
+    makeActive: "Зробити активним",
+    // The non-color active-column marker (shown in/near the active column header in
+    // addition to aria-current, so the active column is identifiable without color).
+    active: "Активне",
+    // The calm 3-city cap message (surfaced when a fourth pin is refused; also the
+    // pin button's accessible hint at the cap). No exclamation mark (BC-BRAND-01).
+    cap: "Можна порівнювати до трьох міст. Щоб додати інше, спершу відкріпіть одне.",
+    header: {
+      // Table headers — Saturday / Sunday row groups and the metric labels.
+      saturday: "Субота",
+      sunday: "Неділя",
+      hiLo: "Макс / мін",
+      precip: "Опади",
+      comfort: "Комфорт",
+    },
+    empty: {
+      // EVAL-GRADED empty "pin a city" state (≥ 90): a calm state shown in place of
+      // the comparison table that guides the visitor to pin a city — never an error
+      // or a dead end. No exclamation mark (BC-BRAND-01).
+      title: "Поки немає міст для порівняння",
+      description:
+        "Закріпіть кілька міст, щоб порівняти їхню погоду на найближчі вихідні поруч.",
+    },
+    // The calm per-column error copy (one city's weekend forecast could not load).
+    // Inline, blame-free, never a toast; the other columns stay intact. The data is
+    // simply unavailable for now — the visitor did nothing wrong (NFR-OBS-01).
+    error: "Дані для цього міста зараз недоступні.",
+  },
 } as const;
 
 export default uk;

@@ -12,6 +12,12 @@
 // (siblings in `app/page.tsx`, so the provider must wrap both). It holds no fetch
 // and no persistence (ADR-0003).
 //
+// PinProvider (add-weekend-compare D1) is the small in-memory pinned-city list the
+// compare chip row + table read. It also nests INSIDE LocationProvider (so a "pin"
+// can capture `useLocation().location` and "make active" can call `setLocation`),
+// alongside WeatherProvider, wrapping `{children}`. In-memory only, no persistence
+// (ADR-0003); it resets on reload.
+//
 // LocationProvider reads `useSearchParams`, which Next 16 requires to sit inside
 // a `<Suspense>` boundary (otherwise the route deopts to client rendering / warns
 // — design.md "Risks"). The boundary wraps the provider subtree here.
@@ -20,6 +26,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 import "./globals.css";
 import { LocationProvider } from "@/components/providers/LocationProvider";
+import { PinProvider } from "@/components/providers/PinProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { WeatherProvider } from "@/components/providers/WeatherProvider";
 import { t } from "@/lib/i18n";
@@ -53,7 +60,9 @@ export default function RootLayout({
         <ThemeProvider>
           <Suspense fallback={null}>
             <LocationProvider>
-              <WeatherProvider>{children}</WeatherProvider>
+              <WeatherProvider>
+                <PinProvider>{children}</PinProvider>
+              </WeatherProvider>
             </LocationProvider>
           </Suspense>
         </ThemeProvider>

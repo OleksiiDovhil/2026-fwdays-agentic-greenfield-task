@@ -385,6 +385,7 @@
       ],
       "planned": true,
       "tests": [
+        "lib/compare/weekend.test.ts",
         "lib/scoring/weekend.test.ts",
         "components/comfort/WeekendHighlight.test.tsx",
         "components/forecast/ForecastSection.test.tsx"
@@ -445,48 +446,45 @@
     {
       "id": "FR-COMPARE-01",
       "specs": [
-        "openspec/specs/weekend-compare/spec.md",
-        "openspec/changes/add-weekend-compare/specs/weekend-compare/spec.md"
+        "openspec/specs/weekend-compare/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/compare/CompareSection.test.tsx",
+        "components/providers/PinProvider.test.tsx",
+        "evals/cases/compare-copy.eval.ts",
+        "evals/cases/compare-copy.eval.ts"
+      ],
       "recordings": []
     },
     {
       "id": "FR-COMPARE-02",
       "specs": [
-        "openspec/specs/weekend-compare/spec.md",
-        "openspec/changes/add-weekend-compare/specs/weekend-compare/spec.md"
+        "openspec/specs/weekend-compare/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "lib/compare/row.test.ts",
+        "lib/compare/weekend.test.ts",
+        "components/compare/CompareSection.test.tsx",
+        "components/compare/CompareSection.test.tsx"
+      ],
       "recordings": []
     },
     {
       "id": "FR-COMPARE-03",
       "specs": [
-        "openspec/specs/weekend-compare/spec.md",
-        "openspec/changes/add-weekend-compare/specs/weekend-compare/spec.md"
+        "openspec/specs/weekend-compare/spec.md"
       ],
       "planned": true,
-      "tests": [],
+      "tests": [
+        "components/compare/CompareSection.test.tsx"
+      ],
       "recordings": []
     }
   ],
   "failures": [],
   "warnings": [
-    {
-      "check": "test-trace",
-      "msg": "FR-COMPARE-01 has no test annotated \"@trace FR-COMPARE-01\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-COMPARE-02 has no test annotated \"@trace FR-COMPARE-02\""
-    },
-    {
-      "check": "test-trace",
-      "msg": "FR-COMPARE-03 has no test annotated \"@trace FR-COMPARE-03\""
-    },
     {
       "check": "recording-evidence",
       "msg": "FR-SHELL-01 is not referenced by any recording manifest under docs/qa/"
@@ -618,10 +616,6 @@
     {
       "check": "recording-evidence",
       "msg": "FR-COMPARE-03 is not referenced by any recording manifest under docs/qa/"
-    },
-    {
-      "check": "active-changes",
-      "msg": "active change \"add-weekend-compare\" is not archived"
     }
   ]
 }

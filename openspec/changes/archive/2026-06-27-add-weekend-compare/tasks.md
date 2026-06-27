@@ -9,7 +9,7 @@
 > `upcomingWeekend`/`ComfortBadge`, and the shell's `data-slot="compare"` slot. No
 > exclamation marks anywhere (BC-BRAND-01, NFR-I18N-01).
 
-- [ ] 1.1 i18n (D6): add a small sibling `compare.*` namespace to `lib/i18n/uk.ts`
+- [x] 1.1 i18n (D6): add a small sibling `compare.*` namespace to `lib/i18n/uk.ts`
   + `lib/i18n/en.ts` (sibling to `forecast.*`/`comfort.*` — never edit `shell.*`),
   Ukrainian-first, calm, **no exclamation marks**: `compare.toggle.label` (+ on/off
   state text if not derived from `aria-pressed`), `compare.header.{saturday,sunday,
@@ -22,7 +22,7 @@
   ("—") — do NOT add a new one. Mirror every key in `en.ts` (strict fallback subset,
   identical shape). The existing `lib/i18n/i18n.test.ts` no-`!` sweep covers the
   added keys automatically.
-- [ ] 1.2 `components/providers/PinProvider.tsx` (`"use client"`, D1) — a tiny
+- [x] 1.2 `components/providers/PinProvider.tsx` (`"use client"`, D1) — a tiny
   in-memory `PinContext` exposing `{ pins: PinnedCity[]; pin: (city) => void; unpin:
   (key: string) => void; isPinned: (key: string) => boolean; atCap: boolean }` where
   `PinnedCity` is the LOCKED `Location` (`{ lat, lon, name }`) IMPORTED from
@@ -37,12 +37,12 @@
   (`{ pins: [], pin: () => {}, unpin: () => {}, isPinned: () => false, atCap: false }`)
   outside a provider so a stray consumer never crashes (mirroring `useLocation`/
   `useTheme`).
-- [ ] 1.3 Mount `<PinProvider>` once in `app/layout.tsx` (D1) — **inside** the
+- [x] 1.3 Mount `<PinProvider>` once in `app/layout.tsx` (D1) — **inside** the
   existing `<LocationProvider>`, wrapping `{children}`, so the pin list is in scope
   for the whole located subtree (the chip row + the table). `app/layout.tsx` is the
   providers' home (it already mounts `ThemeProvider` + `LocationProvider`); this is
   the analogous minimal edit. Do **NOT** edit `app/page.tsx` (§3a serialize point).
-- [ ] 1.4 Decide + record the **pin-button placement** (D1): the "Pin this city"
+- [x] 1.4 Decide + record the **pin-button placement** (D1): the "Pin this city"
   button pins `useLocation().location` and lives in the **compare/chip-row area**
   (beside the "Compare weekend" toggle), NOT in the search box or each day card.
   Record the decision in a code comment in `CompareSection`. The button is disabled
@@ -60,7 +60,7 @@
 > Import `Forecast`/`DailyForecast` from `lib/forecast/types.ts` and `comfortScore`/
 > `toComfortInput` from the locked modules (do NOT redefine).
 
-- [ ] 2.1 `lib/compare/weekend.ts` (D3, FR-COMPARE-02) — a pure, **total**
+- [x] 2.1 `lib/compare/weekend.ts` (D3, FR-COMPARE-02) — a pure, **total**
   `selectWeekend(forecast: Forecast | null | undefined): { saturday: DailyForecast |
   null; sunday: DailyForecast | null }` that finds the upcoming **Saturday**
   (weekday 6) in `forecast.days` and its **consecutive Sunday** (Saturday + 1
@@ -70,7 +70,7 @@
   <first Sunday> }`; neither in the window (short / out-of-range `days`) →
   `{ saturday: null, sunday: null }`. Never throws. Returns the `DailyForecast`
   objects so the row builder reads their fields (consistent with `upcomingWeekend`).
-- [ ] 2.2 `lib/compare/row.ts` (D3, FR-COMPARE-02) — a pure, **total**
+- [x] 2.2 `lib/compare/row.ts` (D3, FR-COMPARE-02) — a pure, **total**
   `buildCompareRow(city: Location, state: CityForecastState): CompareRow` where
   `CityForecastState = { status: "loading" } | { status: "failed" } | { status:
   "ok"; forecast: Forecast }`, `DayCells = { tempMax: number | null; tempMin: number
@@ -101,7 +101,7 @@
 > `app/page.tsx` (§3a). All copy from `compare.*` (no `!`); the placeholder is
 > `forecast.precipPlaceholder`.
 
-- [ ] 4.1 `components/compare/CompareSection.tsx` (`"use client"`, D2) — the slot
+- [x] 4.1 `components/compare/CompareSection.tsx` (`"use client"`, D2) — the slot
   fill. Read `usePins()` + `useLocation()`. Render: a **chip row** above the
   forecast (one chip per pinned city: the resolved city name + a keyboard-operable,
   **named** unpin control `aria-label` from `compare.unpin`), the **"Pin this city"**
@@ -110,7 +110,7 @@
   spec's "hidden when nothing is pinned"). Then in §4.3 REPLACE the `ShellContent`
   compare-slot stub with `<CompareSection/>` (the only shell edit; no other shell
   change; do NOT edit `app/page.tsx`).
-- [ ] 4.2 Per-city forecast fetch — **parallel, reused route, per-city cache** (D4,
+- [x] 4.2 Per-city forecast fetch — **parallel, reused route, per-city cache** (D4,
   TC-DATA-01, NFR-COST-01): on the **set of pinned cities** changing, fetch each
   not-yet-cached city's `/api/forecast?lat=&lon=` **in parallel** (`Promise.all` /
   `Promise.allSettled` so one failure does not reject the batch — **no waterfall**),
@@ -121,11 +121,11 @@
   with the client belt `ForecastSection` uses (typed `{ error }` / unreadable /
   zero-day → `failed`). REUSE the route — add **no** endpoint, no direct Open-Meteo
   call.
-- [ ] 4.3 The **"Compare weekend" toggle** (D2, FR-COMPARE-02): a real toggle
+- [x] 4.3 The **"Compare weekend" toggle** (D2, FR-COMPARE-02): a real toggle
   exposing its on/off state to AT (`aria-pressed` on a `<button>` or a labelled
   `role="switch"`). OFF → the normal forecast view (the table is NOT shown), pins
   intact; ON → the table (§4.4). Toggling off keeps the chip row + pins unchanged.
-- [ ] 4.4 The **sticky 3-column table** (D2/D6, FR-COMPARE-02/03): a real `<table>`
+- [x] 4.4 The **sticky 3-column table** (D2/D6, FR-COMPARE-02/03): a real `<table>`
   — one `<th scope="col">` per pinned city in a **sticky header** (`sticky top-0`),
   `<th scope="row">` row headers for Saturday / Sunday × (hi/lo, precip, comfort).
   Build each column from `buildCompareRow(city, state)` (§2.2). Cells: hi/lo °C via
@@ -134,7 +134,7 @@
   absent `null` → `forecast.precipPlaceholder` (NEVER a misleading "0%"); a
   **`ComfortBadge`** per present day. Up to three columns; a single pin → a
   one-column table (still valid, not empty/error).
-- [ ] 4.5 Per-column **sticky header + "make active"** (D5, FR-COMPARE-03,
+- [x] 4.5 Per-column **sticky header + "make active"** (D5, FR-COMPARE-03,
   NFR-A11Y-01/02): each header shows the city name **constrained to the column**
   (`truncate` + a `title`/`aria-label` carrying the FULL name so a long name like
   `Кам'янець-Подільський` does not overflow or hide the button) and a **"make
@@ -147,7 +147,7 @@
   city active again is a **no-op** (disable the active column's button); the cue MUST
   move to the new column when another is made active. Do not unpin / close the table
   on make-active.
-- [ ] 4.6 **Empty / loading / error states** (D2, NFR-OBS-01): zero pins → a calm
+- [x] 4.6 **Empty / loading / error states** (D2, NFR-OBS-01): zero pins → a calm
   `<Notice variant="empty">` with the EVAL-GRADED `compare.empty.*` copy guiding the
   visitor to pin a city (not an empty table). A still-loading or failed city → calm
   per-cell `forecast.precipPlaceholder` ("—") placeholders, and for a wholly-failed
@@ -165,36 +165,36 @@
 > real network. Use stable `data-slot`/`data-testid`/`role` hooks so assertions are
 > objective.
 
-- [ ] 5.1 Unit `lib/compare/weekend.test.ts` (FR-COMPARE-02, D3): from a mocked
+- [x] 5.1 Unit `lib/compare/weekend.test.ts` (FR-COMPARE-02, D3): from a mocked
   `Forecast`, assert `selectWeekend` picks the **upcoming Saturday + its consecutive
   Sunday** by the location-local `time` date; assert the **location-not-viewer-clock**
   basis (a `time` set so a naive `new Date(string)` would shift the day still selects
   the correct Sat/Sun — fixed-`Date.UTC` parse); assert the degrade cases (Sunday
   tail only → `{ saturday: null, sunday: <Sunday> }`; short / out-of-window `days` →
   `{ null, null }`); no throw. `@trace FR-COMPARE-02`.
-- [ ] 5.2 Unit `lib/compare/row.test.ts` (FR-COMPARE-02, D3): assert `buildCompareRow`
+- [x] 5.2 Unit `lib/compare/row.test.ts` (FR-COMPARE-02, D3): assert `buildCompareRow`
   builds the model for `ok` (Sat/Sun cells with the nullable numbers + `comfortValue`
   from `comfortScore`), `loading`, `failed`, and `out-of-range` (both Sat/Sun null);
   assert a **present `0%` stays `0`** while an **absent precip stays `null`** (the
   zero-vs-absent rule); assert an **extreme negative** hi/lo is carried with its sign
   (e.g. `tempMax: -12`, `tempMin: -20`); no throw on any input. `@trace FR-COMPARE-02`.
-- [ ] 5.3 Unit `components/providers/PinProvider.test.tsx` (FR-COMPARE-01, D1):
+- [x] 5.3 Unit `components/providers/PinProvider.test.tsx` (FR-COMPARE-01, D1):
   drive `usePins()` (a test harness component) and assert **add** (pin → `pins`
   contains the city), **dedupe** (pinning the same `lat`/`lon` twice → one entry),
   **max-3** (a fourth pin is a no-op; `pins.length` stays 3, `atCap` true), and
   **remove** (unpin by key → the city is gone). Assert the safe empty-list default
   outside a provider. `@trace FR-COMPARE-01`.
-- [ ] 5.4 jsdom `components/compare/CompareSection.test.tsx` — **chip row** renders /
+- [x] 5.4 jsdom `components/compare/CompareSection.test.tsx` — **chip row** renders /
   removes pins / hidden-when-empty (FR-COMPARE-01, D2): seed `PinProvider` with
   cities and assert one chip per city (city name + a named unpin control); clicking
   unpin removes that chip; with zero pins the chip row is **not rendered** and the
   empty state shows. Assert the cap message appears (and the pin button is disabled)
   at 3 pins. `@trace FR-COMPARE-01`.
-- [ ] 5.5 jsdom **toggle switches to the table** (FR-COMPARE-02, D2): with cities
+- [x] 5.5 jsdom **toggle switches to the table** (FR-COMPARE-02, D2): with cities
   pinned and `fetch` mocked, assert OFF shows the normal view (no table) and ON shows
   the comparison `<table>`; assert the toggle exposes its on/off state to AT
   (`aria-pressed`/`role="switch"`); toggling off keeps the pins. `@trace FR-COMPARE-02`.
-- [ ] 5.6 jsdom **table shows 3 columns from a PARALLEL `/api/forecast`**
+- [x] 5.6 jsdom **table shows 3 columns from a PARALLEL `/api/forecast`**
   (FR-COMPARE-02, D4): mock `fetch` to return a distinct `{ forecast }` per city
   (`lat`/`lon` keyed); pin three cities, toggle on, and assert the table renders
   **three columns** each with Saturday + Sunday **hi/lo °C**, **precip %**, and a
@@ -204,7 +204,7 @@
   order). Assert a **present `0%`** renders "0%" and an **absent precip** renders the
   "—" placeholder; assert a **negative** hi/lo renders with its sign + `°C`. `@trace
   FR-COMPARE-02`.
-- [ ] 5.7 jsdom **"make active" calls `setLocation`** + active-column cue
+- [x] 5.7 jsdom **"make active" calls `setLocation`** + active-column cue
   (FR-COMPARE-03, D5): mock `useLocation()` with a spy `setLocation`; pin three
   cities, toggle on, press a column's "make active" and assert `setLocation` was
   called with THAT city; assert the active column's header carries `aria-current` +
@@ -212,7 +212,7 @@
   the cue **moves** when another column is made active; assert all three stay pinned.
   Assert a **long city name** is truncated but its FULL name is AT-available
   (`title`/`aria-label`) and the button stays operable. `@trace FR-COMPARE-03`.
-- [ ] 5.8 jsdom **empty state** + **calm error on a failed city** + console silence
+- [x] 5.8 jsdom **empty state** + **calm error on a failed city** + console silence
   (NFR-OBS-01, FR-COMPARE-02, D2): with zero pins assert the calm `<Notice variant=
   "empty">` "pin a city" copy (no table); then with cities pinned and ONE city's
   `fetch` rejecting / returning a typed `{ error }`, assert that column shows calm
@@ -220,7 +220,7 @@
   **no** error toast / uncaught exception, and the console stays clean (no
   `console.error`/`console.warn`) across pin → cap → unpin → toggle → make-active.
   `@trace NFR-OBS-01, FR-COMPARE-02`.
-- [ ] 5.9 EVAL `evals/cases/compare-copy.eval.ts` (D6, the empty-state + error copy
+- [x] 5.9 EVAL `evals/cases/compare-copy.eval.ts` (D6, the empty-state + error copy
   quality, target ≥ 90): a `scenario` + async `produce()` that returns the
   user-visible **empty-state** copy (`compare.empty.*`) and the **per-cell/column
   error** copy (`compare.error.*`) — driving the i18n layer / a pure helper, NOT the
@@ -231,34 +231,42 @@
 
 ## 6. Validation, docs, and archive prep
 
-- [ ] 6.1 Write the §5 tests FIRST and confirm they FAIL (red) for the right reason
+- [x] 6.1 Write the §5 tests FIRST and confirm they FAIL (red) for the right reason
   (missing modules / unimplemented branches, not weak assertions), then implement
   §§1–4 to green (test-first per AGENTS.md). Never weaken a test to pass it; if a
   test contradicts the spec, change it deliberately, not silently.
-- [ ] 6.2 Run `npm run lint` — zero errors/warnings (incl. the import-boundary
-  check: `lib/compare` has no `next/*`/`react`/DOM imports, TC-PURE-01; no inline UI
-  literals, NFR-I18N-01; **no new dependency** added, NFR-PERF-03/DX-01; **no
-  `fetch` to `api.open-meteo.com` and no new route** in compare — the route is
-  REUSED, TC-DATA-01/NFR-COST-01).
-- [ ] 6.3 Run `npm run test:run` — all unit + jsdom component tests green, INCLUDING
-  the new `lib/compare`, `PinProvider`, and `CompareSection` tests, and the existing
-  suites unchanged (no upstream component was modified — `ForecastSection`, the
-  route, `comfort.ts` are consumed as-is).
-- [ ] 6.4 Run `npm run build` — production build succeeds; console clean. Confirm
+- [x] 6.2 Run `npm run lint` — zero errors/warnings. The `lib/compare`
+  framework-free boundary (no `next/*`/`react`/DOM imports, TC-PURE-01) is NOT a
+  dedicated eslint rule in this repo — it is upheld by the `lib/` convention, by
+  review, and by the colocated PURE unit tests (`weekend.test.ts`/`row.test.ts` run
+  framework-free over mocked input, so a stray React/DOM import would surface there).
+  Likewise verified by review/grep, not a custom lint rule: no inline UI literals
+  (NFR-I18N-01); **no new dependency** added (NFR-PERF-03/DX-01); and **no `fetch` to
+  `api.open-meteo.com` and no new route** in compare — the `/api/forecast` route is
+  REUSED (TC-DATA-01/NFR-COST-01), confirmed by `grep` over `.next/static` +
+  `.next/server/app/api`.
+- [x] 6.3 Run `npm run test:run` — all unit + jsdom component tests green, INCLUDING
+  the new `lib/compare`, `PinProvider`, and `CompareSection` tests (+ the per-city
+  abort/strand + failed-retry regression tests), and the existing suites unchanged.
+  The shared `keyOf` was MOVED to `lib/location/key.ts` (a pure move; `lib/compare/
+  key.ts` re-exports it and `ForecastSection` imports it — all forecast + compare
+  tests stay green); no other upstream behavior changed (the route, `comfort.ts`,
+  `ComfortBadge` are consumed as-is).
+- [x] 6.4 Run `npm run build` — production build succeeds; console clean. Confirm
   `app/page.tsx` stays **static** (the ARCHITECTURE LESSON — `CompareSection` is a
   client island under the static page), the client bundle carries **no new
   dependency** and **no new `api.open-meteo.com` reference / key / route** from
   compare (NFR-COST-01, NFR-PERF-03), and no significant new chunk is added (plain
   HTML table + reused primitives).
-- [ ] 6.5 Run `node scripts/check-eval-ratchet.mjs` (the graded-quality bar) — no
+- [x] 6.5 Run `node scripts/check-eval-ratchet.mjs` (the graded-quality bar) — no
   dimension regresses. The §5.9 compare-copy eval is graded by the eval-suite judge
   (maker≠checker); the maker does NOT self-grade — record the eval case as authored,
   and if `evals/results/latest.json` is absent record SKIP-with-note (the ratchet
   must not drop on existing dimensions).
-- [ ] 6.6 Run `npx openspec validate add-weekend-compare --strict` — zero
+- [x] 6.6 Run `npx openspec validate add-weekend-compare --strict` — zero
   errors/warnings ("Change 'add-weekend-compare' is valid").
-- [ ] 6.7 Run `npx openspec validate --all --strict` — all specs + changes pass.
-- [ ] 6.8 Update `docs/current-state.md`: stamp date/time (Europe/Kyiv), mark
+- [x] 6.7 Run `npx openspec validate --all --strict` — all specs + changes pass.
+- [x] 6.8 Update `docs/current-state.md`: stamp date/time (Europe/Kyiv), mark
   `add-weekend-compare` implemented/validated, and record the conventions for the
   record (it is the LAST capability slice): the in-memory **`PinProvider`** +
   `usePins()` (dedupe by `keyOf`, max 3, no persistence — ADR-0003; the pin button
@@ -272,7 +280,7 @@
   `/api/forecast` route** (no new endpoint, cached per city in memory); and that
   **all capability slices are complete** (next: the Phase-6 eval-suite grading +
   the remaining gates).
-- [ ] 6.9 SERVICE/RENDER smoke (NOT a DB smoke — there is no DB, ADR-0003), step by
+- [x] 6.9 SERVICE/RENDER smoke (NOT a DB smoke — there is no DB, ADR-0003), step by
   step, over **mocked forecast payloads**: (a) build the compare-row model from a
   **mocked `Forecast`** — call `buildCompareRow(city, { status: "ok", forecast })`
   and assert the Sat/Sun cells carry the expected hi/lo (incl. a negative), the
@@ -283,7 +291,7 @@
   and assert the calm **empty "pin a city"** state (no table); (d) render with one
   city's `fetch` failing and assert that column's calm "—" placeholders with the
   others intact and a clean console. Capture the pass output as the smoke evidence.
-- [ ] 6.10 GATED on 6.9 passing: `npx openspec archive add-weekend-compare --yes
+- [x] 6.10 GATED on 6.9 passing: `npx openspec archive add-weekend-compare --yes
   --skip-specs` (the baseline `openspec/specs/weekend-compare/spec.md` already holds
   the contract, so the delta is NOT re-applied via Option B). Do not archive before
   the service/render smoke passes.

@@ -1,0 +1,27 @@
+{
+  "generatedBy": "review-gate",
+  "scope": "add-weekend-compare",
+  "change": "add-weekend-compare",
+  "baseRef": null,
+  "headRef": "staged",
+  "dimensions": {
+    "correctness": {
+      "confirmed": 0,
+      "contested": 0,
+      "rejected": 0
+    },
+    "spec-compliance": {
+      "confirmed": 0,
+      "contested": 1,
+      "rejected": 4
+    }
+  },
+  "confirmedTitles": [],
+  "contestedTitles": [
+    "Precipitation cells are not clamped to 0%..100% (FR-COMPARE-02 'within valid range')"
+  ],
+  "clean": true,
+  "generatedAt": "2026-06-27T08:34:38Z",
+  "initialConfirmed": 8,
+  "resolution": "All 8 confirmed + 1 contested fixed (+2 regression tests proven non-vacuous, 564 total; battery green; 4 correctly rejected). CRITICAL+major cache/abort rework: per-city AbortController Map (abort ONLY removed cities, never a still-pinned in-flight req), toFetch retries absent OR failed cities (failed recovers on re-pin), live pinKeysRef membership guard (not stale closure), parallel /api/forecast reuse (no new endpoint). New tests: pin-3rd-mid-flight strands neither survivor; failed city recovers after unpin+repin (both proven to FAIL on the old code). minor: bumpActive corrected (it was load-bearing for the mocked-provider cue test, comment fixed per the finding alternative); keyOf moved to shared lib/location/key.ts (ForecastSection imports it); precip clamped 0..100; tasks.md 6.2 wording softened. ShellContent test adaptation confirmed correct by the reviewer (not a weakening)."
+}

@@ -66,10 +66,18 @@ describe("components/shell/ShellContent — located state dismisses the empty he
       ),
     ).not.toBeNull();
 
-    // The located content-slot placeholders render; the empty-state Notice does not.
+    // The located content-slot placeholders render; the SHELL's first-load empty
+    // Notice does not.
     expect(container.querySelector('[data-slot="forecast"]')).not.toBeNull();
     expect(container.querySelector('[data-slot="map"]')).not.toBeNull();
     expect(container.querySelector('[data-slot="compare"]')).not.toBeNull();
-    expect(screen.queryByRole("status")).toBeNull();
+    // FR-SHELL-03: the shell's own first-load empty Notice (shell.notice.empty,
+    // spanning all columns) is dismissed once a location is active. Asserted by its
+    // specific copy rather than a blanket role="status" query, because the compare
+    // slot now hosts a REAL component (CompareSection) whose own calm "pin a city"
+    // empty state is a legitimate role="status" Notice (its authored contract,
+    // CompareSection.test.tsx) — it is NOT the shell empty placeholder this test guards.
+    expect(screen.queryByText(t("shell.notice.empty.title"))).toBeNull();
+    expect(screen.queryByText(t("shell.notice.empty.description"))).toBeNull();
   });
 });

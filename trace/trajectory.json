@@ -15,8 +15,11 @@
     {
       "slice": "2026-06-26-add-animated-bg",
       "reviewEvidence": "clean",
-      "trailerCommits": 0,
-      "libDomains": [],
+      "trailerCommits": 1,
+      "libDomains": [
+        "animated-bg",
+        "forecast"
+      ],
       "processComplete": true
     },
     {
@@ -80,6 +83,13 @@
         "i18n"
       ],
       "processComplete": true
+    },
+    {
+      "slice": "2026-06-27-add-weekend-compare",
+      "reviewEvidence": "clean",
+      "trailerCommits": 0,
+      "libDomains": [],
+      "processComplete": true
     }
   ],
   "overlaps": [
@@ -108,13 +118,20 @@
         "2026-06-25-add-app-shell",
         "2026-06-26-add-map"
       ]
+    },
+    {
+      "domain": "forecast",
+      "slices": [
+        "2026-06-26-add-animated-bg",
+        "2026-06-26-add-forecast"
+      ]
     }
   ],
   "failures": [],
   "warnings": [
     {
       "check": "trailer",
-      "msg": "2026-06-26-add-animated-bg: no commit carries a \"Slice: add-animated-bg\" trailer"
+      "msg": "2026-06-27-add-weekend-compare: no commit carries a \"Slice: add-weekend-compare\" trailer"
     },
     {
       "check": "in-scope",
@@ -127,6 +144,10 @@
     {
       "check": "in-scope",
       "msg": "lib/location/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-map) — review for scope drift"
+    },
+    {
+      "check": "in-scope",
+      "msg": "lib/forecast/ modified by 2 slices (2026-06-26-add-animated-bg, 2026-06-26-add-forecast) — review for scope drift"
     }
   ]
 }

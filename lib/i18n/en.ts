@@ -190,6 +190,33 @@ export const en = {
       "A rainbow turns up exactly when you have stopped expecting one, and apologizes a little for being late.",
     ],
   },
+  compare: {
+    // Weekend-compare namespace (D6, add-weekend-compare) — the English fallback
+    // subset mirroring `uk.compare.*` key-for-key. Same calm tone; no exclamation
+    // marks (BC-BRAND-01).
+    sectionLabel: "Weekend city comparison",
+    toggle: {
+      label: "Compare weekend",
+    },
+    pin: "Pin this city",
+    unpin: "Unpin",
+    makeActive: "Make active",
+    active: "Active",
+    cap: "You can compare up to three cities. To add another, unpin one first.",
+    header: {
+      saturday: "Saturday",
+      sunday: "Sunday",
+      hiLo: "Hi / lo",
+      precip: "Precip",
+      comfort: "Comfort",
+    },
+    empty: {
+      title: "No cities to compare yet",
+      description:
+        "Pin a few cities to compare their weather for the coming weekend side by side.",
+    },
+    error: "This city's data is unavailable right now.",
+  },
 } as const;
 
 export default en;

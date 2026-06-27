@@ -35,6 +35,7 @@ import { nextHours } from "@/lib/forecast/hourly";
 import { toComfortInput, type Forecast } from "@/lib/forecast/types";
 import { describeWeather } from "@/lib/forecast/weather-code";
 import { comfortScore, upcomingWeekend } from "@/lib/scoring/comfort";
+import { keyOf } from "@/lib/location/key";
 import type { Location } from "@/lib/location/types";
 import { t } from "@/lib/i18n";
 
@@ -56,11 +57,6 @@ function ChartSkeleton() {
       className="h-[200px] w-full animate-pulse rounded-lg border border-border bg-surface"
     />
   );
-}
-
-/** A stable in-memory cache key for a location identity ({lat,lon} rounded). */
-function keyOf(location: Location): string {
-  return `${location.lat.toFixed(4)},${location.lon.toFixed(4)}`;
 }
 
 /**
