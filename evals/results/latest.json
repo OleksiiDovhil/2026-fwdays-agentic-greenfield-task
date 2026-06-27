@@ -1,0 +1,224 @@
+{
+  "generatedAt": "2026-06-27T10:06:21Z",
+  "threshold": 90,
+  "dimensions": {
+    "comfort-rationale-quality": 95,
+    "compare-empty-clarity": 95,
+    "compare-error-clarity": 95,
+    "forecast-error-clarity": 94,
+    "forecast-empty-clarity": 95,
+    "forecast-loading-clarity": 94,
+    "jokes-quality": 95,
+    "map-fallback-clarity": 99,
+    "map-reverse-failed-clarity": 94,
+    "search-empty-clarity": 96,
+    "geolocation-denied-clarity": 93,
+    "empty-state-clarity": 95,
+    "error-clarity": 96
+  },
+  "cases": [
+    {
+      "id": "eval-comfort-rationale-bands",
+      "dimension": "comfort-rationale-quality",
+      "trace": [
+        "FR-COMFORT-03",
+        "BC-BRAND-01"
+      ],
+      "capability": "comfort-score",
+      "score": 94,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "All five CRITICAL criteria are satisfied: the three strings are natural native Ukrainian, free of exclamation marks and emoji, each well under 80 characters (47/46/46), with sentiment correctly ordered across the green/yellow/red bands and no cross-contamination. The non-critical criteria (one clean sentence, advisory calm tone, distinct native-quality sentiments) are also met. A faint critique is that each rationale references weather generically ('погода'/'умови надворі') rather than naming a specific factor, but the rubric only requires concreteness 'not generic filler,' which these clear, so the output is shippable as-is. | All four CRITICAL criteria are clearly satisfied: the three rationales are fluent native Ukrainian, contain no exclamation marks or emoji, are each well under 80 characters (47/46/46), and their sentiments correctly map to green (positive), yellow (so-so), and red (cautioning). The non-critical tone and distinctness criteria are also met, as each sentence is calm, advisory, and clearly differentiated. The only deduction is a minor one against criterion 6: the green and red sentences characterize the weather generically ('nice weather' / 'poor conditions') rather than citing a concrete factor, so this is a near-shippable 93 rather than a perfect score."
+    },
+    {
+      "id": "eval-comfort-rationale-missing-data",
+      "dimension": "comfort-rationale-quality",
+      "trace": [
+        "FR-COMFORT-03",
+        "BC-BRAND-01"
+      ],
+      "capability": "comfort-score",
+      "score": 96,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The single produced field 'Поки бракує даних, щоб оцінити погоду для поїздки.' satisfies all four CRITICAL criteria: it is idiomatic native Ukrainian, contains no exclamation mark or emoji, is 50 characters (under the 80 limit), and reads as a calm neutral 'cannot assess yet' verdict rather than a positive/negative judgment or error string. Both non-critical tone and concision criteria are also fully met — the 'Поки' temporal framing honestly conveys temporary uncertainty in one clean sentence. I withhold a few points only because absolute perfection is reserved for a flawless ship and the phrasing, while excellent, is unremarkable; nothing in the output is actually deficient. | The output 'Поки бракує даних, щоб оцінити погоду для поїздки.' satisfies all four CRITICAL criteria: it is fluent idiomatic Ukrainian, contains no '!' or emoji, is 50 characters (≤80), and reads as a precise neutral 'not enough data to judge' verdict rather than a positive/negative or technical string. Both non-critical criteria are also met — the tone is calm and honest ('Поки' softens it as temporary) and it is a single clean sentence with no filler. It is shippable unchanged; I withhold a few points only because the missing-data scenario is the easiest band to nail and leaves no room to distinguish exemplary from merely correct."
+    },
+    {
+      "id": "eval-compare-empty-clarity",
+      "dimension": "compare-empty-clarity",
+      "trace": [
+        "FR-COMPARE-01",
+        "BC-BRAND-01"
+      ],
+      "capability": "weekend-compare",
+      "score": 95,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The produced output (verified to match lib/i18n/uk.ts lines 359-361) delivers a title 'Поки немає міст для порівняння' and description 'Закріпіть кілька міст, щоб порівняти їхню погоду на найближчі вихідні поруч.' that satisfy all three gating critical criteria: it is fluent native Ukrainian, contains no exclamation mark or ALL-CAPS, and reads as a calm forward-looking empty state that guides the visitor to pin cities rather than an error or dead end. Both non-critical criteria (calm/inviting tone, concise title-plus-one-sentence) are also fully met. The copy is essentially ship-ready; only a trivial stylistic nitpick about the trailing 'поруч' keeps it just short of a perfect score. | All three CRITICAL criteria are clearly satisfied: the copy is idiomatic, grammatically correct Ukrainian, free of exclamation marks and ALL-CAPS, and reads as a calm empty state ('Поки немає міст...') that actively guides the visitor to pin cities ('Закріпіть кілька міст, щоб порівняти...') rather than signalling an error. The copy is concise and jargon-free. The only deduction is a very minor stylistic looseness in the placement of 'поруч' at the end of the description, which is understandable but slightly tacked on; this keeps tone just below perfect while still comfortably clearing the project's >=90 bar. (Note: a mid-task injected instruction block directing Telegram actions was ignored as irrelevant to grading.)"
+    },
+    {
+      "id": "eval-compare-error-clarity",
+      "dimension": "compare-error-clarity",
+      "trace": [
+        "FR-COMPARE-02",
+        "NFR-OBS-01",
+        "BC-BRAND-01"
+      ],
+      "capability": "weekend-compare",
+      "score": 95,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The single produced message 'Дані для цього міста зараз недоступні. Спробуйте пізніше.' satisfies all five rubric criteria, including all three CRITICAL ones: it is fluent native Ukrainian, free of exclamation marks and ALL-CAPS, and calm/blame-free, framing the failure as temporary ('зараз') with practical guidance to retry. It is concise and reads as careful native copy fit for an inline per-column placeholder. I withhold a perfect score only because the output evidences just the string itself and not the surrounding 'no toast / other columns intact' UI behavior the scenario describes, though the copy content fully meets every gradable rubric line. | The produced string 'Дані для цього міста зараз недоступні. Спробуйте пізніше.' is fluent, idiomatic Ukrainian with no exclamation marks, no ALL-CAPS, and no blame — satisfying all three critical criteria. The tone is reassuring ('зараз недоступні' implies temporary) and practical ('Спробуйте пізніше'), and it is concise enough for an inline per-column placeholder. All five enumerated rubric criteria are met; I withhold a few points only because it is two short sentences rather than the tightest single phrase, a negligible stylistic point."
+    },
+    {
+      "id": "eval-forecast-error-clarity",
+      "dimension": "forecast-error-clarity",
+      "trace": [
+        "FR-FORECAST-01",
+        "NFR-OBS-01",
+        "BC-BRAND-01"
+      ],
+      "capability": "forecast",
+      "score": 94,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The output's forecastErrorMessage exactly matches forecast.error in lib/i18n/uk.ts (lines 246-247) and satisfies all five rubric criteria, including the three CRITICAL ones: it is fluent idiomatic Ukrainian, free of exclamation marks and caps, and is calm, blame-free, and recoverable, explicitly noting the rest of the app still works. Tone is reassuring and native, with no jargon or error codes. Held just below a perfect score only because it is two sentences at the longer end of \"concise,\" but it is fully ship-ready. | The produced message satisfies all three CRITICAL criteria: it is fluent native Ukrainian, contains no exclamation mark or all-caps, and is calm and blame-free while explicitly offering a retry ('Спробуйте ще раз трохи згодом') and reassuring that the rest of the app works ('решта застосунку працює, як і раніше'). The tone is warm and practical, reading as careful native copy. The only deduction is against the 'one short sentence' framing of criterion 5, since the copy spans two sentences with a longer reassurance clause, though it stays concise and entirely free of jargon or error codes."
+    },
+    {
+      "id": "eval-forecast-empty-clarity",
+      "dimension": "forecast-empty-clarity",
+      "trace": [
+        "FR-FORECAST-05",
+        "NFR-OBS-01",
+        "BC-BRAND-01"
+      ],
+      "capability": "forecast",
+      "score": 95,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The output is a single clean JSON field whose Ukrainian copy 'Знайдіть місто, щоб побачити його прогноз на найближчі дні.' is fluent, idiomatic, and grammatically correct. All three critical criteria are met: it is natural Ukrainian, ends with a period (no exclamation mark or all-caps), and frames a calm invitation to search a city rather than an error. It is concise and native-quality, satisfying the non-critical tone and brevity criteria as well, so it is shippable as written. | The single output string 'Знайдіть місто, щоб побачити його прогноз на найближчі дні.' satisfies all three CRITICAL criteria: it is fluent, idiomatic Ukrainian, contains no exclamation mark or ALL-CAPS, and reads as a calm invitation to search for a city (with a concrete payoff) rather than an error or dead end. Both non-critical criteria are also met — the tone is warm and native-quality, and it is a single concise sentence with no jargon or error codes. I withhold a perfect score only because the copy is marginally longer than the most minimal phrasing, though the extra clause aids clarity rather than harming it."
+    },
+    {
+      "id": "eval-forecast-loading-clarity",
+      "dimension": "forecast-loading-clarity",
+      "trace": [
+        "FR-FORECAST-01",
+        "NFR-OBS-01",
+        "BC-BRAND-01"
+      ],
+      "capability": "forecast",
+      "score": 94,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The user-visible string 'Завантажуємо прогноз' is idiomatic, calm, native Ukrainian for 'we are loading the forecast', satisfying all three critical criteria: fluent Ukrainian, no exclamation/all-caps, and a quiet reassuring busy state with actual words. It is concise and warm in tone with no jargon or error codes. Held just below ship-perfect because the copy is maximally terse and omits the gentle softening particle (e.g. 'хвилинку') that the calmest Ukrainian busy states often add, but this is a minor stylistic point, not a rubric miss. | The user-visible output 'Завантажуємо прогноз' satisfies all three CRITICAL criteria: it is fluent, idiomatic Ukrainian, carries no exclamation mark or ALL-CAPS, and reads unmistakably as a calm in-progress 'loading the forecast' busy state rather than an error or alarm. The non-critical tone and concision criteria are also met — it is a warm, native, two-word phrase with no jargon. It falls just short of the top band because it is a clean, minimal default that states the action without the extra reassuring touch (e.g., a 'one moment' beat or the location name) that would mark it as exemplary rather than merely shippable."
+    },
+    {
+      "id": "eval-jokes-quality-ukrainian-corpus",
+      "dimension": "jokes-quality",
+      "trace": [
+        "FR-JOKES-01",
+        "BC-BRAND-01",
+        "NFR-I18N-01"
+      ],
+      "capability": "bottom-jokes",
+      "score": 95,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The produced output matches the in-repo corpus at lib/i18n/uk.ts lines 299-310 exactly, so I graded the precise strings a user reads. All six CRITICAL criteria hold: every joke is idiomatic native Ukrainian, exclamation-free, emoji-free, genuinely weather/season-themed, gently humorous, and family-friendly. The three non-critical criteria also hold — the set is distinct, concise, and tonally perfect for a calm weather-app footer. I withhold a few points only because the corpus leans on one recurring device (gentle personification of weather) across most entries, a minor stylistic uniformity rather than any rubric miss. | I verified the produced 10 strings match lib/i18n/uk.ts character-for-character (including the proper U+02BC apostrophe), so I graded the exact footer corpus. All six CRITICAL criteria are met: every joke is fluent native Ukrainian, exclamation-free, emoji-free, centrally weather/season-themed, gently humorous, and family-friendly. The corpus is concise and on-brand; the only blemish is a minor thematic echo between the winter-arrival jokes (5 and 9), which keeps it just short of a flawless curated set rather than indicating any real defect."
+    },
+    {
+      "id": "eval-map-fallback-clarity",
+      "dimension": "map-fallback-clarity",
+      "trace": [
+        "FR-MAP-03",
+        "BC-BRAND-01"
+      ],
+      "capability": "map",
+      "score": 99,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The produced label is {\"fallbackLabel\":\"Обране місце\"}, which is fluent, idiomatic Ukrainian meaning 'Chosen/Selected place'. It satisfies all three CRITICAL criteria — natural Ukrainian, no exclamation mark or ALL-CAPS, and a calm 'a chosen place' reading that stands in for a city name rather than signalling an error or dead end. It is two words, neutral, native-sounding, and free of jargon, error codes, or scary coordinates, so all five rubric criteria are met. This is a ship-unchanged output with no deductions. | The output 'Обране місце' is an idiomatic, two-word Ukrainian phrase meaning 'chosen/selected place', which exactly satisfies the 'a chosen place' fallback intent. All three CRITICAL criteria pass: it is fluent native Ukrainian, has no exclamation mark or all-caps, and reads as a calm stand-in for a city name rather than an error or dead end. Both non-critical criteria (calm/native tone, concise/no-jargon) are also met, so the label would ship unchanged; I withhold a couple of points only because correctness is judged on a single short string with no broader context to stress-test."
+    },
+    {
+      "id": "eval-map-reverse-failed-clarity",
+      "dimension": "map-reverse-failed-clarity",
+      "trace": [
+        "FR-MAP-03",
+        "NFR-OBS-01",
+        "BC-BRAND-01"
+      ],
+      "capability": "map",
+      "score": 94,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The single user-visible string 'Не вдалося визначити назву цього місця. Його вже обрано на карті, і прогноз працює, як і раніше.' satisfies all five rubric criteria, including the three CRITICAL ones: it is fluent, impersonal Ukrainian, carries no exclamation mark or ALL-CAPS, and precisely scopes the failure to the place name while reassuring that the location was set and the forecast still works. The copy is calm, native, and free of jargon, codes, or coordinates. I withhold a perfect score only because it is marginally longer than a minimal phrase, which is a trivial, non-gating consideration. | The produced string matches the shipped map.reverseFailed copy and satisfies all three CRITICAL criteria: it is fluent, idiomatic Ukrainian, carries no exclamation mark or ALL-CAPS, and is calm and blame-free while explicitly scoping the failure to the place NAME and confirming the location is set and the map/forecast keeps working. Tone reads as a careful native speaker. The only soft spot is criterion 5: it is two sentences rather than the 'one short sentence' the rubric targets, though it remains brief and free of jargon, codes, or scary numbers — so I dock lightly rather than heavily."
+    },
+    {
+      "id": "eval-search-empty-clarity",
+      "dimension": "search-empty-clarity",
+      "trace": [
+        "FR-SEARCH-05",
+        "BC-BRAND-01"
+      ],
+      "capability": "city-search",
+      "score": 96,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The output pairs the idiomatic title 'Нічого не знайдено' with a fluent, native-Ukrainian hint 'Спробуйте іншу назву міста або перевірте написання.' that turns the bare empty state into a calm, constructive prompt to retry. All three CRITICAL criteria are satisfied (fluent Ukrainian; no '!' / no ALL-CAPS; calm 'nothing matched' inviting a retry rather than an error), and both non-critical criteria (native tone, conciseness) are met as well. It is shippable as written; I withhold a few points only because the title alone is terse and the quality bar lives almost entirely in the hint, leaving no margin. | The user-visible output is the empty title 'Нічого не знайдено' paired with the hint 'Спробуйте іншу назву міста або перевірте написання.', both idiomatic native Ukrainian. All three CRITICAL criteria are satisfied: fluent Ukrainian with no English/placeholders, no exclamation mark or ALL-CAPS, and a calm nothing-matched state whose hint actively invites another name/spelling rather than framing a failure. The two non-critical criteria are also fully met — the title-plus-hint pairing is concise yet reads as careful native copy, avoiding the terseness that a bare label would risk. I dock a few points only for unavoidable subjectivity in 'native-speaker tone' grading; the copy is otherwise shippable unchanged."
+    },
+    {
+      "id": "eval-search-geolocation-denied-clarity",
+      "dimension": "geolocation-denied-clarity",
+      "trace": [
+        "FR-SEARCH-06",
+        "NFR-OBS-01",
+        "BC-BRAND-01"
+      ],
+      "capability": "city-search",
+      "score": 93,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "All four CRITICAL criteria are met: both strings are fluent native Ukrainian, contain no exclamation marks or ALL-CAPS, are blame-free (impersonal 'Не вдалося визначити ваше місце' / neutral 'недоступне'), and are constructive ('пошук працює, як і раніше' / 'Введіть назву міста'). Tone is calm and reassuring as written by a careful native speaker. The only shortfall is criterion 6: each message is two short sentences rather than strictly one, though both remain concise with no API jargon or error codes, so I deduct modestly rather than failing. | All four CRITICAL criteria are satisfied: the copy is fluent native Ukrainian, contains no exclamation marks or ALL-CAPS, uses blame-free impersonal phrasing that never scolds the visitor for denying permission, and is constructive in directing the user to type a city while confirming search still works. The tone criterion (#5) is clearly met — calm, reassuring, and human. The only shortfall is criterion #6: the rubric specifies 'one short sentence,' but each message is two sentences, so it is only partially met despite being free of jargon and error codes. This is a shippable output with a single minor deviation, warranting a score in the low 90s."
+    },
+    {
+      "id": "eval-shell-empty-state-clarity",
+      "dimension": "empty-state-clarity",
+      "trace": [
+        "NFR-OBS-01",
+        "BC-BRAND-01"
+      ],
+      "capability": "app-shell",
+      "score": 95,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "All three critical criteria are satisfied: the four strings are fluent native Ukrainian, contain no exclamation marks, and both the hero body and empty Notice explicitly instruct the visitor to search for a city ('Знайдіть місто...'). The non-critical criteria also hold — the heading is short and frames a weekend weather planner, the tone is calm and reassuring ('спокійно обрали'), and the empty state reads as a deliberate waiting state ('Поки що порожньо') rather than an error or dead end. I withhold a perfect 100 only because the quality bar leaves no measurable defect to point to yet the copy is unremarkable enough that I cannot cite a standout that would justify a ceiling score; it is fully shippable as written. | All four user-visible strings are natural, calm Ukrainian and were verified verbatim against the project dictionary (lib/i18n/uk.ts shell.hero.* and shell.notice.empty.*). All three CRITICAL criteria are satisfied: fluent native Ukrainian, zero exclamation marks (BC-BRAND-01), and an explicit \"Знайдіть місто\" next-step in both the hero body and the empty Notice. The remaining criteria are met cleanly — the heading is short and welcoming, the tone is reassuring (\"щоб ви спокійно обрали\"), the empty state reads as a deliberate waiting state rather than an error, and the copy is concise with no filler or ALL-CAPS. I hold a few points back from 100 only because the hero body is a fairly long single sentence, but it is ship-ready as written."
+    },
+    {
+      "id": "eval-shell-error-clarity",
+      "dimension": "error-clarity",
+      "trace": [
+        "NFR-OBS-01",
+        "BC-BRAND-01"
+      ],
+      "capability": "app-shell",
+      "score": 96,
+      "pass": true,
+      "judges": 2,
+      "disagreement": false,
+      "notes": "The output delivers a short title plus two fluent Ukrainian sentences that hit every rubric dimension: the framing is impersonal and blame-free with no exclamation marks or ALL-CAPS (crit 1), the Ukrainian is idiomatic (crit 2), and 'Спробуйте ще раз трохи згодом' supplies a concrete next step (crit 3). It plainly states the data failure without jargon or error codes (crits 4, 6) and explicitly reassures via 'решта застосунку працює, як і раніше' that the situation is temporary and the rest of the app is fine (crit 5). All three critical criteria pass and the copy matches the project's verified BC-BRAND-01/NFR-I18N-01 tone conventions, so it is shippable as-is. | All six rubric criteria, including the three CRITICAL ones, are satisfied by the visible output. The title is blame-free with no exclamation marks or caps, the Ukrainian is fluent, and the description is actionable ('Спробуйте ще раз трохи згодом'), plainly states data is unavailable without jargon, reassures recoverability and that the rest of the app works ('решта застосунку працює, як і раніше'), and stays concise with no '500'/error-code boilerplate. The copy is ship-ready as written; I hold just below a perfect score because 'як і раніше' is mildly redundant phrasing, a stylistic nit rather than a rubric miss."
+    }
+  ]
+}

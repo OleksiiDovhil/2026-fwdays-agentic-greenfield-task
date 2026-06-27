@@ -24,6 +24,9 @@ async function searchCopy() {
   const copy = {
     // FR-SEARCH-05 zero-results literal (shipped Ukrainian "Нічого не знайдено").
     empty: t("search.empty" as never),
+    // FR-SEARCH-05 actionable hint rendered beneath the empty title; graded WITH
+    // `empty` so the judge sees the full empty state, not the bare title alone.
+    emptyHint: t("search.emptyHint" as never),
     // FR-SEARCH-06 geolocation messages (denied / unavailable).
     geolocationDenied: t("search.geolocationDenied" as never),
     geolocationUnavailable: t("search.geolocationUnavailable" as never),
@@ -48,7 +51,7 @@ export const cases: EvalCase[] = [
       "The visitor searches a name the geocoder resolves to zero matches. Grade the inline 'Нічого не знайдено' empty-results copy shown in place of the suggestion list (never a toast, never treated as a failure).",
     produce: async () => {
       const c = await searchCopy();
-      return { emptyResultsMessage: c.empty };
+      return { emptyResultsMessage: c.empty, hint: c.emptyHint };
     },
     rubric: [
       "CRITICAL: the message is natural, fluent Ukrainian (not machine-translated, not English, no untranslated placeholders).",

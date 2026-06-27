@@ -1,0 +1,15 @@
+{
+  "comfort-rationale-quality": 95,
+  "compare-empty-clarity": 95,
+  "compare-error-clarity": 95,
+  "forecast-error-clarity": 94,
+  "forecast-empty-clarity": 95,
+  "forecast-loading-clarity": 94,
+  "jokes-quality": 95,
+  "map-fallback-clarity": 99,
+  "map-reverse-failed-clarity": 94,
+  "search-empty-clarity": 96,
+  "geolocation-denied-clarity": 93,
+  "empty-state-clarity": 95,
+  "error-clarity": 96
+}

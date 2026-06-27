@@ -382,7 +382,7 @@ export function SearchBox() {
       ) : null}
 
       {emptyVisible ? (
-        <Notice variant="empty" title={t("search.empty")} description="" />
+        <Notice variant="empty" title={t("search.empty")} description={t("search.emptyHint")} />
       ) : null}
 
       {/* At most ONE error Notice at a time (NFR-A11Y-01, NFR-OBS-01): the search

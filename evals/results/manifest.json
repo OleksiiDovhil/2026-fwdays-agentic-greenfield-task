@@ -1,0 +1,104 @@
+{
+  "generatedAt": "2026-06-27T10:06:21Z",
+  "kind": "eval",
+  "results": [
+    {
+      "id": "eval-comfort-rationale-bands",
+      "dimension": "comfort-rationale-quality",
+      "proof": "FR-COMFORT-03, BC-BRAND-01",
+      "score": 94,
+      "pass": true
+    },
+    {
+      "id": "eval-comfort-rationale-missing-data",
+      "dimension": "comfort-rationale-quality",
+      "proof": "FR-COMFORT-03, BC-BRAND-01",
+      "score": 96,
+      "pass": true
+    },
+    {
+      "id": "eval-compare-empty-clarity",
+      "dimension": "compare-empty-clarity",
+      "proof": "FR-COMPARE-01, BC-BRAND-01",
+      "score": 95,
+      "pass": true
+    },
+    {
+      "id": "eval-compare-error-clarity",
+      "dimension": "compare-error-clarity",
+      "proof": "FR-COMPARE-02, NFR-OBS-01, BC-BRAND-01",
+      "score": 95,
+      "pass": true
+    },
+    {
+      "id": "eval-forecast-error-clarity",
+      "dimension": "forecast-error-clarity",
+      "proof": "FR-FORECAST-01, NFR-OBS-01, BC-BRAND-01",
+      "score": 94,
+      "pass": true
+    },
+    {
+      "id": "eval-forecast-empty-clarity",
+      "dimension": "forecast-empty-clarity",
+      "proof": "FR-FORECAST-05, NFR-OBS-01, BC-BRAND-01",
+      "score": 95,
+      "pass": true
+    },
+    {
+      "id": "eval-forecast-loading-clarity",
+      "dimension": "forecast-loading-clarity",
+      "proof": "FR-FORECAST-01, NFR-OBS-01, BC-BRAND-01",
+      "score": 94,
+      "pass": true
+    },
+    {
+      "id": "eval-jokes-quality-ukrainian-corpus",
+      "dimension": "jokes-quality",
+      "proof": "FR-JOKES-01, BC-BRAND-01, NFR-I18N-01",
+      "score": 95,
+      "pass": true
+    },
+    {
+      "id": "eval-map-fallback-clarity",
+      "dimension": "map-fallback-clarity",
+      "proof": "FR-MAP-03, BC-BRAND-01",
+      "score": 99,
+      "pass": true
+    },
+    {
+      "id": "eval-map-reverse-failed-clarity",
+      "dimension": "map-reverse-failed-clarity",
+      "proof": "FR-MAP-03, NFR-OBS-01, BC-BRAND-01",
+      "score": 94,
+      "pass": true
+    },
+    {
+      "id": "eval-search-empty-clarity",
+      "dimension": "search-empty-clarity",
+      "proof": "FR-SEARCH-05, BC-BRAND-01",
+      "score": 96,
+      "pass": true
+    },
+    {
+      "id": "eval-search-geolocation-denied-clarity",
+      "dimension": "geolocation-denied-clarity",
+      "proof": "FR-SEARCH-06, NFR-OBS-01, BC-BRAND-01",
+      "score": 93,
+      "pass": true
+    },
+    {
+      "id": "eval-shell-empty-state-clarity",
+      "dimension": "empty-state-clarity",
+      "proof": "NFR-OBS-01, BC-BRAND-01",
+      "score": 95,
+      "pass": true
+    },
+    {
+      "id": "eval-shell-error-clarity",
+      "dimension": "error-clarity",
+      "proof": "NFR-OBS-01, BC-BRAND-01",
+      "score": 96,
+      "pass": true
+    }
+  ]
+}

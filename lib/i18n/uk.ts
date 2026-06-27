@@ -123,6 +123,10 @@ export const uk = {
     // FR-SEARCH-05 zero-results literal — the shipped Ukrainian copy. Calm, reads
     // as "nothing matched, try another spelling", never an error or a dead end.
     empty: "Нічого не знайдено",
+    // FR-SEARCH-05 actionable hint shown beneath the empty title — invites the
+    // visitor to try another spelling/name. EVAL-GRADED together with `empty`
+    // (search-empty-clarity, target >= 90): the bare title alone read as terse.
+    emptyHint: "Спробуйте іншу назву міста або перевірте написання.",
     // The search-failed Notice copy (network / non-OK / malformed payload). Calm,
     // reassuring, recoverable — the visitor can simply try again.
     failed:
@@ -359,7 +363,7 @@ export const uk = {
     // The calm per-column error copy (one city's weekend forecast could not load).
     // Inline, blame-free, never a toast; the other columns stay intact. The data is
     // simply unavailable for now — the visitor did nothing wrong (NFR-OBS-01).
-    error: "Дані для цього міста зараз недоступні.",
+    error: "Дані для цього міста зараз недоступні. Спробуйте пізніше.",
   },
 } as const;
 

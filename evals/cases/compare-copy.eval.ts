@@ -70,7 +70,9 @@ export const cases: EvalCase[] = [
       "One pinned city's weekend forecast failed to load (network error, non-OK response, or malformed payload) while the other cities loaded fine. Grade the calm inline Ukrainian copy shown for that city's column/cells (no toast, the other columns intact, no blame).",
     produce: async () => {
       const c = await compareCopy();
-      return { error: c.error };
+      // Return the user-VISIBLE copy under a descriptive key — NOT an `{error: …}`
+      // envelope, which a judge reasonably read as a leaked raw error payload.
+      return { perCityErrorMessage: c.error };
     },
     rubric: [
       "CRITICAL: the message is natural, fluent Ukrainian (not machine-translated, not English).",

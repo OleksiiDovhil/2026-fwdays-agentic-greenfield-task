@@ -85,6 +85,7 @@ export const en = {
     loading: "Searching cities",
     // FR-SEARCH-05 zero-results literal — English fallback for "Нічого не знайдено".
     empty: "Nothing found",
+    emptyHint: "Try another city name or check the spelling.",
     failed:
       "Could not load suggestions. Please try again in a moment, or type a city name.",
     geolocate: "Use my location",
@@ -215,7 +216,7 @@ export const en = {
       description:
         "Pin a few cities to compare their weather for the coming weekend side by side.",
     },
-    error: "This city's data is unavailable right now.",
+    error: "This city's data is unavailable right now. Please try again later.",
   },
 } as const;
 
