@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-06-27T14:14:55Z",
+  "kind": "trajectory-eval",
+  "slices": [
+    "add-app-shell",
+    "add-comfort-score",
+    "add-top-clock",
+    "add-bottom-jokes",
+    "add-city-search",
+    "add-forecast",
+    "add-map",
+    "add-animated-bg",
+    "add-weekend-compare"
+  ],
+  "dimensions": {
+    "process-order": 94.4,
+    "test-integrity": 95.1,
+    "in-scope": 91.9,
+    "craft": 94.8
+  }
+}

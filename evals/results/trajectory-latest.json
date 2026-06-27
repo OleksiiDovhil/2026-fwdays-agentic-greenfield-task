@@ -1,0 +1,347 @@
+{
+  "generatedAt": "2026-06-27T14:14:55Z",
+  "threshold": 70,
+  "dimensions": {
+    "process-order": 94.4,
+    "test-integrity": 95.1,
+    "in-scope": 91.9,
+    "craft": 94.8
+  },
+  "sliceRollup": {
+    "add-app-shell": 95,
+    "add-comfort-score": 94,
+    "add-top-clock": 92,
+    "add-bottom-jokes": 93,
+    "add-city-search": 82,
+    "add-forecast": 93,
+    "add-map": 84,
+    "add-animated-bg": 93,
+    "add-weekend-compare": 94
+  },
+  "units": [
+    {
+      "id": "add-app-shell:process-order",
+      "slice": "add-app-shell",
+      "dimension": "process-order",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are met with primary-source corroboration from the actual artifacts. The two pinned test files carry explicit pre-implementation red headers tied to spec requirements (NFR-A11Y-02, NFR-OBS-01), and their assertions encode WCAG/accessibility spec semantics while staying deliberately agnostic to the implementation's return shape — strong evidence of genuine spec-first authorship rather than a code-shaped retrofit (which would have asserted the exact { ok, failures } shape). The full spec→red→green→review→archive loop is evidenced: clean:true review-findings.json with maker≠checker resolution of all 8 confirmed findings, 33/33 tasks including the gated archive, a folded 7-requirement/25-scenario spec, and existing implementation files that satisfy the contracts. Held just below 'ship unchanged' perfection only because all gating evidence is mediated through committed headers/JSON rather than an observable red→green CI transcript."
+    },
+    {
+      "id": "add-app-shell:test-integrity",
+      "slice": "add-app-shell",
+      "dimension": "test-integrity",
+      "score": 97,
+      "pass": true,
+      "judges": 1,
+      "notes": "Ground-truth inspection of the slice's test files confirms both rubric criteria are strongly met. No skipped/weakened/tautological tests exist anywhere (grep clean across all 52 test files; the .toBeTruthy() hits are guarded, message-bearing DOM assertions), and the review trail explicitly frames the @trace-regex and eval changes as hardening, not weakening, with a fresh checker re-verifying CLEAN. Edge, locale, and boundary coverage is thorough and spec-traced — two-sided coordinate ranges, comma-decimal rejection, exact 120/121 name boundary, non-finite tokens, both-locales-missing i18n fallback, and the runtime-fault/located-dismissal failure branches. I deduct a marginal amount only because a few assertions necessarily rely on broad tolerance helpers (e.g. collectPairs/getThemeToggle fallbacks), not because any concrete miss is visible."
+    },
+    {
+      "id": "add-app-shell:in-scope",
+      "slice": "add-app-shell",
+      "dimension": "in-scope",
+      "score": 95,
+      "pass": true,
+      "judges": 1,
+      "notes": "The slice's own proposal/design declare an exact in-scope file manifest (D1–D8) that matches the changed-files evidence one-to-one, and no foreign-capability lib/ logic appears in the diff — the only shared files touched (app/page.tsx, lib/i18n, the location mechanism) are the deliberately-owned 'single serialize point', so cross-module reach is spec-justified, not drift. It is a single commit with no fixup churn, the design explicitly names and resists slot scope-creep, and the maker≠checker review came back clean with all fixes inside the shell domain. I deducted a small amount only because the eval harness file created by this slice is not listed in the proposal's 'Code (new)' manifest (only task 5.7 covers it) — a manifest-completeness nit, since the case is capability: 'app-shell' and unambiguously in-scope, not actual drift. Both non-critical criteria are met on strong, document-anchored evidence."
+    },
+    {
+      "id": "add-app-shell:craft",
+      "slice": "add-app-shell",
+      "dimension": "craft",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are non-critical and both are fully evidenced in the actual artifacts. Grep across all shell-owned files (lib/i18n, lib/a11y, lib/location, components/shell, app/error.tsx, ErrorBoundary.tsx) found zero TODO/FIXME/dead code/commented-out blocks; all comments are deliberate design-doc rationale and the single eslint-disable is justified. The archived tasks.md is a true 33/33 (0 unchecked), the work landed as one no-fixup commit, and review-findings.json records all 8 initial findings fixed and re-verified clean=true by a fresh reviewer with the residual findings rejected, so there is no revert churn or abandoned half-implementation. Held just under 100 because 'ship unchanged' is reserved and the craft bar here is met rather than exceptional."
+    },
+    {
+      "id": "add-comfort-score:process-order",
+      "slice": "add-comfort-score",
+      "dimension": "process-order",
+      "score": 94,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria, including the gating critical one, are met with file-verified evidence: red-first headers on every test, behavioral/derived-property assertions that map to spec scenarios rather than the implementation's weight constants, a present-and-clean review-findings.json with maker!=checker, and a contested bug demonstrably fixed test-first (weekend.test.ts:151-189 vs comfort.ts:265-285). Two minor, honestly-documented wrinkles keep it below a perfect score: the rationale SIGNATURE fixture was corrected after the fact (tasks 5.5 RESOLVED; the note and disjointness test confirm the implementation was not weakened), and the whole slice is a single commit, so the red->green ordering is provable only from test headers and tasks state rather than commit granularity. Neither defeats either criterion, so this passes comfortably."
+    },
+    {
+      "id": "add-comfort-score:test-integrity",
+      "slice": "add-comfort-score",
+      "dimension": "test-integrity",
+      "score": 95,
+      "pass": true,
+      "judges": 1,
+      "notes": "Direct inspection of all five test files plus the implementation, types, eval case, and i18n copy confirms both rubric criteria are met with substantial depth. No test is weakened, skipped, deleted, or tautological; assertions check never-throws, non-mutation, determinism, calibration bands, strict monotonicity, exact boundaries, Ukrainian-copy constraints, and timezone off-by-one behavior. The lone fixture edit is independently verified as a legitimate correction of an unsatisfiable disjointness constraint (the implementation's red corpus avoids green stems), not a cover for a real defect. The score is held just below perfect because that fixture-framing change is the one place relying on reviewer trust, though the code evidence here substantiates it."
+    },
+    {
+      "id": "add-comfort-score:in-scope",
+      "slice": "add-comfort-score",
+      "dimension": "in-scope",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Direct inspection of the changed files confirms the slice stayed in scope: all substantive logic and UI live in lib/scoring/ and components/comfort/, and every cross-module touch is spec-sanctioned — the comfort.* i18n namespace follows the documented sibling-namespace rule, and the palette/globals.css band tokens are required by FR-COMFORT-04 and the AA-contrast architecture (palette is the single source the checker reads). No opportunistic rewrite was smuggled in: the base Badge primitive is reused unchanged, app/page.tsx is provably untouched (the components explicitly defer wiring to the forecast slice), and superseded shell.* keys were left in place. I dock a few points only because globals.css and two i18n files are genuinely shared surfaces, so the cross-module footprint is non-trivial even though each edit is justified."
+    },
+    {
+      "id": "add-comfort-score:craft",
+      "slice": "add-comfort-score",
+      "dimension": "craft",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both (non-critical) rubric criteria are met against verified file evidence: targeted greps for TODO/FIXME/BLOCKED/dead-code markers and for commented-out code constructs across lib/scoring and components/comfort returned no matches, and the only comment lines are legitimate design/contract documentation. The diff shows no thrash — a single feat commit, 29/29 tasks done, a clean review with all findings resolved, the dead 'comfort.value' key confirmed removed (grep 0), and the contested split-weekend bug landed as a finished test-first fix (assertion in weekend.test.ts, matching consecutive-day implementation in comfort.ts) rather than an abandoned half-edit. Held just below ideal-ship only because a few inputs (full git diff and the per-file revert history) are summarized rather than directly inspectable, so I grade the small residual uncertainty down rather than up."
+    },
+    {
+      "id": "add-top-clock:process-order",
+      "slice": "add-top-clock",
+      "dimension": "process-order",
+      "score": 93,
+      "pass": true,
+      "judges": 1,
+      "notes": "The artifacts directly substantiate both criteria. The critical criterion is met with unusually strong evidence: the mount-gate test asserts observable behavior (placeholder vs. live time) rather than the prescribed state mechanism, so the CONTESTED implementation divergence (single-nullable+microtask vs. the task-3.3 [mounted,setMounted] pattern) did not break the tests — the clearest possible proof the assertions are anchored to spec scenarios, not retrofitted to the final code. The full flow is intact (proposal/design/spec/tasks present, explicit RED-first ordering, clean:true review, archived), and the one test correction (5.3 → 16:30:01) is documented honestly as a third-party orchestrator fix of a wrong expected value, not a weakening. I withhold the top band only because the review surfaced initialConfirmed:3 real defects including a stale/incorrect test assertion, so the initial red state was imperfect rather than pristine."
+    },
+    {
+      "id": "add-top-clock:test-integrity",
+      "slice": "add-top-clock",
+      "dimension": "test-integrity",
+      "score": 93,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are satisfied against the actual files. The critical integrity bar holds: the one contested/changed assertion (resync to 16:30:01) is a defensible correctness fix that still meaningfully separates a re-reading clock from a counter, and every test carries real, non-tautological expectations matching the shipped implementation. Edge/locale coverage is unusually thorough (midnight, noon, 23:59:59, NBSP/AM-PM rejection, epoch, determinism, no-aria-live, timer cleanup, console silence). Minor, non-gating gap: pad2's out-of-range `% 100` belt-and-braces branch is never exercised by a test, so I withhold a perfect score."
+    },
+    {
+      "id": "add-top-clock:in-scope",
+      "slice": "add-top-clock",
+      "dimension": "in-scope",
+      "score": 92,
+      "pass": true,
+      "judges": 1,
+      "notes": "The slice's implementation is cleanly confined to its own domain (components/clock/, lib/clock/), and both cross-module edits — the AppHeader clock-slot swap and the sibling clock.* i18n namespace — are each explicitly prescribed by the slice's tasks/design and were executed minimally without disturbing surrounding code (theme toggle untouched, app/page.tsx untouched). The agent showed unusual restraint by refusing to delete the now-inert shell.clock.* keys because that would be an out-of-scope shell.* edit, instead annotating them as superseded; no opportunistic refactor was smuggled in. The only minor process smell is co-staging the NEXT slice's add-bottom-jokes docs in the same commit, but per the evidence this is docs-only bookkeeping for a future slice rather than a domain-scope violation or a shared-code rewrite, so it costs a few points but does not breach either criterion."
+    },
+    {
+      "id": "add-top-clock:craft",
+      "slice": "add-top-clock",
+      "dimension": "craft",
+      "score": 93,
+      "pass": true,
+      "judges": 1,
+      "notes": "Direct inspection of every changed file in the slice (TopClock.tsx, format.ts, both test files, AppHeader.tsx, uk.ts/en.ts) confirms both rubric criteria. The clock source carries zero TODO/FIXME/dead-code/commented-out blocks (the only suppressHydrationWarning is a justifying comment), and the one retained i18n leftover (shell.clock.*) is pre-existing scaffold deliberately kept per a documented ownership rule, mirroring the established shell.jokes.*/shell.search.* pattern — not careless dead code. The diff shows a single coherent commit with 26/26 tasks done and no revert churn or abandoned half-implementation. I withhold a perfect score only because tasks.md:55-57 still prescribes the two-state mount-gate the shipped code abandoned (a doc-vs-code drift the review flagged as DOC-DRIFT), a minor process-cleanliness blemish though it does not touch either rubric line."
+    },
+    {
+      "id": "add-bottom-jokes:process-order",
+      "slice": "add-bottom-jokes",
+      "dimension": "process-order",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria, including the gating CRITICAL one, are satisfied with independent file-level verification rather than mere self-report. The committed test file is authored test-first against a then-missing module and asserts against independent reference oracles (refIndex, utcDayCount vs localDayCount, the -1!=+1 cadence proof) that track the spec scenarios rather than the implementation's incidental output. The full spec→red→green→review→archive loop is evidenced: spec.md with 10 scenarios, a clean:true review-findings.json that records 5 real findings fixed (notably the build-time-freeze bug confirmed in the actual 'use client' FooterJoke.tsx and the once-missing FooterJoke.test.tsx now present), 25/25 tasks ticked, and the change sitting in the archive directory. Held just below shippable-perfect only because one review finding had to be remediated post-hoc (a ticked task naming a file that did not yet exist), a minor process blemish that was nonetheless caught and resolved."
+    },
+    {
+      "id": "add-bottom-jokes:test-integrity",
+      "slice": "add-bottom-jokes",
+      "dimension": "test-integrity",
+      "score": 93,
+      "pass": true,
+      "judges": 1,
+      "notes": "I read the actual jokes.ts, jokes.test.ts, FooterJoke.tsx/.test.tsx, and the shipped uk/en corpora rather than trusting the evidence summary. Both rubric criteria — including the gating no-weakening one — are met strongly: assertions are substantive and mutation-resistant (the negative-modulo and UTC-vs-local cases independently re-derive expected values), edge/locale/boundary cases are densely covered, and the contested missing test file was genuinely created with real assertions, not stubbed. I withhold a 90+-ceiling-touching perfect score only for two minor robustness nits: the UTC-vs-local discriminating assertion is conditionally skipped on a UTC runner (line 218), and the corpus tests use `(ukItems ?? [])` defensive fallbacks (lines 261, 272) that would not by themselves fail on an absent array — both are mitigated by adjacent non-empty length assertions, so neither is a weakening."
+    },
+    {
+      "id": "add-bottom-jokes:in-scope",
+      "slice": "add-bottom-jokes",
+      "dimension": "in-scope",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Verified against the codebase: the slice's substantive logic is in new domain modules (`lib/jokes/`, `components/jokes/`), and the single cross-module edit (`AppFooter.tsx`) is the spec-designated slot host carrying only minimal wiring while leaving the credits/privacy block intact. The i18n changes are purely additive `jokes.*` namespaces, and the slice shows deliberate scope discipline by leaving the superseded `shell.jokes.placeholder` untouched precisely to avoid an out-of-namespace edit, which is the opposite of an opportunistic rewrite. Both (non-critical) criteria are met with strong evidence of restraint; the only blemish is a resolved traceability nit (a task naming a then-missing test file), which is not a scope violation, so a near-top score is warranted."
+    },
+    {
+      "id": "add-bottom-jokes:craft",
+      "slice": "add-bottom-jokes",
+      "dimension": "craft",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "I verified both criteria against the actual files, not just the process summary: a targeted grep for TODO/FIXME/eslint-disable/ts-ignore/console.log across every slice file returned no matches, and reading jokes.ts, FooterJoke.tsx, both test files, the eval case, AppFooter.tsx, and the uk/en corpora confirmed all comments are load-bearing documentation with zero commented-out code. The only retained-unused symbol (shell.jokes.placeholder) predates this slice, is kept under a documented boundary rule, and is pinned by explicit non-render tests, so it is not introduced dead code. The slice is a single clean commit with 25/25 tasks done, a complete and internally consistent diff, and review evidence showing the one significant bug was fixed in-place rather than abandoned — no thrash. I withhold the last few points only because the verdict rests partly on the supplied review/commit metadata (single-commit, 25/25) that I cannot independently re-derive from a git history here."
+    },
+    {
+      "id": "add-city-search:process-order",
+      "slice": "add-city-search",
+      "dimension": "process-order",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are met on direct evidence I read. The critical test-first criterion is satisfied unambiguously: every test file (validation, route, flag, SearchBox, eval) carries a RED header asserting the module is absent and uses a deferred-import so it fails on missing-module rather than weak assertions, and the assertions are derived from spec rules and contracts (Unicode flag offset, never-a-500 honest degradation, keyless posture, traced to FR/NFR ids) rather than mirroring final code shape. The full flow is evidenced by tasks.md's test-first mandate, the recorded red→green confirmation (6.1), a present and clean review-findings.json (9 confirmed findings fixed with guarding tests plus 3 correctly rejected), maker≠checker enforcement (6.5: the maker does not self-grade), and a smoke-gated archive under the dated archive path. I withhold the last few points only because the red state is attested via the implementer's own task notes rather than an independent CI artifact, but the structural mechanisms in the test files corroborate it strongly."
+    },
+    {
+      "id": "add-city-search:test-integrity",
+      "slice": "add-city-search",
+      "dimension": "test-integrity",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are met with strong, quotable evidence. The critical no-weakening criterion holds: a Grep across all four search/geocode test files surfaced zero skip/only/todo/tautology markers, every assertion I read binds to a concrete spec behavior (real LocationProvider wiring, derived-not-copied flag glyph, allowlist leak checks, status!=500 on all four degradation branches), and the review loop added six guarding tests rather than relaxing any (confirmedTitles=[], findings rejected on merit). Edge/locale/boundary coverage is thorough across both server and client: 120-char capping, Cyrillic/comma/emoji encoding, latest-wins stale-response discard, out-of-range and half-suggestion dropping, zero-results-not-error, and opt-in-only geolocation. I reserve a few points only because I am grading from the committed artifacts and cannot observe the RED-then-green run itself, but the test-first headers and trace ids make the integrity claim well-supported."
+    },
+    {
+      "id": "add-city-search:in-scope",
+      "slice": "add-city-search",
+      "dimension": "in-scope",
+      "score": 82,
+      "pass": true,
+      "judges": 1,
+      "notes": "The slice's own domain code is genuinely confined: the route handler, lib/search/{validation,flag,types}.ts, and SearchBox.tsx are pure search-domain modules, and every cross-module touch is read-only consumption sanctioned by tasks (useLocation setter only, Input/Button/Notice primitives, t() from i18n). The i18n change is an additive sibling search.* namespace explicitly authorized by task 1.1 with shell.search.* deliberately left inert (uk.ts line 31 comment, task 1.3), and SearchHero.tsx's stub replacement is the slice's own spec deliverable (task 4.11) — there is no refactor, rename, or opportunistic rewrite anywhere, so both criteria are met. The deduction below 90 is for genuine commit-hygiene scope-bleed: the single add-city-search commit also carries forward add-forecast/add-map proposal/spec/tasks docs and bundles ADR-0005, which is wholly map-owned (\"Deciders: orchestrator + map-slice author\", artifacts \"added by add-map\") — out-of-slice documentation that the city-search spec does not justify, even though it is docs rather than code drift into another domain's runtime modules. Neither criterion is CRITICAL, so this caps rather than fails the score."
+    },
+    {
+      "id": "add-city-search:craft",
+      "slice": "add-city-search",
+      "dimension": "craft",
+      "score": 88,
+      "pass": true,
+      "judges": 1,
+      "notes": "Neither rubric criterion is marked CRITICAL, so the gate is the 70 threshold. Direct inspection confirms no TODO/FIXME and no commented-out code in any changed source file (the only console.* hits are intentional spies in route.test.ts asserting a clean console), and the diff shows zero thrash: one commit, 41/41 tasks done, fully-wired code paths, and a clean review trail with documented rejections rather than reverts. The single deduction is the empty `if (event.key === \\\"Enter\\\") {}` no-op block in SearchBox.tsx (lines 217-222), an introduced empty conditional that a strict reader counts as dead code, which keeps the craft score below the 90 ship-unchanged bar."
+    },
+    {
+      "id": "add-forecast:process-order",
+      "slice": "add-forecast",
+      "dimension": "process-order",
+      "score": 94,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are met on strong, quotable evidence. The critical test-first criterion is supported by explicit RED headers stating modules do not yet exist, deferred-import mechanics ensuring failures are 'missing module' not weak assertions, and assertions that map one-to-one onto named spec scenarios (null-not-zero-not-dropped, absent optional column, zero-day degrade, A->B->A discard, console silence) rather than the final code shape — confirmed by reading validation.ts against validation.test.ts. The full loop is evidenced end to end: spec.md (8 req / 30 scenarios) -> tasks.md §5 tests-first -> §1-4 implement -> review-findings.json clean:true (maker≠checker, 6 findings adversarially rejected) -> archived change with 40/40 tasks. Held just under perfect because the 'red' state is asserted via headers/mechanics rather than a captured failing-run log in this bundle, and the A->B->A sentinel needed a post-hoc non-colliding correction (caught before review)."
+    },
+    {
+      "id": "add-forecast:test-integrity",
+      "slice": "add-forecast",
+      "dimension": "test-integrity",
+      "score": 93,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are met against directly-read evidence: the critical no-weakening criterion is confirmed by a zero-match grep for skip/only/tautology patterns plus concrete value assertions throughout, and the edge/boundary criterion is satisfied far beyond the happy path (malformed/empty/zero-day/short bodies, null-vs-zero, optional-column absence, extreme-value rounding with the minus glyph, latest-wins discard, console silence). Two evidence claims could not be independently verified — the `add-forecast` change directory (tasks 40/40 and the review record) is absent from the tree — but these are process metadata rather than the test artifacts the rubric grades, so they do not gate. A minor deduction stands because `lib/forecast/format.ts` (roundAwayFromZero, localWeekday) has no colocated unit test despite the evidence asserting every pure helper has one; its logic is covered only indirectly through the DayCard/HourlyChart component tests."
+    },
+    {
+      "id": "add-forecast:in-scope",
+      "slice": "add-forecast",
+      "dimension": "in-scope",
+      "score": 94,
+      "pass": true,
+      "judges": 1,
+      "notes": "Direct inspection confirms the slice's footprint is entirely within the forecast domain (lib/forecast, app/api/forecast, components/forecast, one eval case), with the single shared-file edit being a purely additive, convention-mandated lib/i18n 'forecast:' namespace. The one place in-scope discipline could slip — ForecastSection's 'cross-slice publish into the shared WeatherContext' — is demonstrably read-side consumption of a contract owned by the already-archived add-animated-bg slice (per app/layout.tsx) and is explicitly scoped as additive, not a rewrite; app/page.tsx and the WeatherProvider/WeekendHighlight/comfort modules are untouched. Both rubric criteria are cleanly met and corroborated by clean review evidence (3 minor confirmed, 6 rejected, security 0), so this scores in the shippable band; a couple of points are withheld only because the additive cross-slice publish is an inherently scope-sensitive seam rather than a defect."
+    },
+    {
+      "id": "add-forecast:craft",
+      "slice": "add-forecast",
+      "dimension": "craft",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Direct inspection of every changed file in the slice confirms both craft criteria. A repo-wide grep for TODO/FIXME/HACK/@ts-ignore/dead-code markers across the three forecast directories returned no matches; the lone eslint-disable is a deliberate, thoroughly-commented dependency-array choice tied to the cache spec, and the only console references are test spies asserting a clean console. No commented-out code blocks, no revert churn, and no half-implemented exports are visible — the single-commit diff is coherent end-to-end with types, route, pure helpers, client components, and colocated tests all consistent. Held just under a perfect score only because the process evidence named a 'comfort-input.ts' file that does not exist (the logic lives as toComfortInput in types.ts), a minor evidence-vs-reality mismatch that does not affect either rubric criterion."
+    },
+    {
+      "id": "add-map:process-order",
+      "slice": "add-map",
+      "dimension": "process-order",
+      "score": 93,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are evidenced by the actual files, not just the summary. Every slice-owned test (LocationMap.test.tsx, coordinate-label.test.ts, reverse-validation.test.ts, route.test.ts) opens with a test-first/RED header that quotes the spec scenarios verbatim and asserts the module is MISSING so the red is for the right reason, and the assertions track spec behavior (HTTPS OSM tiles, single marker + city popup, recenter-without-remount, coordinate fallback, antimeridian normalize, guarded latest-wins, console silence) rather than code shape. review-findings.json is present with clean:true under the archive path, tasks.md is 37/37 with explicit test-first ordering, and the change is archived, so the spec→tests(red)→implement(green)→review→archive flow is fully substantiated. I withhold the last few points only because the red phase is attested by in-repo test-header narrative and the resolution log rather than an independent CI/run artifact (e.g. a captured failing-run record), which is the strongest remaining uncertainty."
+    },
+    {
+      "id": "add-map:test-integrity",
+      "slice": "add-map",
+      "dimension": "test-integrity",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria, including the critical one, are met on direct file evidence. A suite-wide grep found no skipped/only/todo tests and no tautological assertions; the regression fix added a new test file (serialize-roundtrip.test.ts) while leaving the original url.test.ts cases — including the `serialize(KYIV).lat === '50.45'` pin — green and unweakened, and the backing implementations exist so the tests are not green-by-vacuousness. Edge/locale/boundary coverage is unusually thorough (coordinate boundaries, comma-decimal rejection, the 1e-7 exponent bug proven in both layers, antimeridian wrap, non-finite degradation, every upstream failure path, and a latest-wins race), so the happy path is far from the only thing asserted. Held just under a perfect score only because two boundary 'happy' round-trips ({0,0}, {90,180}) are demonstrated via parse identity rather than an independently pinned serialized string, a negligible gap."
+    },
+    {
+      "id": "add-map:in-scope",
+      "slice": "add-map",
+      "dimension": "in-scope",
+      "score": 84,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are met on the evidence. The slice's edits live in its own domain (reverse-geocode route, components/map, lib/geo, additive map i18n), and the two cross-module touches are demonstrably feature-driven rather than drift: url.ts repairs a genuine equator/meridian reset that the map's own clicks trigger — minimal (one helper), traced, regression-tested, with every prior url.test.ts case verified still green — and the next.config.ts CSP allowlist is OSM-tile-specific and honestly documents its deferred hardening. No opportunistic rewrite or unrelated reformatting was found. Held below 90 because the CSP applies app-wide (broader than strictly map-scoped) and the commit also forwards add-weekend-compare docs, minor scope-purity blemishes that fall short of silent drift but keep it from being shippable-unchanged-pristine."
+    },
+    {
+      "id": "add-map:craft",
+      "slice": "add-map",
+      "dimension": "craft",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both non-critical craft-process criteria are satisfied with conclusive, quoted evidence across the full changed surface I read (route handler, lib/geo, map components, url.ts, next.config.ts, tasks.md, and the test files). Targeted Grep confirmed zero TODO/FIXME/dead-code/commented-out-block markers and zero skipped/abandoned tests; the only eslint-disable is the standard documented Leaflet icon fix. The slice is a single commit with 37/37 tasks done, every referenced symbol wired and tested, and a coherent cross-slice round-trip fix that keeps prior tests green — no revert churn or half-implementation. I withhold the last few points only because the evidence is a curated digest rather than the raw full diff of all 35 files, so a marginal unseen artifact in an unread test file cannot be 100% excluded."
+    },
+    {
+      "id": "add-animated-bg:process-order",
+      "slice": "add-animated-bg",
+      "dimension": "process-order",
+      "score": 94,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria are met against directly-verified files. The two pure-helper test files carry explicit Test-first/RED headers asserting the module is missing and must fail for the right reason, and the regression for the contested FR-ANIM-02 bug was added in a separate additive file (day-night.offset.test.ts with a host-independent offset-flip case) while the original back-compat test was preserved unedited — strong evidence the assertions track the spec, not the code shape. The full loop is evidenced: 31/31 tasks, a clean archived review-findings.json (initialConfirmed 5 → all resolved, contested findings each mapped to a real added test), and offset threading confirmed in lib/forecast/{types,validation}.ts. Held just under shippable-perfect because the red-before-green ordering is self-attested via file headers and task ticks rather than an independently captured failing-run log."
+    },
+    {
+      "id": "add-animated-bg:test-integrity",
+      "slice": "add-animated-bg",
+      "dimension": "test-integrity",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Direct inspection of all five test files plus the implementations confirms both rubric criteria. No test was skipped, deleted, or weakened to pass (grep-verified: zero .skip/.only/todo/expect(true)), assertions are concrete and non-tautological, and the offset regression flips day<->night on an identical absolute instant — a textbook meaningful guard — while the original back-compat file was left untouched (no 4-arg calls). Boundary, cross-timezone, calendar-mismatch, null/malformed, and failure-path edge cases are all explicitly asserted, covering every spec scenario. I withhold a perfect score only for the single intentionally type-only assertion on the numeric-epoch path (honestly justified, but slightly weaker than a value pin) and the eval SKIP-with-reason in scene.test.ts, neither of which is a test-integrity violation."
+    },
+    {
+      "id": "add-animated-bg:in-scope",
+      "slice": "add-animated-bg",
+      "dimension": "in-scope",
+      "score": 93,
+      "pass": true,
+      "judges": 1,
+      "notes": "Verified in-tree: the slice's substance lives in its own domain modules (lib/animated-bg/{day-night,scene}.ts, components/shell/WeatherBackground.tsx, the new components/providers/WeatherProvider.tsx). Every cross-module edit is spec-justified, not drift: the ForecastSection publish (task 1.4) and app/layout.tsx mount (task 1.3) were planned and additive ('Change NONE of the forecast fetch/cache/render logic' — confirmed, ForecastSection.tsx only adds a publish useEffect), and the one off-plan edit, threading utc_offset_seconds through lib/forecast/{types,validation}.ts, is the review-gate-flagged CORE FR-ANIM-02 correctness fix (a 3-arg isDaytime was using the viewer's clock, violating FR-ANIM-02), documented in review-findings.json and the day-night.offset.test.ts header. That forecast edit is minimal/additive (one optional nullish schema field + one nullable type field; existing zip/zero-day logic untouched; WeatherSnapshot.utcOffsetSeconds kept optional to preserve the pinned NOT_LOADED shape). No opportunistic rewrite was smuggled in — the aria-label removal is a review-flagged fix inside the slice's own WeatherBackground, and the nextHours offset-threading visible in hourly.test.ts is explicitly a SEPARATE later slice (FR-FORECAST-03), while compare/fixture 'utcOffsetSeconds: null' lines are mechanical call-site updates forced by the shared type. Held just below 95 because a forecast-domain schema/type change rode along in an animated-bg slice rather than landing as its own forecast follow-up, a small scope-blur even though fully justified and reviewed."
+    },
+    {
+      "id": "add-animated-bg:craft",
+      "slice": "add-animated-bg",
+      "dimension": "craft",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both non-critical rubric criteria are met with directly verified evidence. A grep for TODO/FIXME/dead-code markers across every directory this slice touched returned no matches, and the only eslint-disable occurrences live in files this slice did not change; the contested dead aria-label was actively removed rather than left behind. The process shows no thrash — a single coherent commit, 31/31 tasks ticked, a fully threaded utc_offset_seconds integration with no dangling ends, and a disciplined additive regression file that avoids editing the pre-written back-compat test. Score held just below perfect only because the verdict rests on the visible slice surface plus the review-findings record rather than a full line-by-line diff of all 26 files."
+    },
+    {
+      "id": "add-weekend-compare:process-order",
+      "slice": "add-weekend-compare",
+      "dimension": "process-order",
+      "score": 94,
+      "pass": true,
+      "judges": 1,
+      "notes": "Both rubric criteria, including the CRITICAL test-first one, are satisfied by directly inspected artifacts: every test file carries an explicit RED/maker-checker banner and its assertions encode the spec's scenarios (TZ off-by-one, zero-vs-absent precip, signed negatives, waterfall-deadlock parallelism, comfort-score reuse) rather than the final code shape, and the full spec->tests->impl->review->archive chain is present with review-findings.json clean:true and a non-trivial resolution. The only reason the score is not higher is that the 'proven to FAIL on old code' claim for the two regression tests is attested in the JSON rather than independently reproducible from this static snapshot, and the eval grade is deferred to a later phase — both rule-compliant but not directly verifiable here. This is a ship-quality process trail."
+    },
+    {
+      "id": "add-weekend-compare:test-integrity",
+      "slice": "add-weekend-compare",
+      "dimension": "test-integrity",
+      "score": 97,
+      "pass": true,
+      "judges": 1,
+      "notes": "Reading the four test files directly, every assertion is meaningful and tied to spec behavior, with zero tautologies, skips, or deletions (grep confirmed none in components/compare). The two regression tests guarding the CRITICAL+major abort/cache findings are demonstrably non-vacuous: they read the per-call AbortSignal to assert still-pinned requests are NOT aborted (timing-independent) and use a call counter to prove a failed city re-fetches on re-pin. Edge/locale/boundary coverage is exhaustive — the 3-city cap, zero-vs-absent precip via Object.is, signed negative temps with explicit counter-assertions, TZ off-by-one proofs, out-of-range, and total handling of null/malformed/abort/post-unmount input are all asserted with a verified-clean console. The only reason this is 97 rather than higher is that I cannot independently re-run the suite to confirm green, but the code evidence is exemplary and the documented ShellContent adaptation is a legitimate strengthening."
+    },
+    {
+      "id": "add-weekend-compare:in-scope",
+      "slice": "add-weekend-compare",
+      "dimension": "in-scope",
+      "score": 95,
+      "pass": true,
+      "judges": 1,
+      "notes": "Direct inspection of the changed files confirms the slice is tightly scoped: all new behavior sits in lib/compare/* and the compare/pin components, and the single cross-domain code edit (ForecastSection.tsx:38) is a one-line import swap forced by extracting the shared keyOf into lib/location/key.ts — a justified de-duplication whose doc names every consumer and cites design.md D1/D3 and FR-COMPARE-01. The two other foreign touches (app/layout.tsx PinProvider mount, ShellContent compare-slot fill) are spec-anticipated, and ShellContent's colocated test change is a documented query-specificity adaptation, not a weakened assertion. Critically, ForecastSection's own fetch logic was left as-is rather than opportunistically rewritten to match the new per-city abort machinery, satisfying both rubric criteria; I withhold the last few points only because the evidence is a static snapshot rather than a true line-level diff against the parent commit."
+    },
+    {
+      "id": "add-weekend-compare:craft",
+      "slice": "add-weekend-compare",
+      "dimension": "craft",
+      "score": 96,
+      "pass": true,
+      "judges": 1,
+      "notes": "Verified directly against the working tree, not just the evidence summary: all changed files are free of TODO/FIXME/dead code/commented-out blocks (the only console references are legitimate silence assertions and the single eslint-disable is a justified, well-documented dependency-loop guard), and the apparent broken `/ comment` at test line 742 was a ripgrep display artifact — the file shows a clean `//` comment. The slice is a single coherent commit with no revert churn, no abandoned branches, every render/fetch path wired, the abort/retry regression rework fully landed in impl and two non-vacuous tests, and tasks.md at 31/31. Both non-critical rubric lines are fully met; I withhold the last few points only for the unusually heavy comment density (documentation, explicitly not dead code, and not penalized by either criterion)."
+    }
+  ]
+}
