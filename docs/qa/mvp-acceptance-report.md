@@ -9,23 +9,27 @@ a generated report, or an archived review record. Where evidence is pending
 - **Scope:** the MVP defined in `docs/requirements.md` — 33 functional
   requirements across 9 capabilities, 9 non-functional requirements, plus the
   technical/business constraints.
-- **Phase:** 5 complete (Gate G5). Phase 6 (eval-suite ≥ 90) and Phase 7
-  (live deploy + deploy-gated NFRs) follow.
+- **Phase:** Gates **G0–G7 (autonomous) complete.** G6 graded-quality bar GREEN
+  (every eval dimension ≥ 90) and G7 global review + trajectory-eval + release
+  hygiene passed (see "Phase 7" below). The remaining steps to production
+  (deploy, push, live-measured NFRs, recordings) are user/deploy-gated.
 
 ## Executive summary
 
 - **9 of 9 capability slices delivered and archived.** Every MVP functional
   requirement is owned by exactly one capability and proven by automated tests
   (see `requirements-traceability-matrix.md`).
-- **585 unit/component tests + 21 integration tests — all green** (52 test files;
-  battery run 2026-06-27 09:23–09:24 Z, Overall **Pass** —
-  `automated-verification-latest.md`).
+- **610 automated tests — all green:** 589 unit/component (52 files) + 21
+  integration. (The G7 fixes added regression tests; the generated
+  `automated-verification-latest.md` records the pre-G7 G6 run at 585 + 21 — the
+  post-G7 count is 589 + 21, confirmed by `npm run test:run` + `test:integration`.)
 - **Coverage 95.78% lines** (92.43% statements / 93.52% functions / 84.53%
   branches), committed and ratchet-guarded (`quality/coverage-baseline.json`).
-- **All 9 review-gates clean** (`openspec/changes/archive/*/review-findings.json`,
+- **All 9 per-slice review-gates clean** (`openspec/changes/archive/*/review-findings.json`,
   every `clean:true`), with **2 high-severity bugs caught and fixed** in review
   (a CRITICAL compare-fetch strand and a CRITICAL day/night viewer-clock error),
-  plus several majors — see "Review evidence" below.
+  plus several majors — see "Review evidence" below. The **G7 global review** then
+  found 3 more substantive issues (2 fixed, 1 deferred) — see "Phase 7" below.
 - **The full battery is all-green:** lint (0 warnings), `tsc --noEmit` (strict),
   `next build` (`/` static, `api/*` dynamic), `openspec validate --all --strict`
   (9 passed), traceability (33 FRs, 0 failures), trajectory, recordings, and the
@@ -117,6 +121,55 @@ The business loop is proven end-to-end over mocked Open-Meteo payloads:
 search → forecast → comfort → weekend → compare, with LOCAL-date timezone
 invariance proven (the day-bound logic uses the location's calendar dates, not
 `toISOString`). Commit `e0cacfa`.
+
+## Phase 7 — global review, trajectory-eval, release hygiene (Gate G7)
+
+The whole-codebase pre-release review (maker ≠ checker; each finding adversarially
+verified by 2 lenses) and the process-quality grade ran at G7. Evidence:
+`docs/qa/global-review-findings.json`, `docs/qa/trajectory-eval-report.md`, and
+commits `996a030` (fixes) + `c7689ff` (evidence).
+
+**Global review — 3 confirmed + 1 contested + 2 rejected. 2 fixed, 1 deferred:**
+
+1. **CRITICAL/MAJOR timezone (FR-FORECAST-03) — FIXED** (commit `996a030`). The
+   hourly "next 48 h" chart window was skewed by the active location's UTC offset:
+   `ForecastSection` called `nextHours(forecast.hourly, 48)` with the default
+   `now = Date.now()` (true UTC), but each point's time is the location's wall clock
+   read as UTC (Open-Meteo `timezone=auto`) — Kyiv (+3h) showed 3 already-elapsed
+   hours and stopped ~3h early, the exact mirror of the FR-ANIM-02 `isDaytime` fix.
+   The same defect was independently confirmed from the spec angle (the MAJOR
+   spec-compliance finding). Fix: `nextHours` gains an optional `utcOffsetSeconds`
+   (4th param) shifting `now` into the location frame; the caller threads
+   `forecast.utcOffsetSeconds`. 3 regression tests pin the corrected + back-compat
+   frames.
+2. **MAJOR theme hydration (NFR-OBS-01) — raised contested, FIXED** (commit
+   `996a030`). `ThemeProvider` read `matchMedia` in a `useState` initializer → SSR
+   rendered "light" but a dark-OS client's first render computed "dark"; the SSR'd
+   `AppHeader` toggle then tripped a React hydration mismatch + console error on
+   every dark-OS first paint. Fix: read the OS preference via `useSyncExternalStore`
+   (server snapshot "light" === first client render → no mismatch) + a separate
+   `override` state; `data-theme` is written only on an explicit choice. A dark-OS
+   adoption test locks it.
+3. **MINOR CSP `unsafe-inline` (security) — DEFERRED, not release-blocking.** No XSS
+   sink today (no `dangerouslySetInnerHTML`/`innerHTML`/`eval`; upstream payloads
+   zod-parsed + rendered as text; `connect-src`/`img-src`/`default-src` locked to
+   `'self'` + OSM tiles). Tracked as risk **R-08b** (tighten to nonces/hashes
+   post-MVP). Both review lenses confirmed no present exploit path.
+
+A fresh `code-reviewer` (maker ≠ checker) re-verified **both fixes PASS, no
+regressions**. Post-fix: **610 tests green**, lint + production build clean, `/`
+still statically prerendered.
+
+**Trajectory-eval (process quality):** the *path* each of the 9 slices took was
+graded by a fresh judge → **36/36 judgements pass** (`trajectory-eval-report.md`).
+Per-dimension means: process-order 94.4 / test-integrity 95.1 / in-scope 91.9 /
+craft 94.8 (pass bar 70); weakest single score 82 (add-city-search in-scope —
+forwarded-docs commit-hygiene, not code drift).
+
+**Release hygiene:** `qa:verify` Overall **Pass**; `check-traceability --release
+--strict-tests` exit 0, `--check-fresh` exit 0, `check-trajectory --release` exit 0;
+`npm audit --audit-level=high` **0 vulnerabilities**; **no secrets** in the repo or
+git history.
 
 ## Pending / env-gated items (explicit — not accepted yet)
 
