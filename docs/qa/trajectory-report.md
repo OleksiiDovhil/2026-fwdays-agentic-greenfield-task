@@ -6,7 +6,7 @@ It does NOT verify test-first ordering or test integrity (not derivable from
 one-commit-per-slice history) — those are graded by the trajectory-eval workflow.
 
 Scope: 9 archived slice(s).
-Result: PASS, 5 warning(s)
+Result: PASS, 4 warning(s)
 
 | Slice | Review evidence | Trailer commits | design+tasks | lib domains touched |
 |---|---|---|---|---|
@@ -18,13 +18,13 @@ Result: PASS, 5 warning(s)
 | 2026-06-26-add-forecast | clean | 1 | yes | forecast, i18n |
 | 2026-06-26-add-map | clean | 1 | yes | geo, i18n, location |
 | 2026-06-26-add-top-clock | clean | 1 | yes | clock, i18n |
-| 2026-06-27-add-weekend-compare | clean | **0** | yes | - |
+| 2026-06-27-add-weekend-compare | clean | 1 | yes | compare, i18n, location |
 
 ## Cross-slice module overlap
 
 - `lib/a11y/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-comfort-score
-- `lib/i18n/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-city-search, 2026-06-26-add-comfort-score, 2026-06-26-add-forecast, 2026-06-26-add-map, 2026-06-26-add-top-clock
-- `lib/location/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-map
+- `lib/i18n/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-city-search, 2026-06-26-add-comfort-score, 2026-06-26-add-forecast, 2026-06-26-add-map, 2026-06-26-add-top-clock, 2026-06-27-add-weekend-compare
+- `lib/location/` touched by: 2026-06-25-add-app-shell, 2026-06-26-add-map, 2026-06-27-add-weekend-compare
 - `lib/forecast/` touched by: 2026-06-26-add-animated-bg, 2026-06-26-add-forecast
 
 ## Failures
@@ -33,8 +33,7 @@ None.
 
 ## Warnings
 
-- **trailer**: 2026-06-27-add-weekend-compare: no commit carries a "Slice: add-weekend-compare" trailer
 - **in-scope**: lib/a11y/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-comfort-score) — review for scope drift
-- **in-scope**: lib/i18n/ modified by 7 slices (2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-city-search, 2026-06-26-add-comfort-score, 2026-06-26-add-forecast, 2026-06-26-add-map, 2026-06-26-add-top-clock) — review for scope drift
-- **in-scope**: lib/location/ modified by 2 slices (2026-06-25-add-app-shell, 2026-06-26-add-map) — review for scope drift
+- **in-scope**: lib/i18n/ modified by 8 slices (2026-06-25-add-app-shell, 2026-06-26-add-bottom-jokes, 2026-06-26-add-city-search, 2026-06-26-add-comfort-score, 2026-06-26-add-forecast, 2026-06-26-add-map, 2026-06-26-add-top-clock, 2026-06-27-add-weekend-compare) — review for scope drift
+- **in-scope**: lib/location/ modified by 3 slices (2026-06-25-add-app-shell, 2026-06-26-add-map, 2026-06-27-add-weekend-compare) — review for scope drift
 - **in-scope**: lib/forecast/ modified by 2 slices (2026-06-26-add-animated-bg, 2026-06-26-add-forecast) — review for scope drift

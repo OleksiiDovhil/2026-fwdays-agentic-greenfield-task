@@ -4,11 +4,14 @@
 > tests — if this conflicts, verify and fix this file.
 
 - **Last updated:** 2026-06-27 11:02 (Europe/Kyiv)
-- **Phase:** 4 COMPLETE — ALL 9/9 capability slices DONE & archived, each review-gate
-  CLEAN (app-shell, comfort-score, top-clock, bottom-jokes, city-search, forecast, map,
-  animated-bg, weekend-compare). 564 tests green; lint/build/openspec/trace clean; `/`
-  stays static. NEXT: **Phase 5** (cross-cutting integration + full battery + coverage
-  baseline) → **Phase 6** eval-suite ≥90 over 13 copy dimensions (THE GOAL) → Phase 7.
+- **Phase:** 5 COMPLETE (G5) — all 9/9 capability slices archived (Phase 4); cross-cutting
+  integration layer added: `tests/integration/weekend-trip-flow.integration.test.ts` (21
+  tests, the search→forecast→comfort→weekend→compare business flow over mocked Open-Meteo,
+  LOCAL-date timezone-invariance proven) + `tests/fixtures/open-meteo.ts` (idempotent).
+  Coverage baseline committed `quality/coverage-baseline.json` (95.78% lines / 92.43% stmt
+  / 84.53% branch; ratchet guards it). `qa:verify` battery all-green (Overall: Pass). 585
+  tests. Browser E2E (chrome-devtools MCP) ENV-GATED per ADR-0004. **NEXT: Phase 6** —
+  eval-suite ≥90 over 13 copy dimensions (THE GOAL) → Phase 7. (history below kept):
   weekend-compare review FIXED a CRITICAL per-city-abort/strand bug + major failed-retry
   (+ shared `keyOf` in lib/location/key.ts, precip clamp). Then Phase 5 + Phase 6 (≥90
   goal) + Phase 7. Eval grading of all per-slice eval cases happens together in Phase 6

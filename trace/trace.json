@@ -117,6 +117,7 @@
       "planned": true,
       "tests": [
         "lib/search/validation.test.ts",
+        "tests/integration/weekend-trip-flow.integration.test.ts",
         "app/api/geocode/route.test.ts",
         "components/search/SearchBox.test.tsx"
       ],
@@ -143,6 +144,7 @@
       ],
       "planned": true,
       "tests": [
+        "tests/integration/weekend-trip-flow.integration.test.ts",
         "components/search/SearchBox.test.tsx"
       ],
       "recordings": []
@@ -207,6 +209,7 @@
       "tests": [
         "lib/forecast/comfort-input.test.ts",
         "lib/forecast/validation.test.ts",
+        "tests/integration/weekend-trip-flow.integration.test.ts",
         "app/api/forecast/route.test.ts",
         "components/forecast/ForecastSection.test.tsx",
         "evals/cases/forecast-copy.eval.ts"
@@ -387,6 +390,7 @@
       "tests": [
         "lib/compare/weekend.test.ts",
         "lib/scoring/weekend.test.ts",
+        "tests/integration/weekend-trip-flow.integration.test.ts",
         "components/comfort/WeekendHighlight.test.tsx",
         "components/forecast/ForecastSection.test.tsx"
       ],
@@ -466,6 +470,7 @@
       "tests": [
         "lib/compare/row.test.ts",
         "lib/compare/weekend.test.ts",
+        "tests/integration/weekend-trip-flow.integration.test.ts",
         "components/compare/CompareSection.test.tsx",
         "components/compare/CompareSection.test.tsx"
       ],
