@@ -25,11 +25,15 @@
 
 # misc
 .DS_Store
+Thumbs.db
 *.pem
 
 # IDE / editor cruft (not project files)
 .idea/
 .vscode/
+
+# logs
+*.log
 
 # debug
 npm-debug.log*
